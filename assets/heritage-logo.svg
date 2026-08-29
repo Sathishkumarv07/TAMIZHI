@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160" fill="none">
+  <!-- Outer Glow Filter -->
+  <defs>
+    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFDF9"/>
+      <stop offset="40%" stop-color="#E5C158"/>
+      <stop offset="100%" stop-color="#B8860B"/>
+    </linearGradient>
+    <linearGradient id="rubyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF4D4D"/>
+      <stop offset="100%" stop-color="#8B0000"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Red Bindi / Sacred Ruby Dot -->
+  <circle cx="80" cy="32" r="6.5" fill="url(#rubyGrad)" stroke="#FFE4B5" stroke-width="1.5" filter="url(#goldGlow)"/>
+
+  <!-- Stylized Calligraphic Tamil 'ழ' (Zha) -->
+  <path d="M78 43 C74 43, 68 46, 68 53 C68 62, 85 62, 85 74 C85 84, 66 86, 60 96 C54 106, 62 118, 76 118 C90 118, 98 108, 98 94 C98 78, 72 74, 72 63 C72 55, 78 51, 86 54 C94 57, 98 66, 98 72" 
+        stroke="url(#goldGrad)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" filter="url(#goldGlow)"/>
+
+  <!-- Horizontal Heritage Sweep -->
+  <path d="M52 98 Q80 84 108 98" stroke="url(#goldGrad)" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="108" cy="98" r="2.5" fill="#E5C158"/>
+</svg>
