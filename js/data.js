@@ -625,7 +625,7 @@ const LANDING_VIDEO_SCENES = [
     titleTa: "நமது மரபு. நமது மொழி. நமது பெருமை.",
     descEn: "Tamil Heritage Hub: An unbroken civilizational treasure spanning millennia.",
     descTa: "எழில்மிகு 'ழ' கரத்தின் பொற்கம்பீரம் — காலம் கடந்து வாழும் உயர்தனிச் செம்மொழி.",
-    image: "assets/heritage-logo.svg",
+    image: "assets/logo.png",
     theme: "pride"
   },
   {
@@ -637,7 +637,7 @@ const LANDING_VIDEO_SCENES = [
     titleTa: "காலம் கடந்து வாழும் தமிழ் — மீண்டும் வரவேற்கிறோம்!",
     descEn: "Welcome back to the portal of eternal Tamil wisdom.",
     descTa: "அறிவும் பண்பாடும் நிறைந்த தமிழ்க் களஞ்சியத்திற்கு அன்புடன் வரவேற்கிறோம்.",
-    image: "assets/heritage-logo.svg",
+    image: "assets/logo.png",
     theme: "login"
   }
 ];
