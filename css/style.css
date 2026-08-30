@@ -28,6 +28,318 @@
   --font-sans: 'Outfit', system-ui, sans-serif;
 }
 
+/* =========================================================================
+   HERITAGE HERO — Replaces cinematic video hero
+   ========================================================================= */
+
+.heritage-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 30%, rgba(74, 21, 27, 0.92) 0%, rgba(30, 8, 10, 0.98) 70%),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4AF37' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-color: #1E080A;
+  overflow: hidden;
+}
+
+.heritage-hero-bg-pattern {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(74, 21, 27, 0.3) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Decorative top and bottom gold lines */
+.heritage-hero::before,
+.heritage-hero::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(212,175,55,0.6) 30%, rgba(212,175,55,0.9) 50%, rgba(212,175,55,0.6) 70%, transparent);
+}
+.heritage-hero::before { top: 0; }
+.heritage-hero::after  { bottom: 0; }
+
+/* Hero Tamil/English titles — inherit old classes */
+.heritage-hero .hero-title-ta {
+  font-family: var(--font-serif-ta);
+  color: #F5E6C8;
+  text-shadow: 0 4px 24px rgba(0,0,0,0.6), 0 0 60px rgba(212,175,55,0.2);
+  line-height: 1.1;
+  margin: 0;
+}
+
+.heritage-hero .hero-title-en {
+  font-family: var(--font-cinzel);
+  color: rgba(212, 175, 55, 0.85);
+  letter-spacing: 0.3em;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* THE CLASSICAL QUOTE — compact inline version inside video hero */
+.hero-inline-quote {
+  position: relative;
+  background: linear-gradient(135deg, rgba(10,5,6,0.55) 0%, rgba(74,21,27,0.45) 100%);
+  border: 1px solid rgba(212,175,55,0.4);
+  border-radius: 1rem;
+  padding: 1.1rem 1.75rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 30px rgba(212,175,55,0.08), inset 0 1px 0 rgba(255,255,255,0.04);
+  text-align: center;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-inline-quote-ta {
+  font-family: var(--font-serif-ta);
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  font-weight: 700;
+  color: #F7E8C0;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  margin-bottom: 0.5rem;
+}
+
+.hero-inline-quote-en {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: rgba(245,230,200,0.72);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.hero-inline-quote-src {
+  font-family: var(--font-sans);
+  font-size: 0.62rem;
+  font-weight: 800;
+  color: rgba(212,175,55,0.65);
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  margin-top: 0.1rem;
+}
+
+
+
+/* =========================================================================
+   SPECIALITIES PHOTO SECTION
+   ========================================================================= */
+
+.specialities-photo-section {
+  background: linear-gradient(180deg, #FAF6F0 0%, #F4ECE1 40%, #EEE3D0 100%);
+  padding: 5rem 0 6rem;
+  border-top: 1px solid var(--border-parchment);
+}
+
+/* 4 col desktop → 2 tablet → 1 mobile */
+.specialities-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 1200px) {
+  .specialities-photo-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .specialities-photo-grid { grid-template-columns: 1fr; }
+}
+
+/* Individual photo card */
+.spec-photo-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-parchment);
+  border-radius: 1.25rem;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.25s ease;
+  box-shadow: 0 4px 16px rgba(74, 21, 27, 0.05);
+}
+
+.spec-photo-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 20px 50px rgba(74, 21, 27, 0.13), 0 0 0 1px rgba(212,175,55,0.3);
+  border-color: rgba(212,175,55,0.5);
+}
+
+/* Image wrapper — fixed height with zoom on hover */
+.spec-photo-card-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 210px;
+  overflow: hidden;
+  background: #2C1A1C;
+  flex-shrink: 0;
+}
+
+.spec-photo-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  display: block;
+}
+
+.spec-photo-card:hover .spec-photo-card-img {
+  transform: scale(1.08);
+}
+
+/* Dark gradient overlay at bottom */
+.spec-photo-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(20,8,10,0.75) 0%, transparent 55%);
+  display: flex;
+  align-items: flex-end;
+  padding: 0.75rem 1rem;
+}
+
+/* Era badge bottom-left of image */
+.spec-photo-card-era {
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  font-weight: 800;
+  color: #D4AF37;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: rgba(0,0,0,0.55);
+  padding: 0.2rem 0.6rem;
+  border-radius: 100px;
+  border: 1px solid rgba(212,175,55,0.4);
+  backdrop-filter: blur(4px);
+}
+
+/* Floating icon top-right of image */
+.spec-photo-card-icon {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  background: rgba(20,8,10,0.7);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* Card body */
+.spec-photo-card-body {
+  padding: 1.25rem 1.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.35rem;
+}
+
+/* Tamil label above title */
+.spec-photo-card-ta {
+  font-family: var(--font-serif-ta);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent-gold-dark);
+  letter-spacing: 0.03em;
+}
+
+/* English title */
+.spec-photo-card-title {
+  font-family: var(--font-serif-en);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary-maroon);
+  line-height: 1.35;
+  margin: 0;
+}
+
+/* Description text */
+.spec-photo-card-desc {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--text-medium);
+  line-height: 1.65;
+  flex: 1;
+  margin-top: 0.2rem;
+}
+
+/* Card footer: tag + button */
+.spec-photo-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-parchment);
+}
+
+.spec-photo-card-tag {
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-green-tag);
+  background: var(--accent-green-bg);
+  padding: 0.2rem 0.6rem;
+  border-radius: 100px;
+}
+
+.spec-photo-card-btn {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--primary-maroon);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s, letter-spacing 0.2s;
+  letter-spacing: 0.02em;
+}
+
+.spec-photo-card-btn:hover {
+  color: var(--accent-gold-dark);
+  letter-spacing: 0.06em;
+}
+
+/* Scroll-reveal override for these cards */
+.spec-photo-card.reveal-visible {
+  animation: specCardReveal 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes specCardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -984,4 +1296,656 @@ body {
   display: flex;
   align-items: flex-end;
   padding: 0.5rem 0.75rem;
+}
+
+/* =========================================================================
+   SPECIALITIES OF TAMIL — INTERACTIVE CAROUSEL & IMMERSIVE READER MODAL
+   ========================================================================= */
+
+.speciality-filter-btn {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.5rem 1.15rem;
+  border-radius: 9999px;
+  background: #FFFDF9;
+  border: 1px solid var(--border-parchment);
+  color: #766459;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+.speciality-filter-btn:hover {
+  border-color: #D4AF37;
+  color: #4A151B;
+  background: #FAF3E7;
+  transform: translateY(-1px);
+}
+
+.speciality-filter-btn.active {
+  background: #4A151B;
+  color: #D4AF37;
+  border-color: #D4AF37;
+  box-shadow: 0 4px 15px rgba(74, 21, 27, 0.25);
+}
+
+/* Carousel Track & Cards */
+.specialities-carousel-container {
+  position: relative;
+  overflow: hidden;
+  padding: 0.5rem 0 1.5rem 0;
+}
+
+.specialities-carousel-track {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.5rem 0.25rem 1rem 0.25rem;
+  scrollbar-width: none;
+}
+
+.specialities-carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.speciality-card {
+  flex: 0 0 calc(33.333% - 1rem);
+  min-width: 320px;
+  max-width: 400px;
+  scroll-snap-align: start;
+  background: #FFFDF9;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 18px;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 8px 25px rgba(74, 21, 27, 0.06);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .speciality-card {
+    flex: 0 0 calc(50% - 0.75rem);
+    min-width: 290px;
+  }
+}
+
+@media (max-width: 640px) {
+  .speciality-card {
+    flex: 0 0 100%;
+    min-width: 100%;
+  }
+}
+
+.speciality-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #4A151B 0%, #D4AF37 50%, #4A151B 100%);
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.speciality-card:hover {
+  transform: translateY(-6px);
+  border-color: #D4AF37;
+  box-shadow: 0 18px 40px rgba(74, 21, 27, 0.14), 0 0 20px rgba(212, 175, 55, 0.2);
+}
+
+.speciality-card:hover::before {
+  opacity: 1;
+  height: 5px;
+}
+
+.speciality-watermark-num {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  font-family: var(--font-cinzel);
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: rgba(212, 175, 55, 0.15);
+  pointer-events: none;
+  line-height: 1;
+  transition: color 0.3s ease;
+}
+
+.speciality-card:hover .speciality-watermark-num {
+  color: rgba(212, 175, 55, 0.3);
+}
+
+.speciality-read-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #4A151B;
+  background: rgba(244, 236, 225, 0.8);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.25s ease;
+}
+
+.speciality-read-btn:hover {
+  background: #4A151B;
+  color: #D4AF37;
+  border-color: #D4AF37;
+  box-shadow: 0 4px 12px rgba(74, 21, 27, 0.2);
+}
+
+.speciality-read-btn svg {
+  transition: transform 0.25s ease;
+}
+
+.speciality-read-btn:hover svg {
+  transform: translateX(4px);
+}
+
+/* Nav Arrows */
+.carousel-nav-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #FFFDF9;
+  border: 1.5px solid rgba(212, 175, 55, 0.5);
+  color: #4A151B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.25s ease;
+}
+
+.carousel-nav-btn:hover {
+  background: #4A151B;
+  color: #D4AF37;
+  border-color: #D4AF37;
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(74, 21, 27, 0.25);
+}
+
+/* Speciality Reader Modal */
+.speciality-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 5, 6, 0.85);
+  backdrop-filter: blur(12px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.speciality-modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.speciality-reader-dialog {
+  background: #FFFDF9;
+  border: 1.5px solid #D4AF37;
+  border-radius: 24px;
+  max-width: 860px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(212, 175, 55, 0.2);
+  position: relative;
+  transform: scale(0.95) translateY(15px);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.speciality-modal-backdrop.active .speciality-reader-dialog {
+  transform: scale(1) translateY(0);
+}
+
+/* Audio Pronunciation Wave */
+.audio-play-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #FAF3E7;
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  color: #4A151B;
+  padding: 0.45rem 0.9rem;
+  border-radius: 10px;
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.audio-play-chip:hover {
+  background: #4A151B;
+  color: #D4AF37;
+  border-color: #D4AF37;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 21, 27, 0.18);
+}
+
+.wave-bar {
+  display: inline-block;
+  width: 3px;
+  height: 12px;
+  background: #D4AF37;
+  border-radius: 2px;
+  animation: wavePulse 1s ease-in-out infinite;
+}
+
+.wave-bar:nth-child(2) { animation-delay: 0.2s; height: 16px; }
+.wave-bar:nth-child(3) { animation-delay: 0.4s; height: 10px; }
+
+@keyframes wavePulse {
+  0%, 100% { transform: scaleY(0.6); }
+  50% { transform: scaleY(1.3); }
+}
+
+/* =========================================================================
+   SCROLL-REVEAL ANIMATION SYSTEM
+   — Professional IntersectionObserver-based enter animations.
+   — Elements start invisible (pre-animate state), reveal on scroll-entry.
+   — Animations fire once only; no broken reset when scrolling back up.
+   ========================================================================= */
+
+/* --------------------------------------------------------------------------
+   Base "pre-animate" hidden states — applied via JS before entry
+   -------------------------------------------------------------------------- */
+
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: none;
+}
+
+.reveal-hidden-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: none;
+}
+
+.reveal-hidden-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: none;
+}
+
+.reveal-hidden-scale {
+  opacity: 0;
+  transform: scale(0.92) translateY(20px);
+  transition: none;
+}
+
+.reveal-hidden-fade {
+  opacity: 0;
+  transition: none;
+}
+
+/* --------------------------------------------------------------------------
+   "Revealed" active states — smoothly transition in
+   -------------------------------------------------------------------------- */
+
+.reveal-visible {
+  opacity: 1 !important;
+  transform: none !important;
+  transition:
+    opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Staggered delay utilities (applied by JS via data-reveal-delay)
+   -------------------------------------------------------------------------- */
+
+.reveal-delay-1  { transition-delay: 0.05s !important; }
+.reveal-delay-2  { transition-delay: 0.12s !important; }
+.reveal-delay-3  { transition-delay: 0.19s !important; }
+.reveal-delay-4  { transition-delay: 0.26s !important; }
+.reveal-delay-5  { transition-delay: 0.33s !important; }
+.reveal-delay-6  { transition-delay: 0.40s !important; }
+.reveal-delay-7  { transition-delay: 0.47s !important; }
+.reveal-delay-8  { transition-delay: 0.54s !important; }
+
+/* --------------------------------------------------------------------------
+   Section header reveal (badge + title + subtitle — sequence in)
+   -------------------------------------------------------------------------- */
+
+.section-header-badge {
+  display: inline-block;
+}
+
+/* --------------------------------------------------------------------------
+   Speciality Card — Premium entry with gold shimmer accent on reveal
+   -------------------------------------------------------------------------- */
+
+.speciality-card.reveal-visible {
+  animation: cardRevealShimmer 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes cardRevealShimmer {
+  0% {
+    opacity: 0;
+    transform: translateY(28px) scale(0.96);
+    box-shadow: none;
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-3px) scale(1.005);
+  }
+  80% {
+    box-shadow: 0 0 24px rgba(212, 175, 55, 0.2);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    box-shadow: 0 8px 25px rgba(74, 21, 27, 0.06);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Hero section stat counters & callout blocks
+   -------------------------------------------------------------------------- */
+
+.reveal-counter {
+  opacity: 0;
+  transform: translateY(14px) scale(0.97);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+}
+
+.reveal-counter.reveal-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   Quote Banner reveal — fade + slight upward drift
+   -------------------------------------------------------------------------- */
+
+.reveal-quote {
+  opacity: 0;
+  transform: translateY(16px);
+  border-left-width: 0;
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease,
+    border-left-width 0.4s ease 0.3s;
+}
+
+.reveal-quote.reveal-visible {
+  opacity: 1;
+  transform: none;
+  border-left-width: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Line / Divider wipe-in animation
+   -------------------------------------------------------------------------- */
+
+.reveal-line {
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-line.reveal-visible {
+  transform: scaleX(1);
+}
+
+/* --------------------------------------------------------------------------
+   Reduced-motion accessibility — respect user preference
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-hidden,
+  .reveal-hidden-left,
+  .reveal-hidden-right,
+  .reveal-hidden-scale,
+  .reveal-hidden-fade,
+  .reveal-counter,
+  .reveal-quote,
+  .reveal-line {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* =========================================================================
+   HERO INLINE QUOTE & SPECIALITIES PHOTO GRID STYLES
+   ========================================================================= */
+
+.hero-inline-quote {
+  position: relative;
+  background: linear-gradient(135deg, rgba(10,5,6,0.65) 0%, rgba(74,21,27,0.55) 100%);
+  border: 1px solid rgba(212,175,55,0.45);
+  border-radius: 1rem;
+  padding: 1.1rem 1.75rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 30px rgba(212,175,55,0.1), inset 0 1px 0 rgba(255,255,255,0.05);
+  text-align: center;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-inline-quote-ta {
+  font-family: var(--font-serif-ta);
+  font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+  font-weight: 700;
+  color: #F7E8C0;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  margin-bottom: 0.4rem;
+}
+
+.hero-inline-quote-en {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: rgba(245,230,200,0.78);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.hero-inline-quote-src {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: rgba(212,175,55,0.85);
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  margin-top: 0.15rem;
+}
+
+/* 4 col desktop → 2 tablet → 1 mobile */
+.specialities-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 1200px) {
+  .specialities-photo-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .specialities-photo-grid { grid-template-columns: 1fr; }
+}
+
+/* Individual photo card */
+.spec-photo-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-parchment);
+  border-radius: 1.25rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.25s ease;
+  box-shadow: 0 4px 16px rgba(74, 21, 27, 0.05);
+}
+
+.spec-photo-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 20px 50px rgba(74, 21, 27, 0.13), 0 0 0 1px rgba(212,175,55,0.3);
+  border-color: rgba(212,175,55,0.5);
+}
+
+/* Image wrapper — fixed height with zoom on hover */
+.spec-photo-card-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 210px;
+  overflow: hidden;
+  background: #2C1A1C;
+  flex-shrink: 0;
+}
+
+.spec-photo-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  display: block;
+}
+
+.spec-photo-card:hover .spec-photo-card-img {
+  transform: scale(1.08);
+}
+
+/* Dark gradient overlay at bottom */
+.spec-photo-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(20,8,10,0.75) 0%, transparent 55%);
+  display: flex;
+  align-items: flex-end;
+  padding: 0.75rem 1rem;
+}
+
+/* Era badge bottom-left of image */
+.spec-photo-card-era {
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  font-weight: 800;
+  color: #D4AF37;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: rgba(0,0,0,0.55);
+  padding: 0.2rem 0.6rem;
+  border-radius: 100px;
+  border: 1px solid rgba(212,175,55,0.4);
+  backdrop-filter: blur(4px);
+}
+
+/* Floating icon top-right of image */
+.spec-photo-card-icon {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  background: rgba(20,8,10,0.7);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* Card body */
+.spec-photo-card-body {
+  padding: 1.25rem 1.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.35rem;
+}
+
+/* Tamil label above title */
+.spec-photo-card-ta {
+  font-family: var(--font-serif-ta);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent-gold-dark);
+  letter-spacing: 0.03em;
+}
+
+/* English title */
+.spec-photo-card-title {
+  font-family: var(--font-serif-en);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary-maroon);
+  line-height: 1.35;
+  margin: 0;
+}
+
+/* Description text */
+.spec-photo-card-desc {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--text-medium);
+  line-height: 1.65;
+  flex: 1;
+  margin-top: 0.2rem;
+}
+
+/* Card footer: tag */
+.spec-photo-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-parchment);
+}
+
+.spec-photo-card-tag {
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-green-tag);
+  background: var(--accent-green-bg);
+  padding: 0.2rem 0.6rem;
+  border-radius: 100px;
 }

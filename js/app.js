@@ -1,4 +1,4 @@
-// Application Controller for Tamil Heritage Hub (Tamizhi)
+﻿// Application Controller for Tamil Heritage Hub (Tamizhi)
 
 let currentLang = 'en';
 let currentView = 'explore';
@@ -53,7 +53,208 @@ document.addEventListener('DOMContentLoaded', () => {
   initBookmarks();
   initAuth();
   updateUserUI();
+  initScrollReveal();
 });
+
+/* =========================================================================
+   PROFESSIONAL SCROLL-REVEAL ANIMATION ENGINE
+   — IntersectionObserver: fires once on entry, never breaks on scroll-up.
+   — Staggered delay per child index for group reveals.
+   ========================================================================= */
+
+function initScrollReveal() {
+  /* Respect prefers-reduced-motion */
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
+
+  /* Observer options — trigger when 12% of element enters viewport */
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px 0px -60px 0px',
+    threshold: 0.08
+  };
+
+  /* ── Single-element reveal observer ─────────────────────────────────── */
+  const singleObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const delay = el.dataset.revealDelay;
+        if (delay) {
+          el.classList.add(`reveal-delay-${delay}`);
+        }
+        /* Kick the transition on next frame so browser registers initial state */
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            el.classList.remove(
+              'reveal-hidden',
+              'reveal-hidden-left',
+              'reveal-hidden-right',
+              'reveal-hidden-scale',
+              'reveal-hidden-fade'
+            );
+            el.classList.add('reveal-visible');
+          });
+        });
+        singleObserver.unobserve(el);
+      }
+    });
+  }, observerOptions);
+
+  /* ── Group / staggered reveal observer ─────────────────────────────── */
+  const groupObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const container = entry.target;
+        const children = container.querySelectorAll('[data-reveal-child]');
+        children.forEach((child, i) => {
+          const delayIndex = Math.min(i + 1, 8);
+          child.classList.add(`reveal-delay-${delayIndex}`);
+          setTimeout(() => {
+            requestAnimationFrame(() => {
+              child.classList.remove(
+                'reveal-hidden',
+                'reveal-hidden-left',
+                'reveal-hidden-right',
+                'reveal-hidden-scale',
+                'reveal-hidden-fade'
+              );
+              child.classList.add('reveal-visible');
+            });
+          }, i * 70); /* 70ms stagger per item */
+        });
+        groupObserver.unobserve(container);
+      }
+    });
+  }, observerOptions);
+
+  /* ── Apply to Section Headers ────────────────────────────────────────
+     Targets every .archive-badge, h2, p inside a .text-center header div
+  ──────────────────────────────────────────────────────────────────────*/
+  document.querySelectorAll('#specialities-section .text-center').forEach(header => {
+    const badge = header.querySelector('.archive-badge');
+    const h2 = header.querySelector('h2');
+    const p = header.querySelector('p');
+
+    if (badge) { badge.classList.add('reveal-hidden'); badge.dataset.revealDelay = '1'; singleObserver.observe(badge); }
+    if (h2) { h2.classList.add('reveal-hidden'); h2.dataset.revealDelay = '2'; singleObserver.observe(h2); }
+    if (p) { p.classList.add('reveal-hidden-fade'); p.dataset.revealDelay = '3'; singleObserver.observe(p); }
+  });
+
+  /* ── Apply to Filter Tab Bar ──────────────────────────────────────── */
+  const filterBar = document.getElementById('speciality-filter-bar');
+  if (filterBar) {
+    filterBar.classList.add('reveal-hidden');
+    filterBar.dataset.revealDelay = '1';
+    singleObserver.observe(filterBar);
+  }
+
+  /* ── Apply to Carousel Controls Bar ─────────────────────────────────*/
+  const carouselControlBar = filterBar && filterBar.nextElementSibling;
+  if (carouselControlBar) {
+    carouselControlBar.classList.add('reveal-hidden-fade');
+    carouselControlBar.dataset.revealDelay = '2';
+    singleObserver.observe(carouselControlBar);
+  }
+
+  /* ── Apply to Speciality Cards (re-applied after each render) ──────── */
+  applySpecialityCardReveal();
+
+  /* ── Apply to all vintage-card (literature, poets, etc.) ─────────── */
+  revealVintageCards();
+
+  /* ── Apply to Footer ──────────────────────────────────────────────── */
+  const footer = document.querySelector('footer.site-footer');
+  if (footer) {
+    const cols = footer.querySelectorAll('.md\\:col-span-6, .md\\:col-span-3');
+    cols.forEach((col, i) => {
+      col.classList.add('reveal-hidden');
+      col.dataset.revealDelay = String(i + 1);
+      singleObserver.observe(col);
+    });
+  }
+}
+
+/* ─── Apply animated reveal to speciality cards after each render ─── */
+function applySpecialityCardReveal() {
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
+
+  const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const card = entry.target;
+        requestAnimationFrame(() => {
+          card.classList.remove('reveal-hidden-scale');
+          card.classList.add('reveal-visible');
+        });
+        cardObserver.unobserve(card);
+      }
+    });
+  }, {
+    root: null,
+    rootMargin: '0px 0px -40px 0px',
+    threshold: 0.05
+  });
+
+  /* Target the new static photo cards */
+  document.querySelectorAll('.spec-photo-card').forEach((card, i) => {
+    if (!card.classList.contains('reveal-visible')) {
+      card.classList.add('reveal-hidden-scale');
+      const delayIndex = Math.min((i % 4) + 1, 8);
+      card.classList.add(`reveal-delay-${delayIndex}`);
+      cardObserver.observe(card);
+    }
+  });
+
+  /* Also target old JS-rendered cards if they exist */
+  const track = document.getElementById('tamil-specialities-track');
+  if (track) {
+    track.querySelectorAll('.speciality-card').forEach((card, i) => {
+      if (!card.classList.contains('reveal-visible')) {
+        card.classList.add('reveal-hidden-scale');
+        const delayIndex = Math.min(i + 1, 8);
+        card.classList.add(`reveal-delay-${delayIndex}`);
+        cardObserver.observe(card);
+      }
+    });
+  }
+}
+
+
+/* ─── Apply reveal to vintage-card elements site-wide ─────────────── */
+function revealVintageCards() {
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
+
+  const vcObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const card = entry.target;
+        requestAnimationFrame(() => {
+          card.classList.remove('reveal-hidden');
+          card.classList.add('reveal-visible');
+        });
+        vcObserver.unobserve(card);
+      }
+    });
+  }, {
+    root: null,
+    rootMargin: '0px 0px -50px 0px',
+    threshold: 0.05
+  });
+
+  document.querySelectorAll('.vintage-card, .poet-card, .lit-work-card, .kural-card').forEach((card, i) => {
+    if (!card.classList.contains('reveal-visible')) {
+      card.classList.add('reveal-hidden');
+      const delayIndex = Math.min((i % 4) + 1, 8);
+      card.classList.add(`reveal-delay-${delayIndex}`);
+      vcObserver.observe(card);
+    }
+  });
+}
+
+
 
 // View Navigation Router
 function initNavigation() {
@@ -163,37 +364,340 @@ function setLanguage(lang) {
   renderPoetsAndBooks();
 }
 
-// Render Specialities of the Tamil Language
-function renderTamilSpecialities() {
-  const container = document.getElementById('tamil-specialities-grid');
-  if (!container) return;
+// Specialities of Tamil State & Interactive Controller
+let currentSpecialityFilter = 'all';
+let isSpecialityGridView = false;
+let currentSpecialityModalIndex = 0;
 
-  container.innerHTML = TAMIL_SPECIALITIES.map(item => `
-    <div class="vintage-card flex flex-col justify-between hover:border-[#D4AF37] transition-all">
-      <div>
-        <div class="flex justify-between items-center mb-3">
-          <span class="text-3xl">${item.icon}</span>
-          <span class="bg-amber-100 text-amber-900 text-[10px] font-sans font-bold px-2.5 py-1 rounded tracking-wider uppercase border border-amber-300/60">${item.badge}</span>
+// Render Specialities of the Tamil Language Carousel & Grid
+function renderTamilSpecialities() {
+  const track = document.getElementById('tamil-specialities-track');
+  if (!track) return;
+
+  const filtered = currentSpecialityFilter === 'all'
+    ? TAMIL_SPECIALITIES
+    : TAMIL_SPECIALITIES.filter(item => item.category === currentSpecialityFilter);
+
+  // Update count badge
+  const countBadge = document.getElementById('speciality-count-badge');
+  if (countBadge) {
+    countBadge.textContent = currentLang === 'ta'
+      ? `${filtered.length} தமிழ்த் தனிச்சிறப்புகள்`
+      : `${filtered.length} Heritage Pillars`;
+  }
+
+  if (filtered.length === 0) {
+    track.innerHTML = `
+      <div class="w-full text-center py-12 text-stone-500 font-serif">
+        ${currentLang === 'ta' ? 'இப்பிரிவில் பதிவுகள் இல்லை.' : 'No specialities found in this category.'}
+      </div>
+    `;
+    return;
+  }
+
+  track.innerHTML = filtered.map((item) => {
+    const originalIndex = TAMIL_SPECIALITIES.findIndex(s => s.id === item.id);
+    const displayNum = String(originalIndex + 1).padStart(2, '0');
+    return `
+      <div class="speciality-card group" onclick="openSpecialityReader(${originalIndex})">
+        <span class="speciality-watermark-num">${displayNum}</span>
+        
+        <div>
+          <!-- Badge & Icon Row -->
+          <div class="flex justify-between items-start mb-4">
+            <div class="w-12 h-12 rounded-xl bg-[#3B1418] border border-[#D4AF37]/50 flex items-center justify-center text-2xl shadow-sm group-hover:scale-105 transition-transform">
+              ${item.icon}
+            </div>
+            <span class="bg-amber-100/90 text-[#4A151B] text-[10px] font-sans font-extrabold px-2.5 py-1 rounded tracking-wider uppercase border border-amber-300/80">
+              ${item.badge}
+            </span>
+          </div>
+
+          <!-- Title -->
+          <h3 class="font-serif font-bold text-lg md:text-xl text-[#4A151B] mb-1.5 leading-snug group-hover:text-[#7A1F2A] transition-colors">
+            ${currentLang === 'ta' ? item.titleTa : item.titleEn}
+          </h3>
+
+          <div class="text-xs font-serif text-[#C8963E] font-medium mb-3">
+            ${currentLang === 'ta' ? item.titleEn : item.titleTa}
+          </div>
+
+          <!-- Calligraphic Quote -->
+          <div class="bg-[#FAF3E7]/80 border-l-2 border-[#D4AF37] px-3 py-2 rounded-r-lg mb-3.5">
+            <p class="text-[11px] italic text-[#4A151B] font-serif font-semibold line-clamp-2">
+              ${item.quoteTa}
+            </p>
+          </div>
+
+          <!-- Summary Description -->
+          <p class="text-stone-700 text-xs md:text-sm font-serif leading-relaxed line-clamp-3 mb-4">
+            ${currentLang === 'ta' ? item.descTa : item.descEn}
+          </p>
         </div>
-        <h3 class="font-serif font-bold text-xl text-maroon mb-2">
-          ${currentLang === 'ta' ? item.titleTa : item.titleEn}
-        </h3>
-        <p class="text-xs italic text-amber-800 font-serif mb-3 font-semibold">
-          ${item.quoteTa}
-        </p>
-        <p class="text-stone-700 text-sm font-serif leading-relaxed mb-4">
-          ${currentLang === 'ta' ? item.descTa : item.descEn}
-        </p>
+
+        <!-- Card Footer Actions -->
+        <div class="pt-3 border-t border-[#EBE1D3] flex items-center justify-between">
+          <span class="text-[11px] font-sans font-bold text-[#766459] uppercase tracking-wider flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></span>
+            ${item.category.toUpperCase()}
+          </span>
+
+          <button onclick="event.stopPropagation(); openSpecialityReader(${originalIndex})" class="speciality-read-btn">
+            <span>${currentLang === 'ta' ? 'ஆழமாக வாசிக்க' : 'Read Full Story'}</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </button>
+        </div>
       </div>
-      <div class="pt-3 border-t border-amber-100 flex items-center justify-between">
-        <span class="text-xs text-stone-500 font-sans">Classical Heritage Pillar</span>
-        <button onclick="askAIPrompt('Tell me more about ${item.titleEn}')" class="text-xs text-maroon font-bold hover:underline">
-          Learn More →
-        </button>
-      </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
+
+// Category Filter Controller
+function filterSpecialities(category) {
+  currentSpecialityFilter = category;
+
+  // Update button active state
+  const buttons = document.querySelectorAll('#speciality-filter-bar .speciality-filter-btn');
+  buttons.forEach(btn => {
+    if (btn.getAttribute('data-filter') === category) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+
+  renderTamilSpecialities();
+
+  // Re-apply scroll reveal on newly rendered cards
+  requestAnimationFrame(() => applySpecialityCardReveal());
+}
+
+// Horizontal Scroll Carousel
+function scrollSpecialityCarousel(direction) {
+  const track = document.getElementById('tamil-specialities-track');
+  if (track) {
+    const scrollAmount = track.clientWidth * 0.75;
+    track.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+  }
+}
+
+// Toggle between Snapping Carousel & Multi-Column Grid View
+function toggleSpecialityLayout() {
+  const track = document.getElementById('tamil-specialities-track');
+  const toggleText = document.getElementById('layout-toggle-text');
+  const toggleIcon = document.getElementById('layout-toggle-icon');
+  const arrowsGroup = document.getElementById('carousel-arrows-group');
+  if (!track) return;
+
+  isSpecialityGridView = !isSpecialityGridView;
+
+  if (isSpecialityGridView) {
+    track.style.display = 'grid';
+    track.style.gridTemplateColumns = 'repeat(auto-fill, minmax(320px, 1fr))';
+    track.style.overflowX = 'visible';
+    track.style.scrollSnapType = 'none';
+    if (toggleText) toggleText.textContent = currentLang === 'ta' ? 'சுருள் வடிவம்' : 'Carousel View';
+    if (toggleIcon) toggleIcon.textContent = '🎠';
+    if (arrowsGroup) arrowsGroup.style.display = 'none';
+  } else {
+    track.style.display = 'flex';
+    track.style.gridTemplateColumns = '';
+    track.style.overflowX = 'auto';
+    track.style.scrollSnapType = 'x mandatory';
+    if (toggleText) toggleText.textContent = currentLang === 'ta' ? 'கட்டம் வடிவம்' : 'Grid View';
+    if (toggleIcon) toggleIcon.textContent = '⊞';
+    if (arrowsGroup) arrowsGroup.style.display = 'flex';
+  }
+}
+
+// Open Immersive Speciality Reader Modal
+function openSpecialityReader(index) {
+  currentSpecialityModalIndex = index;
+  const item = TAMIL_SPECIALITIES[index];
+  if (!item) return;
+
+  const modal = document.getElementById('speciality-reader-modal');
+  if (!modal) return;
+
+  // Header Details
+  const iconEl = document.getElementById('modal-spec-icon');
+  const badgeEl = document.getElementById('modal-spec-badge');
+  const indexEl = document.getElementById('modal-spec-index');
+  const titleEl = document.getElementById('modal-spec-title');
+  const subtitleEl = document.getElementById('modal-spec-subtitle');
+  const quoteTaEl = document.getElementById('modal-spec-quote-ta');
+  const quoteEnEl = document.getElementById('modal-spec-quote-en');
+  const articleEl = document.getElementById('modal-spec-article');
+  const interactiveContainer = document.getElementById('modal-spec-interactive-container');
+  const keypointsEl = document.getElementById('modal-spec-keypoints');
+  const sourcesEl = document.getElementById('modal-spec-sources');
+
+  if (iconEl) iconEl.textContent = item.icon;
+  if (badgeEl) badgeEl.textContent = item.badge;
+  if (indexEl) indexEl.textContent = `Pillar 0${index + 1} of 0${TAMIL_SPECIALITIES.length}`;
+  if (titleEl) titleEl.textContent = currentLang === 'ta' ? item.titleTa : item.titleEn;
+  if (subtitleEl) subtitleEl.textContent = currentLang === 'ta' ? item.titleEn : item.titleTa;
+  if (quoteTaEl) quoteTaEl.textContent = item.quoteTa;
+  if (quoteEnEl) quoteEnEl.textContent = item.quoteEn;
+  if (articleEl) articleEl.textContent = currentLang === 'ta' ? item.detailedArticleTa : item.detailedArticleEn;
+
+  // Render Interactive Feature depending on type
+  if (interactiveContainer) {
+    if (item.interactiveType === 'audio' && item.audioWords) {
+      interactiveContainer.innerHTML = `
+        <div class="space-y-3">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <span class="text-xs font-sans font-bold uppercase tracking-wider text-[#4A151B] flex items-center gap-1.5">
+              <span>🗣️</span>
+              <span>Classical Tamil Pronunciation Station (ஒலிப்பகம்)</span>
+            </span>
+            <span class="text-[11px] font-serif text-stone-500 italic">Tap any word to listen to standard articulation</span>
+          </div>
+          <div class="flex flex-wrap gap-2.5">
+            ${item.audioWords.map(w => `
+              <button onclick="playTamilAudioWord('${w.soundText}')" class="audio-play-chip group">
+                <span class="text-sm">🔊</span>
+                <span class="text-[#4A151B] font-bold text-base">${w.word}</span>
+                <span class="text-xs font-sans text-stone-600 font-normal">(${w.trans})</span>
+                <span class="wave-bar"></span>
+                <span class="wave-bar"></span>
+                <span class="wave-bar"></span>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    } else if (item.interactiveType === 'couplet') {
+      interactiveContainer.innerHTML = `
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-sans font-bold uppercase tracking-wider text-[#4A151B] flex items-center gap-1.5">
+              <span>📜</span>
+              <span>Sample Universal Couplet (மாதிரிக் குறள்)</span>
+            </span>
+            <span class="text-[10px] font-sans font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded">7 Words Metric</span>
+          </div>
+          <div class="bg-[#FFFDF9] p-4 rounded-lg border border-[#D4AF37]/50 shadow-inner">
+            <div class="font-serif font-bold text-base md:text-lg text-[#4A151B] mb-1 leading-relaxed">
+              அகர முதல எழுத்தெல்லாம் ஆதி<br>பகவன் முதற்றே உலகு.
+            </div>
+            <div class="text-xs md:text-sm font-serif italic text-stone-700 mt-2">
+              "As the letter 'A' is the first of all letters, so is the primordial Divine the origin of the world."
+            </div>
+          </div>
+        </div>
+      `;
+    } else {
+      interactiveContainer.innerHTML = `
+        <div class="flex items-start gap-3.5">
+          <span class="text-2xl">🏛️</span>
+          <div>
+            <div class="text-xs font-sans font-bold uppercase tracking-wider text-[#4A151B] mb-1">
+              Historical & Archaeological Verification
+            </div>
+            <div class="text-xs md:text-sm font-serif text-stone-700 leading-relaxed">
+              Verified through epigraphical records, carbon dating by Beta Analytic (USA), and classical literary canons preserved across centuries.
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  // Key Points List
+  if (keypointsEl) {
+    const points = currentLang === 'ta' ? item.keyPointsTa : item.keyPointsEn;
+    keypointsEl.innerHTML = points.map(pt => `
+      <div class="flex items-start gap-2.5 text-xs md:text-sm text-stone-800 leading-relaxed">
+        <span class="w-5 h-5 rounded-full bg-amber-100 text-[#4A151B] flex items-center justify-center text-[10px] font-bold flex-shrink-0 mt-0.5">✓</span>
+        <span>${pt}</span>
+      </div>
+    `).join('');
+  }
+
+  // Sources
+  if (sourcesEl && item.historicalSources) {
+    sourcesEl.textContent = item.historicalSources.join(' • ');
+  }
+
+  // Render navigation dots indicator
+  const dotsContainer = document.getElementById('modal-dots-indicator');
+  if (dotsContainer) {
+    dotsContainer.innerHTML = TAMIL_SPECIALITIES.map((_, i) => `
+      <button onclick="openSpecialityReader(${i})" class="w-2 h-2 rounded-full transition-all ${i === index ? 'w-5 bg-[#4A151B]' : 'bg-stone-300 hover:bg-stone-400'}" title="Pillar ${i + 1}"></button>
+    `).join('');
+  }
+
+  // Show Modal & Prevent Body Scroll
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+// Close Speciality Reader Modal
+function closeSpecialityReader() {
+  const modal = document.getElementById('speciality-reader-modal');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+// Modal Next / Prev Navigation
+function navigateSpecialityModal(direction) {
+  const total = TAMIL_SPECIALITIES.length;
+  let newIndex = (currentSpecialityModalIndex + direction + total) % total;
+  openSpecialityReader(newIndex);
+}
+
+// Play Tamil Audio Pronunciation using Web Speech API with fallback
+function playTamilAudioWord(word) {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(word);
+    utterance.lang = 'ta-IN';
+    utterance.rate = 0.85;
+    utterance.pitch = 1.0;
+
+    // Pick Tamil voice if available
+    const voices = window.speechSynthesis.getVoices();
+    const tamilVoice = voices.find(v => v.lang.startsWith('ta') || v.name.toLowerCase().includes('tamil'));
+    if (tamilVoice) {
+      utterance.voice = tamilVoice;
+    }
+
+    window.speechSynthesis.speak(utterance);
+  } else {
+    alert(`Audio pronunciation for "${word}"`);
+  }
+}
+
+// Ask AI Tamil about current speciality
+function askAIFocusedSpeciality() {
+  const item = TAMIL_SPECIALITIES[currentSpecialityModalIndex];
+  if (!item) return;
+
+  closeSpecialityReader();
+  showView('ai');
+
+  const prompt = currentLang === 'ta'
+    ? `தமிழ் மொழியின் தனிச்சிறப்பான "${item.titleTa}" குறித்து சங்க இலக்கிய மேற்கோள்கள் மற்றும் வரலாற்றுச் சான்றுகளுடன் விரிவாக விளக்குக.`
+    : `Please explain in scholarly detail the historical evidence, Sangam literature references, and unique global significance of the Tamil language pillar: "${item.titleEn}" (${item.titleTa}).`;
+
+  const inputEl = document.getElementById('ai-chat-input');
+  if (inputEl) {
+    inputEl.value = prompt;
+    sendAIMessage();
+  }
+}
+
+// Close Modal on Escape Key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeSpecialityReader();
+  }
+});
 
 // Render Classical Tamil Dictionary View
 function renderDictionary() {
@@ -697,7 +1201,7 @@ function filterPoetsPage(query) {
     return;
   }
 
-  const filtered = POETS_CATALOG.filter(p => 
+  const filtered = POETS_CATALOG.filter(p =>
     p.nameTa.toLowerCase().includes(q) ||
     p.nameEn.toLowerCase().includes(q) ||
     p.descEn.toLowerCase().includes(q) ||
@@ -760,7 +1264,7 @@ function filterBooksPage(query) {
     return;
   }
 
-  const filtered = BOOKS_CATALOG.filter(b => 
+  const filtered = BOOKS_CATALOG.filter(b =>
     b.titleTa.toLowerCase().includes(q) ||
     b.titleEn.toLowerCase().includes(q) ||
     b.authorTa.toLowerCase().includes(q) ||
@@ -916,7 +1420,7 @@ function toggleVideoPlayback() {
   isVideoPlaying = !isVideoPlaying;
   const videoEl = document.getElementById('hero-bg-video');
   if (videoEl) {
-    if (isVideoPlaying) videoEl.play().catch(() => {});
+    if (isVideoPlaying) videoEl.play().catch(() => { });
     else videoEl.pause();
   }
   updatePlayButtonUI();
@@ -1124,7 +1628,7 @@ function stopAmbientHeritageDrone() {
       try {
         gain.gain.exponentialRampToValueAtTime(0.0001, ambientAudioCtx.currentTime + 0.3);
         setTimeout(() => osc.stop(), 350);
-      } catch (e) {}
+      } catch (e) { }
     });
     ambientOscillators = [];
   }
@@ -1186,7 +1690,7 @@ function playSceneAudioTransition(sceneIdx) {
 
     fluteOsc.start(t + 0.1);
     fluteOsc.stop(t + 1.9);
-  } catch (e) {}
+  } catch (e) { }
 }
 
 /* =========================================================================
@@ -1200,7 +1704,7 @@ function initHeroScrollManager() {
     if (!heroEl) return;
 
     const heroHeight = heroEl.offsetHeight || 600;
-    
+
     // Calculate fade opacity: 1 at top, fades out smoothly as user scrolls down past 200px
     const fadeThreshold = heroHeight * 0.55;
     const opacity = Math.max(0, Math.min(1, 1 - (scrollY / fadeThreshold)));
@@ -1227,7 +1731,7 @@ function initHeroScrollManager() {
         ambientAudioCtx.suspend();
       }
     } else {
-      if (isVideoPlaying && videoEl && videoEl.paused) videoEl.play().catch(() => {});
+      if (isVideoPlaying && videoEl && videoEl.paused) videoEl.play().catch(() => { });
       if (!isHeroMuted && ambientAudioCtx && ambientAudioCtx.state === 'suspended') {
         ambientAudioCtx.resume();
       }
