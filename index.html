@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 
 <head>
@@ -136,6 +136,11 @@
               src="https://assets.mixkit.co/videos/preview/mixkit-sun-setting-over-an-ancient-temple-42777-large.mp4"
               type="video/mp4">
           </video>
+          <!-- Background Sound for Landing Page Video -->
+          <audio id="hero-bg-audio" loop preload="auto">
+            <source src="https://assets.mixkit.co/music/preview/mixkit-meditation-flute-and-bells-688.mp3" type="audio/mpeg">
+            <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
+          </audio>
           <div id="hero-slide-layer" class="hero-slide-overlay"></div>
         </div>
 
@@ -146,10 +151,21 @@
         <div class="film-grain-overlay"></div>
 
         <!-- Top Sound Control Toggle -->
-        <div class="relative z-20 max-w-7xl mx-auto w-full px-6 pt-6 flex justify-end hero-fade-on-scroll">
+        <div class="relative z-20 max-w-7xl mx-auto w-full px-6 pt-6 flex justify-end items-center gap-3 hero-fade-on-scroll">
+          <div id="hero-audio-volume-wrapper" class="hidden items-center gap-2 bg-[#0A0506]/80 backdrop-blur-md border border-[#D4AF37]/40 px-3 py-1 rounded-full text-xs font-sans text-[#D4AF37]">
+            <span>🔈</span>
+            <input type="range" id="hero-audio-volume" min="0" max="100" value="50" oninput="setHeroAudioVolume(this.value)" class="w-20 accent-[#D4AF37] cursor-pointer">
+            <span>🔊</span>
+          </div>
           <button id="btn-hero-audio" onclick="toggleHeroAudio()"
-            class="text-xs font-sans font-semibold text-[#D4AF37] border border-[#D4AF37]/50 bg-[#0A0506]/70 backdrop-blur-md px-3.5 py-1.5 rounded-full hover:bg-[#4A151B] transition-all shadow">
-            🔇 Sound On
+            class="text-xs font-sans font-semibold text-[#D4AF37] border border-[#D4AF37]/50 bg-[#0A0506]/80 backdrop-blur-md px-4 py-1.5 rounded-full hover:bg-[#4A151B] hover:border-[#D4AF37] transition-all shadow-lg flex items-center gap-2">
+            <span id="hero-audio-icon">🔇</span>
+            <span id="hero-audio-label">Sound On</span>
+            <span id="hero-audio-waves" class="hidden flex items-center gap-0.5 ml-1">
+              <span class="w-0.5 h-3 bg-[#D4AF37] rounded-full animate-bounce"></span>
+              <span class="w-0.5 h-4 bg-[#D4AF37] rounded-full animate-bounce [animation-delay:0.2s]"></span>
+              <span class="w-0.5 h-2.5 bg-[#D4AF37] rounded-full animate-bounce [animation-delay:0.4s]"></span>
+            </span>
           </button>
         </div>
 
@@ -199,320 +215,134 @@
             <h2 class="text-3xl md:text-4xl font-serif text-[#4A151B] font-bold mb-3" data-i18n="specialitiesTitle">
               Specialities of the Tamil Language (தமிழ் தனிச்சிறப்புகள்)
             </h2>
-            <p class="text-stone-600 font-serif text-sm md:text-base leading-relaxed" data-i18n="specialitiesSubtitle">
-              Discover why Tamil stands unique among the world's ancient classical languages through its phonetic
-              melody, unbroken antiquity, secular ethics, Keeladi civilization, and global inscriptions.
+            <p class="text-stone-600 font-serif text-sm md:text-base leading-relaxed mb-4" data-i18n="specialitiesSubtitle">
+              Discover why Tamil stands unique among the world's ancient classical languages through its phonetic melody, unbroken antiquity, secular ethics, Keeladi civilization, and global inscriptions.
             </p>
           </div>
 
-          <!-- Literature-Style Box Layouts with Surrounded Photos -->
-          <div class="space-y-8">
+          <div id="tamil-specialities-track" class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 items-stretch">
 
-            <!-- BOX CARD 1: Antiquity & Continuity -->
-            <div class="vintage-card flex flex-col md:flex-row gap-6 items-center reveal-hidden-scale" data-reveal-delay="1">
-              <div class="w-full md:w-64 lg:w-80 h-56 rounded-xl overflow-hidden border-2 border-[#D4AF37]/50 shadow-md relative group flex-shrink-0">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Keeladi_museum_item.jpg/640px-Keeladi_museum_item.jpg"
-                  alt="Keeladi Excavation Artifacts"
-                  class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
-                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Keeladi-Excavation.jpg/640px-Keeladi-Excavation.jpg'; this.onerror=null;"
-                  loading="lazy">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end justify-between p-3.5">
-                  <span class="text-[10px] font-sans font-extrabold uppercase tracking-wider text-[#D4AF37] bg-black/60 backdrop-blur-md px-2.5 py-1 rounded border border-[#D4AF37]/40">
-                    5,000+ YEARS CONTINUITY
-                  </span>
-                  <span class="text-xl">🏺</span>
+            <!-- CARD 1: Ancient Inscriptions -->
+            <div class="bg-[#FFFDF9] rounded-2xl p-6 border border-[#EBE1D3] shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group reveal-hidden-scale" onclick="openSpecialityReader(4)">
+              <div class="w-full h-56 md:h-64 rounded-xl overflow-hidden shadow-sm relative group mb-5 border border-[#EBE1D3] bg-stone-100 flex-shrink-0">
+                <img src="assets/ancient_inscriptions.jpg" alt="Ancient Inscriptions" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.src='assets/ancient_inscriptions.jpg'; this.onerror=null;">
+                <div class="absolute top-3 left-3 bg-[#0A0506]/80 backdrop-blur-md border border-[#D4AF37]/50 text-[#D4AF37] px-3 py-1 rounded-full text-[10px] font-sans font-bold uppercase tracking-wider shadow-sm">
+                  55%+ ASI INSCRIPTIONS
                 </div>
               </div>
-              <div class="flex-1 space-y-3">
-                <div class="flex items-center justify-between flex-wrap gap-2">
-                  <span class="era-badge">ORIGINS • தொன்மை</span>
-                  <span class="text-xs font-sans font-bold text-[#4A151B] bg-amber-100/90 border border-amber-300 px-2.5 py-0.5 rounded-full">
-                    HERITAGE PILLAR #01
-                  </span>
-                </div>
-                <h3 class="text-2xl md:text-3xl font-serif font-bold text-[#4A151B]">
-                  தொன்மை — Unbroken Classical Antiquity
-                </h3>
-                <div class="bg-[#FAF3E7] border-l-4 border-[#C8963E] p-3 rounded-r-lg font-serif italic text-sm text-[#4A151B]">
-                  “கல் தோன்றி மண் தோன்றாக் காலத்தே, வாளொடு முன் தோன்றிய மூத்த குடி”
-                  <span class="block text-[10px] font-sans text-stone-500 not-italic mt-0.5">— புறநானூறு, பாடல் 192</span>
-                </div>
-                <p class="text-stone-700 text-sm md:text-base font-serif leading-relaxed">
-                  Tamil is the only living classical language with an unbroken literary tradition spanning over 5,000 years. Unlike Latin or Ancient Greek, Sangam Tamil poetry written millennia ago can still be read, spoken, and appreciated by modern Tamil speakers today.
-                </p>
-                <div class="flex flex-wrap gap-2 pt-1">
-                  <span class="bg-amber-50 text-amber-900 text-xs px-2.5 py-1 rounded border border-amber-200 font-serif font-semibold">5,000+ Years Antiquity</span>
-                  <span class="bg-amber-50 text-amber-900 text-xs px-2.5 py-1 rounded border border-amber-200 font-serif font-semibold">Living Classical Canons</span>
-                  <span class="bg-amber-50 text-amber-900 text-xs px-2.5 py-1 rounded border border-amber-200 font-serif font-semibold">UNESCO Status</span>
-                </div>
-              </div>
+              <h3 class="text-xl md:text-2xl font-serif font-bold text-[#4A151B] mb-2 group-hover:text-[#7A1F2A] transition-colors leading-snug">
+                Ancient Inscriptions
+              </h3>
+              <p class="text-stone-700 text-sm md:text-base font-serif leading-relaxed mb-6 flex-1 line-clamp-4">
+                Explore the epigraphic evidence carved in stone across millennia, revealing the foundational roots and evolving script of the Tamil language in historical contexts.
+              </p>
+              <button onclick="event.stopPropagation(); openSpecialityReader(4)" class="inline-flex items-center gap-1.5 text-xs font-sans font-bold uppercase tracking-wider text-[#4A151B] hover:text-[#7A1F2A] transition-colors pt-4 border-t border-[#EBE1D3]/80 group/link mt-auto">
+                <span>Read More</span>
+                <span class="group-hover/link:translate-x-1 transition-transform">→</span>
+              </button>
             </div>
 
-            <!-- BOX CARD 2: 'ழ' — The Unique Sound -->
-            <div class="vintage-card flex flex-col md:flex-row-reverse gap-6 items-center reveal-hidden-scale" data-reveal-delay="2">
-              <div class="w-full md:w-64 lg:w-80 h-56 rounded-xl overflow-hidden border-2 border-[#D4AF37]/50 shadow-md relative group flex-shrink-0">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Tamil-Brahmi_inscription_at_Pugalur.jpg/640px-Tamil-Brahmi_inscription_at_Pugalur.jpg"
-                  alt="Tamil Brahmi Rock Inscription"
-                  class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
-                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Tamil_Brahmi.jpg/640px-Tamil_Brahmi.jpg'; this.onerror=null;"
-                  loading="lazy">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end justify-between p-3.5">
-                  <span class="text-[10px] font-sans font-extrabold uppercase tracking-wider text-[#D4AF37] bg-black/60 backdrop-blur-md px-2.5 py-1 rounded border border-[#D4AF37]/40">
-                    UNIQUE PHONEME
-                  </span>
-                  <span class="text-xl">🗣️</span>
+            <!-- CARD 2: Classical Manuscripts -->
+            <div class="bg-[#FFFDF9] rounded-2xl p-6 border border-[#EBE1D3] shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group reveal-hidden-scale" onclick="openSpecialityReader(0)">
+              <div class="w-full h-56 md:h-64 rounded-xl overflow-hidden shadow-sm relative group mb-5 border border-[#EBE1D3] bg-stone-100 flex-shrink-0">
+                <img src="assets/classical_manuscripts.jpg" alt="Classical Manuscripts" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.src='assets/classical_manuscripts.jpg'; this.onerror=null;">
+                <div class="absolute top-3 left-3 bg-[#0A0506]/80 backdrop-blur-md border border-[#D4AF37]/50 text-[#D4AF37] px-3 py-1 rounded-full text-[10px] font-sans font-bold uppercase tracking-wider shadow-sm">
+                  OLAICHUVADI HERITAGE
                 </div>
               </div>
-              <div class="flex-1 space-y-3">
-                <div class="flex items-center justify-between flex-wrap gap-2">
-                  <span class="era-badge">PHONETICS • ழகரம்</span>
-                  <span class="text-xs font-sans font-bold text-[#4A151B] bg-amber-100/90 border border-amber-300 px-2.5 py-0.5 rounded-full">
-                    HERITAGE PILLAR #02
-                  </span>
-                </div>
-                <h3 class="text-2xl md:text-3xl font-serif font-bold text-[#4A151B]">
-                  ழகரம் — The Sound Only Tamil Knows
-                </h3>
-                <div class="bg-[#FAF3E7] border-l-4 border-[#C8963E] p-3 rounded-r-lg font-serif italic text-sm text-[#4A151B]">
-                  “தமிழுக்கும் அமுதென்று பேர் - அந்தத் தமிழ்இன்பத் தமிழ்எங்கள் உயிருக்கு நேர்”
-                  <span class="block text-[10px] font-sans text-stone-500 not-italic mt-0.5">— பாரதிதாசன்</span>
-                </div>
-                <p class="text-stone-700 text-sm md:text-base font-serif leading-relaxed">
-                  The retroflex approximant 'ழ' (zh) is a unique phoneme found exclusively in Tamil. Articulated by curling the tongue back toward the hard palate without contact, it gives Tamil its signature melody, euphonic sweetness, and phonetic identity unmatched in world languages.
-                </p>
-                <div class="flex flex-wrap gap-2 pt-1">
-                  <span class="bg-amber-50 text-amber-900 text-xs px-2.5 py-1 rounded border border-amber-200 font-serif font-semibold">Retroflex Approximant</span>
-                  <span class="bg-amber-50 text-amber-900 text-xs px-2.5 py-1 rounded border border-amber-200 font-serif font-semibold">Tolkappiyam Phonology</span>
-                  <span class="bg-amber-50 text-amber-900 text-xs px-2.5 py-1 rounded border border-amber-200 font-serif font-semibold">Euphonic Sweetness</span>
-                </div>
-              </div>
+              <h3 class="text-xl md:text-2xl font-serif font-bold text-[#4A151B] mb-2 group-hover:text-[#7A1F2A] transition-colors leading-snug">
+                Classical Manuscripts
+              </h3>
+              <p class="text-stone-700 text-sm md:text-base font-serif leading-relaxed mb-6 flex-1 line-clamp-4">
+                Delve into the fragile beauty of Olaichuvadi (palm-leaf manuscripts), the traditional medium that preserved profound literary works, medicine, and scientific wisdom.
+              </p>
+              <button onclick="event.stopPropagation(); openSpecialityReader(0)" class="inline-flex items-center gap-1.5 text-xs font-sans font-bold uppercase tracking-wider text-[#4A151B] hover:text-[#7A1F2A] transition-colors pt-4 border-t border-[#EBE1D3]/80 group/link mt-auto">
+                <span>Read More</span>
+                <span class="group-hover/link:translate-x-1 transition-transform">→</span>
+              </button>
             </div>
 
-            <!-- BOX CARD 3: Keeladi Civilization -->
-            <div class="vintage-card flex flex-col md:flex-row gap-6 items-center reveal-hidden-scale" data-reveal-delay="3">
-              <div class="w-full md:w-64 lg:w-80 h-56 rounded-xl overflow-hidden border-2 border-[#D4AF37]/50 shadow-md relative group flex-shrink-0">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Keeladi_Excavation_Site.jpg/640px-Keeladi_Excavation_Site.jpg"
-                  alt="Keeladi Archaeological Excavation Site"
-                  class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
-                  onerror="this.src='https://images.unsplash.com/photo-1587474260584-136574528ed5?w=640&q=80'; this.onerror=null;"
-                  loading="lazy">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end justify-between p-3.5">
-                  <span class="text-[10px] font-sans font-extrabold uppercase tracking-wider text-[#D4AF37] bg-black/60 backdrop-blur-md px-2.5 py-1 rounded border border-[#D4AF37]/40">
-                    600 BCE URBAN CITY
-                  </span>
-                  <span class="text-xl">⛏️</span>
+            <!-- CARD 3: Cultural Personification -->
+            <div class="bg-[#FFFDF9] rounded-2xl p-6 border border-[#EBE1D3] shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group reveal-hidden-scale" onclick="openSpecialityReader(7)">
+              <div class="w-full h-56 md:h-64 rounded-xl overflow-hidden shadow-sm relative group mb-5 border border-[#EBE1D3] bg-stone-100 flex-shrink-0">
+                <img src="assets/cultural_personification.jpg" alt="Cultural Personification" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.src='assets/cultural_personification.jpg'; this.onerror=null;">
+                <div class="absolute top-3 left-3 bg-[#0A0506]/80 backdrop-blur-md border border-[#D4AF37]/50 text-[#D4AF37] px-3 py-1 rounded-full text-[10px] font-sans font-bold uppercase tracking-wider shadow-sm">
+                  TAMIL THAI REVERENCE
                 </div>
               </div>
-              <div class="flex-1 space-y-3">
-                <div class="flex items-center justify-between flex-wrap gap-2">
-                  <span class="era-badge">ARCHAEOLOGY • கீழடி</span>
-                  <span class="text-xs font-sans font-bold text-[#4A151B] bg-amber-100/90 border border-amber-300 px-2.5 py-0.5 rounded-full">
-                    HERITAGE PILLAR #03
-                  </span>
-                </div>
-                <h3 class="text-2xl md:text-3xl font-serif font-bold text-[#4A151B]">
-                  கீழடி நாகரிகம் — Keeladi Urban Tamil Civilization
-                </h3>
-                <div class="bg-[#FAF3E7] border-l-4 border-[#C8963E] p-3 rounded-r-lg font-serif italic text-sm text-[#4A151B]">
-                  “வைகை நதிக்கரையில் மலர்ந்த 2600 ஆண்டுகள் பழமையான தமிழ் நகர நாகரிகம்”
-                  <span class="block text-[10px] font-sans text-stone-500 not-italic mt-0.5">— தொல்லியல் துறை அறிக்கை</span>
-                </div>
-                <p class="text-stone-700 text-sm md:text-base font-serif leading-relaxed">
-                  Excavations along the Vaigai riverbed at Keeladi prove a literate, secular, urban Sangam-era civilization carbon-dated to 600 BCE. Artifacts reveal widespread literacy across all strata of society, advanced brick architecture, textile weaving, and global maritime trade connections.
-                </p>
-                <div class="flex flex-wrap gap-2 pt-1">
-                  <span class="bg-amber-50 text-amber-900 text-xs px-2.5 py-1 rounded border border-amber-200 font-serif font-semibold">600 BCE Carbon Dating</span>
-                  <span class="bg-amber-50 text-amber-900 text-xs px-2.5 py-1 rounded border border-amber-200 font-serif font-semibold">Widespread Literacy</span>
-                  <span class="bg-amber-50 text-amber-900 text-xs px-2.5 py-1 rounded border border-amber-200 font-serif font-semibold">Vaigai River Civilization</span>
-                </div>
-              </div>
+              <h3 class="text-xl md:text-2xl font-serif font-bold text-[#4A151B] mb-2 group-hover:text-[#7A1F2A] transition-colors leading-snug">
+                Cultural Personification
+              </h3>
+              <p class="text-stone-700 text-sm md:text-base font-serif leading-relaxed mb-6 flex-1 line-clamp-4">
+                Discover the reverence of Tamil Thai, the deified mother figure representing the language itself, symbolizing its eternal grace, classical purity, and enduring spirit.
+              </p>
+              <button onclick="event.stopPropagation(); openSpecialityReader(7)" class="inline-flex items-center gap-1.5 text-xs font-sans font-bold uppercase tracking-wider text-[#4A151B] hover:text-[#7A1F2A] transition-colors pt-4 border-t border-[#EBE1D3]/80 group/link mt-auto">
+                <span>Read More</span>
+                <span class="group-hover/link:translate-x-1 transition-transform">→</span>
+              </button>
             </div>
 
-            <!-- BOX CARD 4: Thirukkural — Universal Ethics -->
-            <div class="vintage-card flex flex-col md:flex-row-reverse gap-6 items-center reveal-hidden-scale" data-reveal-delay="4">
-              <div class="w-full md:w-64 lg:w-80 h-56 rounded-xl overflow-hidden border-2 border-[#D4AF37]/50 shadow-md relative group flex-shrink-0">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Thiruvalluvar_statue_Kanyakumari.jpg/640px-Thiruvalluvar_statue_Kanyakumari.jpg"
-                  alt="Thiruvalluvar Statue Kanyakumari"
-                  class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
-                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Thiruvalluvar.jpg/640px-Thiruvalluvar.jpg'; this.onerror=null;"
-                  loading="lazy">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end justify-between p-3.5">
-                  <span class="text-[10px] font-sans font-extrabold uppercase tracking-wider text-[#D4AF37] bg-black/60 backdrop-blur-md px-2.5 py-1 rounded border border-[#D4AF37]/40">
-                    1,330 COUPLETS
-                  </span>
-                  <span class="text-xl">⚖️</span>
+            <!-- CARD 4: Keeladi Urban Civilization -->
+            <div class="bg-[#FFFDF9] rounded-2xl p-6 border border-[#EBE1D3] shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group reveal-hidden-scale" onclick="openSpecialityReader(2)">
+              <div class="w-full h-56 md:h-64 rounded-xl overflow-hidden shadow-sm relative group mb-5 border border-[#EBE1D3] bg-stone-100 flex-shrink-0">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Keeladi_museum_item.jpg/640px-Keeladi_museum_item.jpg" alt="Keeladi Urban Civilization" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Keeladi-Excavation.jpg/640px-Keeladi-Excavation.jpg'; this.onerror=null;">
+                <div class="absolute top-3 left-3 bg-[#0A0506]/80 backdrop-blur-md border border-[#D4AF37]/50 text-[#D4AF37] px-3 py-1 rounded-full text-[10px] font-sans font-bold uppercase tracking-wider shadow-sm">
+                  600 BCE URBAN CITY
                 </div>
               </div>
-              <div class="flex-1 space-y-3">
-                <div class="flex items-center justify-between flex-wrap gap-2">
-                  <span class="era-badge">ETHICS • திருக்குறள்</span>
-                  <span class="text-xs font-sans font-bold text-[#4A151B] bg-amber-100/90 border border-amber-300 px-2.5 py-0.5 rounded-full">
-                    HERITAGE PILLAR #04
-                  </span>
-                </div>
-                <h3 class="text-2xl md:text-3xl font-serif font-bold text-[#4A151B]">
-                  திருக்குறள் — World's Universal Ethics
-                </h3>
-                <div class="bg-[#FAF3E7] border-l-4 border-[#C8963E] p-3 rounded-r-lg font-serif italic text-sm text-[#4A151B]">
-                  “எப்பொருள் யார்யார்வாய்க் கேட்பினும் அப்பொருள் மெய்ப்பொருள் காண்ப தறிவு”
-                  <span class="block text-[10px] font-sans text-stone-500 not-italic mt-0.5">— திருக்குறள், குறள் 355</span>
-                </div>
-                <p class="text-stone-700 text-sm md:text-base font-serif leading-relaxed">
-                  Thiruvalluvar's 1,330 couplets treat virtue, wealth, and love without religious or sectarian bias. Translated into over 80 world languages, Thirukkural stands alongside the Bible and Quran as one of the most translated literary works in human history.
-                </p>
-                <div class="flex flex-wrap gap-2 pt-1">
-                  <span class="bg-amber-50 text-amber-900 text-xs px-2.5 py-1 rounded border border-amber-200 font-serif font-semibold">133 Chapters</span>
-                  <span class="bg-amber-50 text-amber-900 text-xs px-2.5 py-1 rounded border border-amber-200 font-serif font-semibold">Universal Secular Ethics</span>
-                  <span class="bg-amber-50 text-amber-900 text-xs px-2.5 py-1 rounded border border-amber-200 font-serif font-semibold">80+ World Translations</span>
-                </div>
-              </div>
+              <h3 class="text-xl md:text-2xl font-serif font-bold text-[#4A151B] mb-2 group-hover:text-[#7A1F2A] transition-colors leading-snug">
+                Keeladi Urban Civilization
+              </h3>
+              <p class="text-stone-700 text-sm md:text-base font-serif leading-relaxed mb-6 flex-1 line-clamp-4">
+                Excavations along the Vaigai riverbed at Keeladi prove a literate, secular, urban Sangam-era civilization carbon-dated to 600 BCE with advanced architecture and trade.
+              </p>
+              <button onclick="event.stopPropagation(); openSpecialityReader(2)" class="inline-flex items-center gap-1.5 text-xs font-sans font-bold uppercase tracking-wider text-[#4A151B] hover:text-[#7A1F2A] transition-colors pt-4 border-t border-[#EBE1D3]/80 group/link mt-auto">
+                <span>Read More</span>
+                <span class="group-hover/link:translate-x-1 transition-transform">→</span>
+              </button>
             </div>
 
-            <!-- BOX CARD 5: Stone Inscriptions & Epigraphy -->
-            <div class="vintage-card flex flex-col md:flex-row gap-6 items-center reveal-hidden-scale" data-reveal-delay="5">
-              <div class="w-full md:w-64 lg:w-80 h-56 rounded-xl overflow-hidden border-2 border-[#D4AF37]/50 shadow-md relative group flex-shrink-0">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Pulimankombai_inscription.jpg/640px-Pulimankombai_inscription.jpg"
-                  alt="Ancient Tamil Stone Inscription"
-                  class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
-                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Tamil_inscription_on_stone.jpg/640px-Tamil_inscription_on_stone.jpg'; this.onerror=null;"
-                  loading="lazy">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end justify-between p-3.5">
-                  <span class="text-[10px] font-sans font-extrabold uppercase tracking-wider text-[#D4AF37] bg-black/60 backdrop-blur-md px-2.5 py-1 rounded border border-[#D4AF37]/40">
-                    50,000+ INSCRIPTIONS
-                  </span>
-                  <span class="text-xl">🏛️</span>
+            <!-- CARD 5: Thirukkural Universal Ethics -->
+            <div class="bg-[#FFFDF9] rounded-2xl p-6 border border-[#EBE1D3] shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group reveal-hidden-scale" onclick="openSpecialityReader(3)">
+              <div class="w-full h-56 md:h-64 rounded-xl overflow-hidden shadow-sm relative group mb-5 border border-[#EBE1D3] bg-stone-100 flex-shrink-0">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Thiruvalluvar_statue_Kanyakumari.jpg/640px-Thiruvalluvar_statue_Kanyakumari.jpg" alt="Thirukkural Universal Ethics" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Thiruvalluvar.jpg/640px-Thiruvalluvar.jpg'; this.onerror=null;">
+                <div class="absolute top-3 left-3 bg-[#0A0506]/80 backdrop-blur-md border border-[#D4AF37]/50 text-[#D4AF37] px-3 py-1 rounded-full text-[10px] font-sans font-bold uppercase tracking-wider shadow-sm">
+                  1,330 COUPLETS
                 </div>
               </div>
-              <div class="flex-1 space-y-3">
-                <div class="flex items-center justify-between flex-wrap gap-2">
-                  <span class="era-badge">EPIGRAPHY • கல்வெட்டுகள்</span>
-                  <span class="text-xs font-sans font-bold text-[#4A151B] bg-amber-100/90 border border-amber-300 px-2.5 py-0.5 rounded-full">
-                    HERITAGE PILLAR #05
-                  </span>
-                </div>
-                <h3 class="text-2xl md:text-3xl font-serif font-bold text-[#4A151B]">
-                  கல்வெட்டுகள் — Global Tamil Inscriptions
-                </h3>
-                <div class="bg-[#FAF3E7] border-l-4 border-[#C8963E] p-3 rounded-r-lg font-serif italic text-sm text-[#4A151B]">
-                  “இந்தியாவில் கண்டெடுக்கப்பட்ட கல்வெட்டுகளில் 55% மேலானவை தமிழ்க் கல்வெட்டுகளே!”
-                  <span class="block text-[10px] font-sans text-stone-500 not-italic mt-0.5">— இந்திய தொல்லியல் துறை சான்று</span>
-                </div>
-                <p class="text-stone-700 text-sm md:text-base font-serif leading-relaxed">
-                  Over 55% of all stone inscriptions discovered by the Archaeological Survey of India (ASI) are written in Tamil. Tamil Brahmi and Vatteluttu inscriptions found across Sri Lanka, Thailand, Egypt, and Rome document ancient Tamil sea trade routes spanning the Indian Ocean.
-                </p>
-                <div class="flex flex-wrap gap-2 pt-1">
-                  <span class="bg-amber-50 text-amber-900 text-xs px-2.5 py-1 rounded border border-amber-200 font-serif font-semibold">55%+ of ASI Inscriptions</span>
-                  <span class="bg-amber-50 text-amber-900 text-xs px-2.5 py-1 rounded border border-amber-200 font-serif font-semibold">Maritime Silk Route</span>
-                  <span class="bg-amber-50 text-amber-900 text-xs px-2.5 py-1 rounded border border-amber-200 font-serif font-semibold">Global Epigraphy</span>
-                </div>
-              </div>
+              <h3 class="text-xl md:text-2xl font-serif font-bold text-[#4A151B] mb-2 group-hover:text-[#7A1F2A] transition-colors leading-snug">
+                Universal Ethics (Thirukkural)
+              </h3>
+              <p class="text-stone-700 text-sm md:text-base font-serif leading-relaxed mb-6 flex-1 line-clamp-4">
+                Thiruvalluvar's 1,330 couplets offer non-sectarian philosophy on virtue, governance, leadership, and love translated into over 40 world languages.
+              </p>
+              <button onclick="event.stopPropagation(); openSpecialityReader(3)" class="inline-flex items-center gap-1.5 text-xs font-sans font-bold uppercase tracking-wider text-[#4A151B] hover:text-[#7A1F2A] transition-colors pt-4 border-t border-[#EBE1D3]/80 group/link mt-auto">
+                <span>Read More</span>
+                <span class="group-hover/link:translate-x-1 transition-transform">→</span>
+              </button>
             </div>
 
-            <!-- BOX CARD 6: Thinai Landscape Poetry -->
-            <div class="vintage-card flex flex-col md:flex-row-reverse gap-6 items-center reveal-hidden-scale" data-reveal-delay="6">
-              <div class="w-full md:w-64 lg:w-80 h-56 rounded-xl overflow-hidden border-2 border-[#D4AF37]/50 shadow-md relative group flex-shrink-0">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Sangam_era_Tamil_manuscript.jpg/640px-Sangam_era_Tamil_manuscript.jpg"
-                  alt="Sangam Era Tamil Manuscript"
-                  class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
-                  onerror="this.src='https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=640&q=80'; this.onerror=null;"
-                  loading="lazy">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end justify-between p-3.5">
-                  <span class="text-[10px] font-sans font-extrabold uppercase tracking-wider text-[#D4AF37] bg-black/60 backdrop-blur-md px-2.5 py-1 rounded border border-[#D4AF37]/40">
-                    2,000 YEARS OLD
-                  </span>
-                  <span class="text-xl">📜</span>
+            <!-- CARD 6: Unique Phoneme 'ழ' -->
+            <div class="bg-[#FFFDF9] rounded-2xl p-6 border border-[#EBE1D3] shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group reveal-hidden-scale" onclick="openSpecialityReader(1)">
+              <div class="w-full h-56 md:h-64 rounded-xl overflow-hidden shadow-sm relative group mb-5 border border-[#EBE1D3] bg-stone-100 flex-shrink-0">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Tamil-Brahmi_inscription_at_Pugalur.jpg/640px-Tamil-Brahmi_inscription_at_Pugalur.jpg" alt="Unique Phoneme Zha" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Tamil_Brahmi.jpg/640px-Tamil_Brahmi.jpg'; this.onerror=null;">
+                <div class="absolute top-3 left-3 bg-[#0A0506]/80 backdrop-blur-md border border-[#D4AF37]/50 text-[#D4AF37] px-3 py-1 rounded-full text-[10px] font-sans font-bold uppercase tracking-wider shadow-sm">
+                  UNIQUE ழ (ZHA) SOUND
                 </div>
               </div>
-              <div class="flex-1 space-y-3">
-                <div class="flex items-center justify-between flex-wrap gap-2">
-                  <span class="era-badge">POETICS • திணை இலக்கியம்</span>
-                  <span class="text-xs font-sans font-bold text-[#4A151B] bg-amber-100/90 border border-amber-300 px-2.5 py-0.5 rounded-full">
-                    HERITAGE PILLAR #06
-                  </span>
-                </div>
-                <h3 class="text-2xl md:text-3xl font-serif font-bold text-[#4A151B]">
-                  திணை இலக்கியம் — Thinai Eco-Poetic Landscape System
-                </h3>
-                <div class="bg-[#FAF3E7] border-l-4 border-[#C8963E] p-3 rounded-r-lg font-serif italic text-sm text-[#4A151B]">
-                  “குறிஞ்சி, முல்லை, மருதம், நெய்தல், பாலை எனும் ஐந்திணை இயற்கை வாழ்வியல்”
-                  <span class="block text-[10px] font-sans text-stone-500 not-italic mt-0.5">— தொல்காப்பியம் அகம் & புறம்</span>
-                </div>
-                <p class="text-stone-700 text-sm md:text-base font-serif leading-relaxed">
-                  Ancient Sangam poets developed Thinai — a unique 5-fold ecological poetry system mapping human emotions to specific natural landscapes (Mountain, Forest, Agricultural Plains, Seacoast, Arid Wasteland). An eco-literary innovation unmatched in world literature.
-                </p>
-                <div class="flex flex-wrap gap-2 pt-1">
-                  <span class="bg-amber-50 text-amber-900 text-xs px-2.5 py-1 rounded border border-amber-200 font-serif font-semibold">5 Eco-Landscapes</span>
-                  <span class="bg-amber-50 text-amber-900 text-xs px-2.5 py-1 rounded border border-amber-200 font-serif font-semibold">Akam & Puram</span>
-                  <span class="bg-amber-50 text-amber-900 text-xs px-2.5 py-1 rounded border border-amber-200 font-serif font-semibold">Environmental Poetics</span>
-                </div>
-              </div>
+              <h3 class="text-xl md:text-2xl font-serif font-bold text-[#4A151B] mb-2 group-hover:text-[#7A1F2A] transition-colors leading-snug">
+                The Unique Sound 'ழ' (Zha)
+              </h3>
+              <p class="text-stone-700 text-sm md:text-base font-serif leading-relaxed mb-6 flex-1 line-clamp-4">
+                The retroflex approximant 'ழ' is a signature phoneme found exclusively in Tamil, articulated by curling the tongue to give Tamil its melodic sweetness.
+              </p>
+              <button onclick="event.stopPropagation(); openSpecialityReader(1)" class="inline-flex items-center gap-1.5 text-xs font-sans font-bold uppercase tracking-wider text-[#4A151B] hover:text-[#7A1F2A] transition-colors pt-4 border-t border-[#EBE1D3]/80 group/link mt-auto">
+                <span>Read More</span>
+                <span class="group-hover/link:translate-x-1 transition-transform">→</span>
+              </button>
             </div>
 
-            <!-- BOX CARD 7: First Printed Book -->
-            <div class="vintage-card flex flex-col md:flex-row gap-6 items-center reveal-hidden-scale" data-reveal-delay="7">
-              <div class="w-full md:w-64 lg:w-80 h-56 rounded-xl overflow-hidden border-2 border-[#D4AF37]/50 shadow-md relative group flex-shrink-0">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Thambiraan_Vanakkam_1578.jpg/640px-Thambiraan_Vanakkam_1578.jpg"
-                  alt="First Tamil Printed Book 1578"
-                  class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
-                  onerror="this.src='https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=640&q=80'; this.onerror=null;"
-                  loading="lazy">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end justify-between p-3.5">
-                  <span class="text-[10px] font-sans font-extrabold uppercase tracking-wider text-[#D4AF37] bg-black/60 backdrop-blur-md px-2.5 py-1 rounded border border-[#D4AF37]/40">
-                    PRINT SINCE 1578 CE
-                  </span>
-                  <span class="text-xl">🖨️</span>
-                </div>
-              </div>
-              <div class="flex-1 space-y-3">
-                <div class="flex items-center justify-between flex-wrap gap-2">
-                  <span class="era-badge">PRINT HERITAGE • அச்சுக் கலை</span>
-                  <span class="text-xs font-sans font-bold text-[#4A151B] bg-amber-100/90 border border-amber-300 px-2.5 py-0.5 rounded-full">
-                    HERITAGE PILLAR #07
-                  </span>
-                </div>
-                <h3 class="text-2xl md:text-3xl font-serif font-bold text-[#4A151B]">
-                  அச்சுக் கலை — India's First Printed Book
-                </h3>
-                <div class="bg-[#FAF3E7] border-l-4 border-[#C8963E] p-3 rounded-r-lg font-serif italic text-sm text-[#4A151B]">
-                  “இந்திய மொழிகளிலேயே முதன்முதலில் அச்சுக்குச் சென்ற பெருமை தமிழ் மொழிக்கே!”
-                  <span class="block text-[10px] font-sans text-stone-500 not-italic mt-0.5">— தம்பிரான் வணக்கம், 1578</span>
-                </div>
-                <p class="text-stone-700 text-sm md:text-base font-serif leading-relaxed">
-                  In 1578 CE, "Thambiraan Vanakkam" was printed in Kollam, Kerala — making Tamil the first non-European language to be typeset and printed in movable type. Bartholomew Ziegenbalg later established the famous Tranquebar printing press in 1706 CE.
-                </p>
-                <div class="flex flex-wrap gap-2 pt-1">
-                  <span class="bg-amber-50 text-amber-900 text-xs px-2.5 py-1 rounded border border-amber-200 font-serif font-semibold">First Indian Print Language</span>
-                  <span class="bg-amber-50 text-amber-900 text-xs px-2.5 py-1 rounded border border-amber-200 font-serif font-semibold">1578 Kollam Press</span>
-                  <span class="bg-amber-50 text-amber-900 text-xs px-2.5 py-1 rounded border border-amber-200 font-serif font-semibold">Tranquebar Typeset</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- BOX CARD 8: Tamil in the Digital Age -->
-            <div class="vintage-card flex flex-col md:flex-row-reverse gap-6 items-center reveal-hidden-scale" data-reveal-delay="8">
-              <div class="w-full md:w-64 lg:w-80 h-56 rounded-xl overflow-hidden border-2 border-[#D4AF37]/50 shadow-md relative group flex-shrink-0">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Tamil99_keyboard_layout.svg/640px-Tamil99_keyboard_layout.svg.png"
-                  alt="Tamil99 Keyboard Layout"
-                  class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
-                  onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=640&q=80'; this.onerror=null;"
-                  loading="lazy">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end justify-between p-3.5">
-                  <span class="text-[10px] font-sans font-extrabold uppercase tracking-wider text-[#D4AF37] bg-black/60 backdrop-blur-md px-2.5 py-1 rounded border border-[#D4AF37]/40">
-                    ISO 639-1 · UNICODE & AI
-                  </span>
-                  <span class="text-xl">💻</span>
-                </div>
-              </div>
-              <div class="flex-1 space-y-3">
-                <div class="flex items-center justify-between flex-wrap gap-2">
+          </div>v class="flex items-center justify-between flex-wrap gap-2">
                   <span class="era-badge">DIGITAL AGE • டிஜிட்டல் தமிழ்</span>
                   <span class="text-xs font-sans font-bold text-[#4A151B] bg-amber-100/90 border border-amber-300 px-2.5 py-0.5 rounded-full">
                     HERITAGE PILLAR #08

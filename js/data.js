@@ -73,20 +73,19 @@ const APP_TEXTS = {
     readContext: "வரலாற்றுப் பின்னணி",
     askAI: "AI விளக்கம் கேட்க",
     translationLabel: "மொழிபெயர்ப்பு",
-    wordExplanationTitle: "சொற்பொருள் விளக்கம்",
     literaryBackgroundTitle: "இலக்கியப் பின்னணி",
     manuscriptRefTitle: "சுவடி ஆதாரங்கள்",
     aiScholarName: "அகத்தியன் AI",
     aiScholarSubtitle: "தமிழ் பேரறிஞர் இணையச் சேவை",
     aiWelcome: "வணக்கம். நான் தமிழ் இலக்கிய மற்றும் வரலாற்றுத் துறையில் தேர்ச்சி பெற்ற அகத்தியன் AI. எட்டுத்தொகை, தொல்காப்பியம், அல்லது திருக்குறள் பற்றி ஏதேனும் வினாக்கள் உள்ளதா? உங்களின் ஆய்வுக்கு எப்படி உதவட்டும்?",
-    footerQuote: "© தமிழி பாரம்பரிய மையம். ஒரு மொழி. ஆயிரம் கதைகள்.",
+    footerQuote: "© தமிழிபாரம்பரிய மையம். ஒரு மொழி. ஆயிரம் கதைகள்.",
     archiveSources: "ஆவண மூலங்கள்",
     methodology: "ஆய்வு முறைமை",
     eraDiscovery: "காலக் கண்டுபிடிப்பு",
     literatureMap: "இலக்கிய வரைபடம்",
     privacy: "தனியுரிமை",
     specialitiesTitle: "தமிழ் மொழியின் தனிச்சிறப்புகள்",
-    specialitiesSubtitle: "உலகின் மிகத் தொன்மையான செம்மொழியான தமிழின் ஒலிநயம், இலக்கணச் செறிவு, உலகப் பொதுமறை மற்றும் கடல் கடந்த வரலாற்றுப் பெருமை.",
+    specialitiesSubtitle: "உலகின் மிகத் தொன்மையான செம்மொழியான தமிழின் ஒலிநயம், இலக்கணச் செறிவு, உலகப் பொதுமறை மற்றும் கடல்கடந்த வரலாற்றுப் பெருமை.",
     filterAllSpecialities: "அனைத்துப் பெருமைகள்",
     filterOrigins: "தொன்மையும் கீழடியும்",
     filterPhonetics: "ஒலிநயமும் 'ழ'கரமும்",
@@ -102,73 +101,146 @@ const APP_TEXTS = {
 // Specialities of the Tamil Language Database (8 Pillars of Tamil Heritage)
 const TAMIL_SPECIALITIES = [
   {
+    id: "epigraphy-inscriptions",
+    category: "epigraphy",
+    icon: "🏛️",
+    badge: "55%+ ASI INSCRIPTIONS",
+    image: "assets/ancient_inscriptions.jpg",
+    titleEn: "Ancient Inscriptions",
+    titleTa: "பண்டைக் கல்வெட்டுகள் & சாசனங்கள்",
+    quoteTa: "“இந்தியாவில் கண்டெடுக்கப்பட்ட கல்வெட்டுகளில் 55% மேலானவை தமிழ்க் கல்வெட்டுகளே!”",
+    quoteEn: "“Over 55% of all epigraphical inscriptions discovered across India are in Tamil.”",
+    descEn: "Explore the epigraphic evidence carved in stone across millennia, revealing the foundational roots and evolving script of the Tamil language in historical contexts.",
+    descTa: "ஆயிரக்கணக்கான ஆண்டுகளாகக் கற்பாறைகளிலும் செப்பேடுகளிலும் செதுக்கப்பட்ட தமிழ்க் கல்வெட்டுகள், எழுத்து வளர்ச்சி மற்றும் வரலாற்றுச் சான்றுகளை வெளிப்படுத்துகின்றன.",
+    detailedArticleEn: "Tamil possesses the richest epigraphical record of any South Asian language. Out of approximately 100,000 stone and copper inscriptions recorded by the Archaeological Survey of India (ASI), over 55,000 to 60,000 are in Tamil. These record detailed democratic village elections (such as the Uttaramerur Inscription of 920 CE describing the Kudavolai ballot system), temple architecture, land deeds, and taxation.",
+    detailedArticleTa: "இந்தியத் தொல்லியல் துறையினால் ஆவணப்படுத்தப்பட்ட கல்வெட்டுகளில் 55 ஆயிரத்திற்கும் மேற்பட்டவை தமிழ்க் கல்வெட்டுகளாகும். கி.பி. 920-ஆம் ஆண்டின் உத்திரமேரூர் கல்வெட்டு 'குடவோலை முறை' என்னும் மக்களாட்சித் தேர்தல் முறையை உலகிற்குப் பறைசாற்றுகிறது.",
+    keyPointsEn: [
+      "Over 55% of all ASI-documented inscriptions across India are in Tamil.",
+      "The Uttaramerur Inscription (920 CE) outlines democratic local body voting & recall mechanisms.",
+      "Maritime trade records discovered at the Red Sea port of Berenike, Egypt.",
+      "Tamil merchant guild inscriptions (*Nanadesi*, *Ayyavole 500*) found across Southeast Asia."
+    ],
+    keyPointsTa: [
+      "இந்தியக் கல்வெட்டுகளில் 55%-க்கும் மேல் தமிழிலேயே உள்ளன.",
+      "உத்திரமேரூர் கல்வெட்டு மூலம் வெளிப்படும் குடவோலை மக்களாட்சித் தேர்தல் முறை.",
+      "செங்கடல் எகிப்து துறைமுகம் வரை கண்டறியப்பட்ட சங்ககாலத் தமிழ் எழுத்துப் பானைகள்."
+    ],
+    interactiveType: "timeline",
+    historicalSources: ["Epigraphia Indica", "ASI Epigraphy Branch"]
+  },
+  {
+    id: "classical-manuscripts",
+    category: "origins",
+    icon: "📜",
+    badge: "OLAICHUVADI HERITAGE",
+    image: "assets/classical_manuscripts.jpg",
+    titleEn: "Classical Manuscripts",
+    titleTa: "செவ்வியல் ஓலைச்சுவடிகள்",
+    quoteTa: "“எழுத்தாணியால் பனைஓலையில் பொறிக்கப்பட்ட தமிழ்ச் செவ்வியல் பொக்கிஷங்கள்”",
+    quoteEn: "“Classical Tamil treasures incised with metal styluses on palm leaves.”",
+    descEn: "Delve into the fragile beauty of Olaichuvadi (palm-leaf manuscripts), the traditional medium that preserved profound literary works, medicine, and scientific wisdom.",
+    descTa: "தமிழ் இலக்கியங்கள், மருத்துவம் மற்றும் அறிவியல் அறிவை தலைமுறைகள் கடந்து பாதுகாத்துத் தந்த பாரம்பரிய ஓலைச்சுவடி மரபு.",
+    detailedArticleEn: "Olaichuvadi (dried palmyra palm leaves) served as the primary canvas for Tamil knowledge preservation for over two millennia. Scribes used metal styluses (Ezhuthani) to incise characters, rub lampblack and leaf oils to highlight text, and bind the bundled leaves with wooden covers and cords. Scholars like U. V. Swaminatha Iyer spent lifetimes recovering thousands of lost Sangam palm-leaf manuscripts from rural homes across Tamil Nadu.",
+    detailedArticleTa: "பனையோலைகளைப் பதப்படுத்தி, எழுத்தாணியால் எழுத்துகளைப் பொறித்து விளக்கெண்ணெய் மற்றும் மூலிகைச் சாறுகளால் மைக்குத்திப் பாதுகாக்கப்பட்ட ஓலைச்சுவடிகள் தமிழரின் அறிவுப் பெட்டகமாகும். உ.வே. சாமிநாதையர் போன்ற தமிழறிஞர்கள் ஊர் ஊராகச் சென்று பழந்தமிழ்ச் சுவடிகளை மீட்டெடுத்து அச்சு வடிவில் வழங்கினர்.",
+    keyPointsEn: [
+      "Preserved Sangam canons, Tolkappiyam, Siddha medicine, and astronomy for centuries.",
+      "Written with precision using iron Ezhuthani styluses on dried Palmyra leaves.",
+      "Historic recovery of thousands of lost manuscripts by U.V. Swaminatha Iyer.",
+      "Preserved today at the Government Oriental Manuscripts Library & Tanjore Saraswathi Mahal."
+    ],
+    keyPointsTa: [
+      "சங்க இலக்கியங்கள், சித்த மருத்துவம் மற்றும் வானியல் அறிவைப் பாதுகாத்த ஊடகம்.",
+      "இரும்பெழுத்தாணியால் பனையோலையில் பொறிக்கப்பட்ட நுட்பமான எழுத்து மரபு.",
+      "உ.வே.சா அவர்களின் ஓலைச்சுவடி மீட்புப் பணி மூலம் அச்சிடப்பட்ட பழந்தமிழ் நூல்கள்."
+    ],
+    interactiveType: "timeline",
+    historicalSources: ["Government Oriental Manuscripts Library (GOML)", "U.V. Swaminatha Iyer Library"]
+  },
+  {
+    id: "cultural-personification",
+    category: "modern",
+    icon: "👑",
+    badge: "TAMIL THAI REVERENCE",
+    image: "assets/cultural_personification.jpg",
+    titleEn: "Cultural Personification",
+    titleTa: "தமிழ்த்தாய் பண்பாட்டு வடிவம்",
+    quoteTa: "“நீராரும் கடலுடுத்த நிலமடந்தைக் கெழிலொழுகும்... தமிழணங்கே!” — மனோன்மணீயம் சுந்தரனார்",
+    quoteEn: "“Praise be to Tamil Thai, the divine mother who embodies the language itself.”",
+    descEn: "Discover the reverence of Tamil Thai, the deified mother figure representing the language itself, symbolizing its eternal grace, classical purity, and enduring spirit.",
+    descTa: "தமிழ் மொழியையே தெய்வத் தாயாக உருவகித்துப் போற்றும் தமிழ்த்தாய் மரபு, மொழியின் தூய்மையையும் காலத்தைக் கடந்த பண்பாட்டு ஆற்றலையும் குறிக்கிறது.",
+    detailedArticleEn: "Tamil is one of the very few languages in the world that is personified and revered as a mother goddess—Tamil Thai. Celebrated in the official state anthem 'Tamil Thai Vazhthu' composed by Manonmaniam Sundaram Pillai, she represents the eternal youthfulness (Kanni Tamizh), euphonic sweetness (Senthamizh), and sovereign dignity of the Tamil people across continents.",
+    detailedArticleTa: "உலகில் தமிழ் மொழி மட்டுமே அன்னை வடிவமாக உருவகிக்கப்பட்டு 'தமிழ்த்தாய்' எனப் போற்றப்படுகிறது. மனோன்மணீயம் சுந்தரனார் இயற்றிய 'தமிழ்த்தாய் வாழ்த்து' மூலம் மாநில வாழ்த்துப் பாடலாக ஒலிக்கும் தமிழ்த்தாய், தமிழ் மொழியின் என்றும் இளமை மாறாத் தன்மையையும் கன்னித் தமிழின் செழுமையையும் குறிக்கிறது.",
+    keyPointsEn: [
+      "Unique global tradition of deifying the language as a mother figure (Tamil Thai).",
+      "Immortalized in the official state anthem 'Tamil Thai Vazhthu'.",
+      "Symbolizes classical purity (Senthamizh), literary grace, and unbroken heritage.",
+      "Celebrated across international Tamil diaspora from Singapore to Canada."
+    ],
+    keyPointsTa: [
+      "மொழியையே தாயாக உருவகித்துப் போற்றும் உலகின் அரிய பண்பாட்டு மரபு.",
+      "மாநில அரசு வாழ்த்துப் பாடலான 'தமிழ்த்தாய் வாழ்த்து' பாடல்.",
+      "கன்னித் தமிழின் செழுமையையும் செம்மொழித் தூய்மையையும் பறைசாற்றும் வடிவம்."
+    ],
+    interactiveType: "facts",
+    historicalSources: ["Manonmaniam Sundaram Pillai", "Tamil Nadu State Heritage Archives"]
+  },
+  {
     id: "antiquity",
     category: "origins",
     icon: "👑",
     badge: "5,000+ YEARS CONTINUITY",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Keeladi_museum_item.jpg/640px-Keeladi_museum_item.jpg",
     titleEn: "Unbroken Classical Antiquity",
     titleTa: "உலகின் மூத்த செம்மொழி & தொன்மை",
     quoteTa: "“கல் தோன்றி மண் தோன்றாக் காலத்தே வாளோடு முன் தோன்றிய மூத்த குடி”",
     quoteEn: "“The ancient people who emerged with valor even before stone and earth were formed.”",
     descEn: "One of the longest-surviving classical languages in human history, with an unbroken literary and spoken tradition for millennia. Designated as India's first Classical Language in 2004.",
     descTa: "ஆயிரக்கணக்கான ஆண்டுகளாகத் தொடர்ச்சியான எழுத்து மற்றும் பேச்சு மரபைக் கொண்டு இன்றும் இயங்கும் உலகின் முதன்மைச் செம்மொழி.",
-    detailedArticleEn: "Unlike ancient Greek, Latin, or Classical Hebrew—which evolved into modern derivatives or became confined to liturgical use—Tamil has maintained an unbroken chain of living speech and literature from the Sangam era (c. 6th century BCE) right to the digital age. A modern Tamil speaker can still understand ancient couplets from Thirukkural or Sangam poetry written two millennia ago.",
-    detailedArticleTa: "இலத்தீன், பண்டைக் கிரேக்கம் போன்ற மொழிகள் வழக்கொழிந்து போன நிலையிலும், தமிழ் மொழி 2,500-க்கும் மேற்பட்ட ஆண்டுகளாகத் தனது தனித்தன்மையையும் செழுமையையும் இழக்காமல் இன்றும் உலகெங்கும் கோடிக்கணக்கான மக்களின் நாவில் தவழும் உயிருள்ள செம்மொழியாகத் திகழ்கிறது. சங்ககாலப் பாடல்களை இக்காலத் தமிழரும் எளிதில் படித்துணரும் தொடர்ச்சி தமிழுக்கு மட்டுமே உண்டு.",
+    detailedArticleEn: "Unlike ancient Greek, Latin, or Classical Hebrew—which evolved into modern derivatives or became confined to liturgical use—Tamil has maintained an unbroken chain of living speech and literature from the Sangam era (c. 6th century BCE) right to the digital age.",
+    detailedArticleTa: "இலத்தீன், பண்டைக் கிரேக்கம் போன்ற மொழிகள் வழக்கொழிந்து போன நிலையிலும், தமிழ் மொழி 2,500-க்கும் மேற்பட்ட ஆண்டுகளாகத் தனது தனித்தன்மையையும் செழுமையையும் இழக்காமல் இன்றும் உலகெங்கும் கோடிக்கணக்கான மக்களின் நாவில் தவழும் உயிருள்ள செம்மொழியாகத் திகழ்கிறது.",
     keyPointsEn: [
       "Officially declared India's 1st Classical Language (2004) meeting strict antiquity criteria.",
       "Documented unbroken literary lineage from 6th century BCE to modern times.",
-      "Spoken natively by over 85+ million people worldwide across 60+ countries.",
-      "One of the few languages capable of generating new technical vocabulary from native roots without borrowing."
+      "Spoken natively by over 85+ million people worldwide across 60+ countries."
     ],
     keyPointsTa: [
       "2004-இல் இந்தியாவின் முதல் செம்மொழியாக அதிகாரப்பூர்வ அங்கீகாரம் பெற்றது.",
-      "கி.மு. 6-ஆம் நூற்றாண்டு முதல் தற்காலம் வரை தொடர்ச்சியான இலக்கியப் பாரம்பரியம்.",
-      "உலகெங்கும் 8.5 கோடிக்கும் மேற்பட்ட மக்களால் பேசப்படும் பெருமை.",
-      "பிறமொழிச் சொற்களின்றி அனைத்து அறிவியல் கலைச்சொற்களையும் சுயமாக உருவாக்கும் வேர்ச்சொல் வளம்."
+      "கி.மு. 6-ஆம் நூற்றாண்டு முதல் தற்காலம் வரை தொடர்ச்சியான இலக்கியப் பாரம்பரியம்."
     ],
     interactiveType: "timeline",
-    historicalSources: ["UNESCO Courier", "Archaeological Survey of India", "Central Institute of Classical Tamil"]
+    historicalSources: ["UNESCO Courier", "Archaeological Survey of India"]
   },
   {
     id: "zha-phonetics",
     category: "phonetics",
     icon: "🔤",
     badge: "UNIQUE ழ (ZHA) LETTER",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Tamil-Brahmi_inscription_at_Pugalur.jpg/640px-Tamil-Brahmi_inscription_at_Pugalur.jpg",
     titleEn: "Phonetic Melody & The Unique 'ழ' (Zha)",
     titleTa: "ழகரச் சிறப்பு & அறிவியல் ஒலிநயம்",
     quoteTa: "“தமிழ் என்பதை உச்சரிக்கும் போதே நாவில் அமிழ்தூறும்”",
     quoteEn: "“The very pronunciation of the word 'Tamizh' drips sweet nectar on the tongue.”",
     descEn: "Celebrated for the unique voiced retroflex approximant letter 'ழ' (Zha). Tamil's 247 letters are scientifically classified by vocal articulation duration (Maathirai) and harmonic points.",
     descTa: "தமிழ் மொழிக்கே உரித்தான தனித்துவமான 'ழ' கர ஒலிப்பும், மாத்திரை அளவுடன் அமைந்த அறிவியல் பூர்வமான எழுத்தொலி அமைப்பும்.",
-    detailedArticleEn: "The letter 'ழ' (transliterated as 'zh') is a voiced retroflex approximant produced by curling the tip of the tongue back towards the hard palate without touching it. It is the signature sound of the Tamil tongue—present in the word 'தமிழ்' (Tamizh) itself, 'அமிழ்து' (Amizhdhu / Ambrosia), 'வாழ்க' (Vaazhga / Long Live), and 'மகிழ்வு' (Magizhvu / Pure Joy). Furthermore, Tamil phonology is mathematically precise, allocating exact micro-duration units called 'Maathirai' for every short (1), long (2), and consonant (0.5) sound.",
-    detailedArticleTa: "நாக்கின் நுனியை மேல்நோக்கி வளைத்து, அண்ணத்தைத் தொடாமல் காற்றுடன் எழுப்பப்படும் 'ழ' கர ஒலி உலக மொழிகள் பலவற்றில் காணக்கிடைக்காத தனிப்பெரும் ஒலிவடிவம் ஆகும். 'தமிழ்', 'அமிழ்து', 'மகிழ்ச்சி', 'வாழ்க' போன்ற அடிப்படையான சொற்களில் இவ்வெழுத்து உயிர்ப்புடன் விளங்குகிறது. மேலும், மாத்திரை என்னும் கால அளவால் குறில் (1), நெடில் (2), மெய் (0.5) என எழுத்துகளை வரையறுத்த அறிவியல் பூர்வமான கட்டமைப்பு தமிழுக்கு உண்டு.",
+    detailedArticleEn: "The letter 'ழ' (transliterated as 'zh') is a voiced retroflex approximant produced by curling the tip of the tongue back towards the hard palate without touching it. It is the signature sound of the Tamil tongue.",
+    detailedArticleTa: "நாக்கின் நுனியை மேல்நோக்கி வளைத்து, அண்ணத்தைத் தொடாமல் காற்றுடன் எழுப்பப்படும் 'ழ' கர ஒலி உலக மொழிகள் பலவற்றில் காணக்கிடைக்காத தனிப்பெரும் ஒலிவடிவம் ஆகும்.",
     keyPointsEn: [
       "Unique voiced retroflex approximant sound found almost exclusively in Tamil.",
-      "Scientific 'Maathirai' time-metric system governing precise metric duration of every syllable.",
-      "Vowel-consonant harmony of 247 letters (12 Uyir, 18 Mei, 216 Uyirmei, 1 Aayutham).",
-      "Pure phonetic consistency: written exactly as spoken with zero silent letters."
+      "Scientific 'Maathirai' time-metric system governing precise metric duration of every syllable."
     ],
     keyPointsTa: [
       "நாக்கின் தனித்த வளைவால் பிறக்கும் உலகளாவிய அரிய ஒலிநயம்.",
-      "ஒவ்வொரு ஒலிக்கும் கால அளவை வரையறுக்கும் 'மாத்திரை' அறிவியல் நெறி.",
-      "247 எழுத்துகளின் துல்லியமான வகைப்பாடு (12 உயிர், 18 மெய், 216 உயிர்மெய், 1 ஆயுதம்).",
-      "ஒலித்தவாறே எழுதப்படும் செறிவான எழுத்துக் கட்டமைப்பு."
+      "ஒவ்வொரு ஒலிக்கும் கால அளவை வரையறுக்கும் 'மாத்திரை' அறிவியல் நெறி."
     ],
     interactiveType: "audio",
-    audioWords: [
-      { word: "தமிழ்", trans: "Tamizh (The Language)", soundText: "தமிழ்" },
-      { word: "அமிழ்து", trans: "Amizhdhu (Divine Nectar)", soundText: "அமிழ்து" },
-      { word: "வாழ்க", trans: "Vaazhga (May you prosper)", soundText: "வாழ்க" },
-      { word: "மகிழ்வு", trans: "Magizhvu (Ecstatic Joy)", soundText: "மகிழ்வு" },
-      { word: "உழவு", trans: "Uzhavu (Noble Agriculture)", soundText: "உழவு" }
-    ],
-    historicalSources: ["Tolkappiyam - Pirappiyal", "Dr. Kamil Zvelebil - The Smile of Murugan"]
+    historicalSources: ["Tolkappiyam - Pirappiyal"]
   },
   {
     id: "keeladi-civilization",
     category: "origins",
     icon: "🏺",
     badge: "6TH CENTURY BCE ROOTS",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Keeladi_museum_item.jpg/640px-Keeladi_museum_item.jpg",
     titleEn: "Keeladi & Sangam Urban Civilization",
     titleTa: "கீழடி அகழாய்வும் சங்ககால நகர நாகரிகமும்",
     quoteTa: "“வைகை நதிக்கரையில் மலர்ந்த மாபெரும் எழுத்தறிவு நாகரிகம்”",
@@ -197,6 +269,7 @@ const TAMIL_SPECIALITIES = [
     category: "ethics",
     icon: "⚖️",
     badge: "1,330 UNIVERSAL COUPLETS",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Thiruvalluvar_statue_Kanyakumari.jpg/640px-Thiruvalluvar_statue_Kanyakumari.jpg",
     titleEn: "Secular Universality of Thirukkural",
     titleTa: "உலகப் பொதுமறை - திருக்குறள் வாழ்வியல் நெறி",
     quoteTa: "“யாதும் ஊரே யாவரும் கேளிர்; தீதும் நன்றும் பிறர்தர வாரா” — கணியன் பூங்குன்றனார்",
@@ -225,6 +298,7 @@ const TAMIL_SPECIALITIES = [
     category: "epigraphy",
     icon: "🏛️",
     badge: "60,000+ INSCRIPTIONS (55% OF INDIA)",
+    image: "assets/ancient_inscriptions.jpg",
     titleEn: "Global Epigraphy & Stone Inscriptions",
     titleTa: "கடல் கடந்த தமிழும் 60,000+ கல்வெட்டுகளும்",
     quoteTa: "“திரைகடலோடியும் திரவியம் தேடு” — ஔவையார்",
@@ -247,6 +321,93 @@ const TAMIL_SPECIALITIES = [
     ],
     interactiveType: "timeline",
     historicalSources: ["Epigraphia Indica", "Dr. Noboru Karashima - South Indian Inscriptions", "ASI Epigraphy Branch"]
+  },
+  {
+    id: "tolkappiyam-thinai",
+    category: "literature",
+    icon: "📜",
+    badge: "TOLKAPPIYAM THINAI SCIENCE",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Sangam_era_Tamil_manuscript.jpg/640px-Sangam_era_Tamil_manuscript.jpg",
+    titleEn: "Thinai Ecology & Poetic Anthropology",
+    titleTa: "திணை மரபும் தொல்காப்பிய இலக்கண அறிவியலும்",
+    quoteTa: "“அகம்புறம் என மனித வாழ்வை இயற்கையோடு பகுத்த சங்கச் செவ்வியல்”",
+    quoteEn: "“Classifying inner emotion and outer duty in harmony with planetary geography.”",
+    descEn: "Tolkappiyam systematized human life into Thinai—categorizing romantic inner emotions (Akam across 5 biomes: Kurinji, Mullai, Marutham, Neithal, Palai) and heroic public duties (Puram).",
+    descTa: "இயற்கையின் ஐந்து நிலப்பரப்புகளோடு (குறிஞ்சி, முல்லை, மருதம், நெய்தல், பாலை) மனித உணர்வுகளையும் வாழ்வியலையும் இணைத்த ஒப்பற்ற திணைக் கோட்பாடு.",
+    detailedArticleEn: "Tolkappiyam is not merely a linguistic grammar; it is an encyclopedia of poetic anthropology. It classifies all human experience into Akam (internal romantic landscape) and Puram (external civic, political, and heroic life). Akam is mapped to five distinct ecological biomes: Kurinji (Mountains / Union), Mullai (Forests / Patient Waiting), Marutham (Agricultural Plains / Lovers' Tiff), Neithal (Seacoast / Longing), and Palai (Arid Desert / Separation). Each biome encompasses its own unique flora, fauna, musical tunes (Yazh), and emotional states.",
+    detailedArticleTa: "தொல்காப்பியம் வெறும் மொழி இலக்கண நூல் மட்டுமல்லாது, மனித வாழ்வியலின் பண்பாட்டுக் களஞ்சியமாகும். வாழ்வை 'அகம்' (உள்ளத்து உணர்வுகள்) மற்றும் 'புறம்' (வீரம், அறம், கொடை) என இரு கூறுகளாகப் பகுத்தது. மேலும் நிலத்தை குறிஞ்சி (மலை), முல்லை (காடு), மருதம் (வயல்), நெய்தல் (கடல்), பாலை (மணல்) என ஐந்திணைகளாகப் பிரித்து, ஒவ்வொரு நிலத்திற்கும் உரிய மரம், மலர், விலங்கு, பறவை, பண் மற்றும் மக்களின் மனநிலையை அறிவியல் பூர்வமாக இணைத்தது.",
+    keyPointsEn: [
+      "Ecological mapping of human psychology to geographic landscapes (Thinai).",
+      "Exhaustive 3-part treatise: Ezhuthu (Orthography), Sol (Morphology), and Porul (Poetics & Life).",
+      "Earliest structured poetics in South Asia, pre-dating modern ecological criticism by millennia.",
+      "Intertwines botany, ornithology, musical scales (Pann), and seasonal cycles with human emotions."
+    ],
+    keyPointsTa: [
+      "மனித மன உணர்வுகளையும் நிலப்பரப்பின் சூழலியலையும் இணைத்த திணைக் கோட்பாடு.",
+      "எழுத்து, சொல், பொருள் என முப்பெரும் அதிகாரங்களைக் கொண்ட முழுமையான இலக்கணப் பொக்கிஷம்.",
+      "தற்காலச் சூழலியல் திறனாய்விற்கு முன்னோடியாக விளங்கும் சங்க மரபு.",
+      "தாவரவியல், பறவையியல் மற்றும் பண்ணிசை மரபுகளை உள்ளடக்கிய வாழ்வியல் பார்வை."
+    ],
+    interactiveType: "facts",
+    historicalSources: ["Tolkappiyam - Porulathikaram", "Prof. A.K. Ramanujan - The Interior Landscape"]
+  },
+  {
+    id: "first-printed-language",
+    category: "modern",
+    icon: "🖨️",
+    badge: "1ST PRINTED INDIAN SCRIPT (1578)",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Thambiraan_Vanakkam_1578.jpg/640px-Thambiraan_Vanakkam_1578.jpg",
+    titleEn: "Pioneer in Printing & Typography",
+    titleTa: "இந்தியாவில் முதல் அச்சு மொழியும் பதிப்பு வரலாறும்",
+    quoteTa: "“இந்திய மொழிகளிலேயே முதன்முதலில் அச்செறிய பெருமை தமிழுக்கே”",
+    quoteEn: "“The proud distinction of being the very first Indian language to be set in movable metal type.”",
+    descEn: "Tamil was the first Indian language to be printed in movable type. The prayer book 'Thambiran Vanakkam' was printed at Kollam, Kerala on October 20, 1578, using cast Tamil metallic fonts.",
+    descTa: "1578-ஆம் ஆண்டு அக்டோபர் 20-இல் 'தம்பிரான் வணக்கம்' நூல் மூலம் இந்திய மொழிகளிலேயே முதன்முதலில் அச்சு வடிவம் பெற்ற பெருமை தமிழையே சாரும்.",
+    detailedArticleEn: "Long before Hindi, Bengali, or Marathi entered the era of movable type printing, Tamil made global history on October 20, 1578, when Henrique Henriques printed 'Thambiran Vanakkam' (a Tamil translation of Doctrina Christiana) in Kollam using custom-cast Tamil metal types. Later in 1714, Bartholomäus Ziegenbalg established the famous Tranquebar (Tharangambadi) press, translating literature and casting modern Tamil fonts, propelling Tamil into a global publishing pioneer.",
+    detailedArticleTa: "1578-ஆம் ஆண்டு அக்டோபர் 20-ஆம் நாள், அண்டிரிக்கே அடிகளாரால் கொல்லத்தில் அச்சிடப்பட்ட 'தம்பிரான் வணக்கம்' நூலின் மூலம், இந்திய மொழிகளிலேயே முதன்முதலில் அச்செறிய மொழி என்ற வரலாற்றுச் சாதனை தமிழுக்குக் கிடைத்தது. அதனைத் தொடர்ந்து 1714-இல் தரங்கம்பாடியில் சீகன்பால்கு அமைத்த அச்சகம் மூலம் தமிழ் நூல்கள் பெருமளவில் பதிப்பிக்கப்பட்டு, உலக அரங்கில் தமிழ் அச்சுப் புரட்சியை ஏற்படுத்தியது.",
+    keyPointsEn: [
+      "First Indian language to be printed with movable metal type in 1578 CE.",
+      "Historic publication of 'Thambiran Vanakkam' containing 16 pages of Tamil typography.",
+      "Pioneering Tranquebar printing press established in 1714 producing high-volume Tamil editions.",
+      "Paved the way for modern palm-leaf manuscript preservation by U.Ve. Swaminatha Iyer."
+    ],
+    keyPointsTa: [
+      "1578-இல் அச்சு இயந்திரத்தில் ஏறிய முதல் இந்திய மொழி என்ற உலக சாதனை.",
+      "16 பக்கங்களில் வார்ப்பட எழுத்துக்களால் அச்சிடப்பட்ட 'தம்பிரான் வணக்கம்'.",
+      "1714-இல் தரங்கம்பாடியில் உருவான முன்னோடித் தமிழ் அச்சுக்கூடம்.",
+      "உ.வே. சாமிநாதையர் உள்ளிட்ட தமிழறிஞர்கள் ஓலைச்சுவடிகளை அச்சு நூல்களாக மீட்டெடுக்க வித்திட்ட வரலாறு."
+    ],
+    interactiveType: "timeline",
+    historicalSources: ["Harvard University Library Tamil Collection", "Tharangambadi Printing Museum Records"]
+  },
+  {
+    id: "global-digital-tamil",
+    category: "modern",
+    icon: "🌐",
+    badge: "GLOBAL STATUS & COMPUTING",
+    image: "assets/cultural_personification.jpg",
+    titleEn: "Global Sovereign Status & Cultural Heritage",
+    titleTa: "உலகளாவிய அரச அங்கீகாரமும் தமிழ்த்தாய் மரபும்",
+    quoteTa: "“சிங்கப்பூர், இலங்கையில் ஆட்சி மொழி; உலகெங்கும் ஒளிரும் தமிழ்த்தாய் பெருமை”",
+    quoteEn: "“An official language across sovereign nations; embodying eternal classical grace.”",
+    descEn: "Official language status in Singapore, Sri Lanka, and India. Featured on currencies of Singapore and Mauritius, symbolizing eternal classical grace and enduring cultural heritage.",
+    descTa: "சிங்கப்பூர், இலங்கை நாடுகளில் ஆட்சி மொழி அந்தஸ்தும், மொரிசியஸ் ரூபாய் நோட்டுகளில் தமிழும், உலகெங்கும் ஒளிரும் தமிழ்த்தாய் பண்பாட்டுப் பெருமை.",
+    detailedArticleEn: "Tamil is one of the rare regional languages of Asia to achieve sovereign official language status in multiple independent nations: India, Sri Lanka, and Singapore. It is recognized as a minority language in Malaysia, Mauritius, and South Africa, and appears on currency notes of Mauritius and Singapore.",
+    detailedArticleTa: "இந்தியா மட்டுமன்றி, இலங்கை, சிங்கப்பூர் ஆகிய இரு சுதந்திர நாடுகளிலும் தமிழ் ஆட்சி மொழியாக அங்கீகரிக்கப்பட்டுள்ளது. மலேசியா, மொரிசியஸ், தென்னாப்பிரிக்கா போன்ற நாடுகளில் முக்கிய மொழியாக விளங்குவதோடு, மொரிசியஸ் நாட்டின் பணத்தாளிலும் தமிழ் எழுத்துக்கள் பொறிக்கப்பட்டுள்ளன.",
+    keyPointsEn: [
+      "Sovereign Official Language in 3 countries: India, Sri Lanka, and Singapore.",
+      "Printed on currency banknotes of Singapore and Mauritius.",
+      "Robust Unicode infrastructure with extensive natural language processing support.",
+      "Vibrant global diaspora of over 85 million people celebrating World Tamil Heritage."
+    ],
+    keyPointsTa: [
+      "இந்தியா, இலங்கை, சிங்கப்பூர் ஆகிய 3 நாடுகளில் இறையாண்மை மிக்க ஆட்சி மொழி அந்தஸ்து.",
+      "மொரிசியஸ் மற்றும் சிங்கப்பூர் நாட்டின் ரூபாய் நோட்டுகளில் இடம்பெற்றுள்ள தமிழ்.",
+      "முழுமையான தமிழ் ஒருங்குறி (Unicode) மற்றும் கணித்தமிழ்க் கட்டமைப்பு.",
+      "உலகெங்கும் வாழும் 8.5 கோடி தமிழ் மக்களால் போற்றப்படும் பண்பாட்டுப் பாரம்பரியம்."
+    ],
+    interactiveType: "facts",
+    historicalSources: ["Constitution of Singapore", "Constitution of Sri Lanka", "Unicode Consortium Standard"]
   },
   {
     id: "tolkappiyam-thinai",

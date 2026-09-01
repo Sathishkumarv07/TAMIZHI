@@ -1,4 +1,4 @@
-﻿// Application Controller for Tamil Heritage Hub (Tamizhi)
+// Application Controller for Tamil Heritage Hub (Tamizhi)
 
 let currentLang = 'en';
 let currentView = 'explore';
@@ -304,23 +304,6 @@ function showView(viewId) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function toggleHeroAudio() {
-  const videoEl = document.getElementById('hero-bg-video');
-  const btn = document.getElementById('btn-hero-audio');
-  if (!videoEl || !btn) return;
-
-  isHeroMuted = !isHeroMuted;
-  videoEl.muted = isHeroMuted;
-
-  if (!isHeroMuted) {
-    btn.innerHTML = `🔊 Mute Sound`;
-    btn.classList.add('bg-[#4A151B]', 'text-[#D4AF37]');
-  } else {
-    btn.innerHTML = `🔇 Sound On`;
-    btn.classList.remove('bg-[#4A151B]', 'text-[#D4AF37]');
-  }
-}
-
 // Multi-language Toggle (English / Tamil)
 function initLanguage() {
   const langToggleBtns = document.querySelectorAll('.lang-toggle-btn');
@@ -388,67 +371,39 @@ function renderTamilSpecialities() {
 
   if (filtered.length === 0) {
     track.innerHTML = `
-      <div class="w-full text-center py-12 text-stone-500 font-serif">
+      <div class="w-full text-center py-12 text-stone-500 font-serif col-span-full">
         ${currentLang === 'ta' ? 'இப்பிரிவில் பதிவுகள் இல்லை.' : 'No specialities found in this category.'}
       </div>
     `;
     return;
   }
 
+  track.className = 'grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 items-stretch';
+
   track.innerHTML = filtered.map((item) => {
     const originalIndex = TAMIL_SPECIALITIES.findIndex(s => s.id === item.id);
-    const displayNum = String(originalIndex + 1).padStart(2, '0');
+    const displayImage = item.image || 'assets/ancient_inscriptions.jpg';
     return `
-      <div class="speciality-card group" onclick="openSpecialityReader(${originalIndex})">
-        <span class="speciality-watermark-num">${displayNum}</span>
-        
-        <div>
-          <!-- Badge & Icon Row -->
-          <div class="flex justify-between items-start mb-4">
-            <div class="w-12 h-12 rounded-xl bg-[#3B1418] border border-[#D4AF37]/50 flex items-center justify-center text-2xl shadow-sm group-hover:scale-105 transition-transform">
-              ${item.icon}
-            </div>
-            <span class="bg-amber-100/90 text-[#4A151B] text-[10px] font-sans font-extrabold px-2.5 py-1 rounded tracking-wider uppercase border border-amber-300/80">
-              ${item.badge}
-            </span>
+      <div class="bg-[#FFFDF9] rounded-2xl p-6 border border-[#EBE1D3] shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group reveal-hidden-scale" onclick="openSpecialityReader(${originalIndex})">
+        <div class="w-full h-56 md:h-64 rounded-xl overflow-hidden shadow-sm relative group mb-5 border border-[#EBE1D3] bg-stone-100 flex-shrink-0">
+          <img src="${displayImage}" alt="${currentLang === 'ta' ? item.titleTa : item.titleEn}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.src='assets/ancient_inscriptions.jpg'; this.onerror=null;">
+          <div class="absolute top-3 left-3 bg-[#0A0506]/80 backdrop-blur-md border border-[#D4AF37]/50 text-[#D4AF37] px-3 py-1 rounded-full text-[10px] font-sans font-bold uppercase tracking-wider shadow-sm">
+            ${item.badge}
           </div>
-
-          <!-- Title -->
-          <h3 class="font-serif font-bold text-lg md:text-xl text-[#4A151B] mb-1.5 leading-snug group-hover:text-[#7A1F2A] transition-colors">
-            ${currentLang === 'ta' ? item.titleTa : item.titleEn}
-          </h3>
-
-          <div class="text-xs font-serif text-[#C8963E] font-medium mb-3">
-            ${currentLang === 'ta' ? item.titleEn : item.titleTa}
-          </div>
-
-          <!-- Calligraphic Quote -->
-          <div class="bg-[#FAF3E7]/80 border-l-2 border-[#D4AF37] px-3 py-2 rounded-r-lg mb-3.5">
-            <p class="text-[11px] italic text-[#4A151B] font-serif font-semibold line-clamp-2">
-              ${item.quoteTa}
-            </p>
-          </div>
-
-          <!-- Summary Description -->
-          <p class="text-stone-700 text-xs md:text-sm font-serif leading-relaxed line-clamp-3 mb-4">
-            ${currentLang === 'ta' ? item.descTa : item.descEn}
-          </p>
         </div>
 
-        <!-- Card Footer Actions -->
-        <div class="pt-3 border-t border-[#EBE1D3] flex items-center justify-between">
-          <span class="text-[11px] font-sans font-bold text-[#766459] uppercase tracking-wider flex items-center gap-1">
-            <span class="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></span>
-            ${item.category.toUpperCase()}
-          </span>
+        <h3 class="text-xl md:text-2xl font-serif font-bold text-[#4A151B] mb-2 group-hover:text-[#7A1F2A] transition-colors leading-snug">
+          ${currentLang === 'ta' ? item.titleTa : item.titleEn}
+        </h3>
 
-          <button onclick="event.stopPropagation(); openSpecialityReader(${originalIndex})" class="speciality-read-btn">
-            <span>${currentLang === 'ta' ? 'ஆழமாக வாசிக்க' : 'Read Full Story'}</span>
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </button>
-        </div>
+        <p class="text-stone-700 text-sm md:text-base font-serif leading-relaxed mb-6 flex-1 line-clamp-4">
+          ${currentLang === 'ta' ? item.descTa : item.descEn}
+        </p>
+
+        <button onclick="event.stopPropagation(); openSpecialityReader(${originalIndex})" class="inline-flex items-center gap-1.5 text-xs font-sans font-bold uppercase tracking-wider text-[#4A151B] hover:text-[#7A1F2A] transition-colors pt-4 border-t border-[#EBE1D3]/80 group/link mt-auto">
+          <span>${currentLang === 'ta' ? 'ஆழமாக அறிய' : 'Read More'}</span>
+          <span class="group-hover/link:translate-x-1 transition-transform">→</span>
+        </button>
       </div>
     `;
   }).join('');
@@ -1556,26 +1511,72 @@ function renderStoryboardGrid() {
 }
 
 /* =========================================================================
-   CRYSTAL-CLEAR HERITAGE AUDIO ENGINE (BELL CHIMES & RAGA HARMONICS)
+   CRYSTAL-CLEAR HERITAGE AUDIO ENGINE (BACKGROUND MUSIC, BELL CHIMES & RAGA HARMONICS)
    ========================================================================= */
 
 function toggleHeroAudio() {
   const videoEl = document.getElementById('hero-bg-video');
+  const audioEl = document.getElementById('hero-bg-audio');
   const btn = document.getElementById('btn-hero-audio');
+  const icon = document.getElementById('hero-audio-icon');
+  const label = document.getElementById('hero-audio-label');
+  const waves = document.getElementById('hero-audio-waves');
+  const volWrapper = document.getElementById('hero-audio-volume-wrapper');
+  const volSlider = document.getElementById('hero-audio-volume');
+
   if (!btn) return;
 
   isHeroMuted = !isHeroMuted;
+
   if (videoEl) videoEl.muted = isHeroMuted;
 
   if (!isHeroMuted) {
-    btn.innerHTML = `🔊 Sound On`;
-    btn.classList.add('bg-[#4A151B]', 'text-[#D4AF37]');
+    // Sound ON
+    if (audioEl) {
+      const vol = volSlider ? parseInt(volSlider.value, 10) / 100 : 0.5;
+      audioEl.volume = vol;
+      audioEl.play().catch(err => {
+        console.log("Audio play deferred to user gesture:", err);
+      });
+    }
+
     startAmbientHeritageDrone();
     playSceneAudioTransition(currentSceneIndex);
+
+    if (icon) icon.textContent = '🔊';
+    if (label) label.textContent = 'Sound Off';
+    if (waves) waves.classList.remove('hidden');
+    if (volWrapper) {
+      volWrapper.classList.remove('hidden');
+      volWrapper.classList.add('flex');
+    }
+
+    btn.classList.add('bg-[#4A151B]', 'border-[#D4AF37]');
   } else {
-    btn.innerHTML = `🔇 Sound Off`;
-    btn.classList.remove('bg-[#4A151B]', 'text-[#D4AF37]');
+    // Sound OFF / Mute
+    if (audioEl) {
+      audioEl.pause();
+    }
+
     stopAmbientHeritageDrone();
+
+    if (icon) icon.textContent = '🔇';
+    if (label) label.textContent = 'Sound On';
+    if (waves) waves.classList.add('hidden');
+    if (volWrapper) {
+      volWrapper.classList.add('hidden');
+      volWrapper.classList.remove('flex');
+    }
+
+    btn.classList.remove('bg-[#4A151B]', 'border-[#D4AF37]');
+  }
+}
+
+function setHeroAudioVolume(val) {
+  const audioEl = document.getElementById('hero-bg-audio');
+  const vol = Math.max(0, Math.min(1, parseFloat(val) / 100));
+  if (audioEl) {
+    audioEl.volume = vol;
   }
 }
 
@@ -1725,13 +1726,16 @@ function initHeroScrollManager() {
 
     // Auto-pause video and audio when user scrolls completely down to read content
     const videoEl = document.getElementById('hero-bg-video');
+    const audioEl = document.getElementById('hero-bg-audio');
     if (scrollY >= heroHeight) {
       if (videoEl && !videoEl.paused) videoEl.pause();
+      if (audioEl && !audioEl.paused) audioEl.pause();
       if (!isHeroMuted && ambientAudioCtx && ambientAudioCtx.state === 'running') {
         ambientAudioCtx.suspend();
       }
     } else {
       if (isVideoPlaying && videoEl && videoEl.paused) videoEl.play().catch(() => { });
+      if (!isHeroMuted && audioEl && audioEl.paused) audioEl.play().catch(() => { });
       if (!isHeroMuted && ambientAudioCtx && ambientAudioCtx.state === 'suspended') {
         ambientAudioCtx.resume();
       }
