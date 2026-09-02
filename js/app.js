@@ -177,48 +177,14 @@ function initScrollReveal() {
 
 /* ─── Apply animated reveal to speciality cards after each render ─── */
 function applySpecialityCardReveal() {
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReduced) return;
-
-  const cardObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const card = entry.target;
-        requestAnimationFrame(() => {
-          card.classList.remove('reveal-hidden-scale');
-          card.classList.add('reveal-visible');
-        });
-        cardObserver.unobserve(card);
-      }
-    });
-  }, {
-    root: null,
-    rootMargin: '0px 0px -40px 0px',
-    threshold: 0.05
-  });
-
-  /* Target the new static photo cards */
-  document.querySelectorAll('.spec-photo-card').forEach((card, i) => {
-    if (!card.classList.contains('reveal-visible')) {
-      card.classList.add('reveal-hidden-scale');
-      const delayIndex = Math.min((i % 4) + 1, 8);
-      card.classList.add(`reveal-delay-${delayIndex}`);
-      cardObserver.observe(card);
-    }
-  });
-
-  /* Also target old JS-rendered cards if they exist */
   const track = document.getElementById('tamil-specialities-track');
-  if (track) {
-    track.querySelectorAll('.speciality-card').forEach((card, i) => {
-      if (!card.classList.contains('reveal-visible')) {
-        card.classList.add('reveal-hidden-scale');
-        const delayIndex = Math.min(i + 1, 8);
-        card.classList.add(`reveal-delay-${delayIndex}`);
-        cardObserver.observe(card);
-      }
-    });
-  }
+  if (!track) return;
+
+  const cards = track.querySelectorAll(':scope > div');
+  cards.forEach((card) => {
+    card.classList.remove('reveal-hidden-scale', 'reveal-hidden');
+    card.classList.add('reveal-visible');
+  });
 }
 
 
@@ -384,24 +350,21 @@ function renderTamilSpecialities() {
     const originalIndex = TAMIL_SPECIALITIES.findIndex(s => s.id === item.id);
     const displayImage = item.image || 'assets/ancient_inscriptions.jpg';
     return `
-      <div class="bg-[#FFFDF9] rounded-2xl p-6 border border-[#EBE1D3] shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group reveal-hidden-scale" onclick="openSpecialityReader(${originalIndex})">
-        <div class="w-full h-56 md:h-64 rounded-xl overflow-hidden shadow-sm relative group mb-5 border border-[#EBE1D3] bg-stone-100 flex-shrink-0">
+      <div class="flex flex-col group cursor-pointer reveal-hidden-scale" onclick="openSpecialityReader(${originalIndex})">
+        <div class="w-full h-56 md:h-64 rounded-2xl overflow-hidden mb-5 border border-[#EBE1D3] bg-stone-100 flex-shrink-0 shadow-sm group-hover:shadow-md transition-all duration-300">
           <img src="${displayImage}" alt="${currentLang === 'ta' ? item.titleTa : item.titleEn}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.src='assets/ancient_inscriptions.jpg'; this.onerror=null;">
-          <div class="absolute top-3 left-3 bg-[#0A0506]/80 backdrop-blur-md border border-[#D4AF37]/50 text-[#D4AF37] px-3 py-1 rounded-full text-[10px] font-sans font-bold uppercase tracking-wider shadow-sm">
-            ${item.badge}
-          </div>
         </div>
 
         <h3 class="text-xl md:text-2xl font-serif font-bold text-[#4A151B] mb-2 group-hover:text-[#7A1F2A] transition-colors leading-snug">
           ${currentLang === 'ta' ? item.titleTa : item.titleEn}
         </h3>
 
-        <p class="text-stone-700 text-sm md:text-base font-serif leading-relaxed mb-6 flex-1 line-clamp-4">
+        <p class="text-stone-700 text-sm md:text-base font-serif leading-relaxed mb-4 flex-1 line-clamp-4">
           ${currentLang === 'ta' ? item.descTa : item.descEn}
         </p>
 
-        <button onclick="event.stopPropagation(); openSpecialityReader(${originalIndex})" class="inline-flex items-center gap-1.5 text-xs font-sans font-bold uppercase tracking-wider text-[#4A151B] hover:text-[#7A1F2A] transition-colors pt-4 border-t border-[#EBE1D3]/80 group/link mt-auto">
-          <span>${currentLang === 'ta' ? 'ஆழமாக அறிய' : 'Read More'}</span>
+        <button onclick="event.stopPropagation(); openSpecialityReader(${originalIndex})" class="inline-flex items-center gap-1.5 text-sm font-serif font-bold text-[#4A151B] hover:text-[#7A1F2A] transition-colors mt-auto self-start group/link">
+          <span>${currentLang === 'ta' ? 'மேலும் படிக்க' : 'Read More'}</span>
           <span class="group-hover/link:translate-x-1 transition-transform">→</span>
         </button>
       </div>
@@ -467,35 +430,37 @@ function toggleSpecialityLayout() {
   }
 }
 
-// Open Immersive Speciality Reader Modal
+// Open Immersive Speciality Full-Page Reader View
 function openSpecialityReader(index) {
   currentSpecialityModalIndex = index;
   const item = TAMIL_SPECIALITIES[index];
   if (!item) return;
 
-  const modal = document.getElementById('speciality-reader-modal');
-  if (!modal) return;
+  // Detail View Elements
+  const iconEl = document.getElementById('detail-spec-icon');
+  const badgeEl = document.getElementById('detail-spec-badge');
+  const indexEl = document.getElementById('detail-spec-index');
+  const titleEl = document.getElementById('detail-spec-title');
+  const subtitleEl = document.getElementById('detail-spec-subtitle');
+  const imageEl = document.getElementById('detail-spec-image');
+  const quoteTaEl = document.getElementById('detail-spec-quote-ta');
+  const quoteEnEl = document.getElementById('detail-spec-quote-en');
+  const articleEl = document.getElementById('detail-spec-article');
+  const interactiveContainer = document.getElementById('detail-spec-interactive');
+  const keypointsEl = document.getElementById('detail-spec-keypoints');
+  const sourcesEl = document.getElementById('detail-spec-sources');
 
-  // Header Details
-  const iconEl = document.getElementById('modal-spec-icon');
-  const badgeEl = document.getElementById('modal-spec-badge');
-  const indexEl = document.getElementById('modal-spec-index');
-  const titleEl = document.getElementById('modal-spec-title');
-  const subtitleEl = document.getElementById('modal-spec-subtitle');
-  const quoteTaEl = document.getElementById('modal-spec-quote-ta');
-  const quoteEnEl = document.getElementById('modal-spec-quote-en');
-  const articleEl = document.getElementById('modal-spec-article');
-  const interactiveContainer = document.getElementById('modal-spec-interactive-container');
-  const keypointsEl = document.getElementById('modal-spec-keypoints');
-  const sourcesEl = document.getElementById('modal-spec-sources');
-
-  if (iconEl) iconEl.textContent = item.icon;
-  if (badgeEl) badgeEl.textContent = item.badge;
+  if (iconEl) iconEl.textContent = item.icon || '🏛️';
+  if (badgeEl) badgeEl.textContent = item.badge || 'HERITAGE PILLAR';
   if (indexEl) indexEl.textContent = `Pillar 0${index + 1} of 0${TAMIL_SPECIALITIES.length}`;
   if (titleEl) titleEl.textContent = currentLang === 'ta' ? item.titleTa : item.titleEn;
   if (subtitleEl) subtitleEl.textContent = currentLang === 'ta' ? item.titleEn : item.titleTa;
-  if (quoteTaEl) quoteTaEl.textContent = item.quoteTa;
-  if (quoteEnEl) quoteEnEl.textContent = item.quoteEn;
+  if (imageEl) {
+    imageEl.src = item.image || 'assets/ancient_inscriptions.jpg';
+    imageEl.alt = currentLang === 'ta' ? item.titleTa : item.titleEn;
+  }
+  if (quoteTaEl) quoteTaEl.textContent = item.quoteTa || '';
+  if (quoteEnEl) quoteEnEl.textContent = item.quoteEn || '';
   if (articleEl) articleEl.textContent = currentLang === 'ta' ? item.detailedArticleTa : item.detailedArticleEn;
 
   // Render Interactive Feature depending on type
@@ -516,9 +481,6 @@ function openSpecialityReader(index) {
                 <span class="text-sm">🔊</span>
                 <span class="text-[#4A151B] font-bold text-base">${w.word}</span>
                 <span class="text-xs font-sans text-stone-600 font-normal">(${w.trans})</span>
-                <span class="wave-bar"></span>
-                <span class="wave-bar"></span>
-                <span class="wave-bar"></span>
               </button>
             `).join('')}
           </div>
@@ -565,8 +527,8 @@ function openSpecialityReader(index) {
   if (keypointsEl) {
     const points = currentLang === 'ta' ? item.keyPointsTa : item.keyPointsEn;
     keypointsEl.innerHTML = points.map(pt => `
-      <div class="flex items-start gap-2.5 text-xs md:text-sm text-stone-800 leading-relaxed">
-        <span class="w-5 h-5 rounded-full bg-amber-100 text-[#4A151B] flex items-center justify-center text-[10px] font-bold flex-shrink-0 mt-0.5">✓</span>
+      <div class="flex items-start gap-3 text-sm md:text-base text-stone-800 leading-relaxed">
+        <span class="w-6 h-6 rounded-full bg-amber-100 text-[#4A151B] flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">✓</span>
         <span>${pt}</span>
       </div>
     `).join('');
@@ -577,33 +539,20 @@ function openSpecialityReader(index) {
     sourcesEl.textContent = item.historicalSources.join(' • ');
   }
 
-  // Render navigation dots indicator
-  const dotsContainer = document.getElementById('modal-dots-indicator');
-  if (dotsContainer) {
-    dotsContainer.innerHTML = TAMIL_SPECIALITIES.map((_, i) => `
-      <button onclick="openSpecialityReader(${i})" class="w-2 h-2 rounded-full transition-all ${i === index ? 'w-5 bg-[#4A151B]' : 'bg-stone-300 hover:bg-stone-400'}" title="Pillar ${i + 1}"></button>
-    `).join('');
-  }
-
-  // Show Modal & Prevent Body Scroll
-  modal.classList.add('active');
-  document.body.style.overflow = 'hidden';
+  // Navigate to full-page detail view & scroll smooth to top
+  showView('speciality-detail');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Close Speciality Reader Modal
-function closeSpecialityReader() {
-  const modal = document.getElementById('speciality-reader-modal');
-  if (modal) {
-    modal.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-}
-
-// Modal Next / Prev Navigation
-function navigateSpecialityModal(direction) {
+// Modal/Detail Next / Prev Navigation
+function navigateSpecialityDetail(direction) {
   const total = TAMIL_SPECIALITIES.length;
   let newIndex = (currentSpecialityModalIndex + direction + total) % total;
   openSpecialityReader(newIndex);
+}
+
+function navigateSpecialityModal(direction) {
+  navigateSpecialityDetail(direction);
 }
 
 // Play Tamil Audio Pronunciation using Web Speech API with fallback
