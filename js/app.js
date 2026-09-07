@@ -242,6 +242,11 @@ function showView(viewId) {
   const activeView = document.getElementById(`view-${viewId}`);
   if (activeView) {
     activeView.classList.remove('hidden');
+    // Reveal all hidden cards inside the newly active view so they are never blank/invisible
+    activeView.querySelectorAll('.reveal-hidden, .reveal-hidden-scale, .reveal-hidden-left, .reveal-hidden-right, .reveal-hidden-fade, .vintage-card, .poet-card, .lit-work-card, .kural-card').forEach(el => {
+      el.classList.remove('reveal-hidden', 'reveal-hidden-scale', 'reveal-hidden-left', 'reveal-hidden-right', 'reveal-hidden-fade');
+      el.classList.add('reveal-visible');
+    });
   }
 
   const menuDropdown = document.getElementById('top-menu-dropdown');
@@ -265,6 +270,8 @@ function showView(viewId) {
     renderLiteratureEras();
   } else if (viewId === 'dictionary') {
     renderDictionary();
+  } else if (viewId === 'explore') {
+    renderTamilSpecialities();
   }
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -577,23 +584,26 @@ function playTamilAudioWord(word) {
   }
 }
 
+// Close Speciality Reader View / Modal
+function closeSpecialityReader() {
+  const modal = document.getElementById('speciality-reader-modal');
+  if (modal) modal.classList.add('hidden');
+  showView('explore');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 // Ask AI Tamil about current speciality
 function askAIFocusedSpeciality() {
   const item = TAMIL_SPECIALITIES[currentSpecialityModalIndex];
   if (!item) return;
 
   closeSpecialityReader();
-  showView('ai');
 
   const prompt = currentLang === 'ta'
     ? `தமிழ் மொழியின் தனிச்சிறப்பான "${item.titleTa}" குறித்து சங்க இலக்கிய மேற்கோள்கள் மற்றும் வரலாற்றுச் சான்றுகளுடன் விரிவாக விளக்குக.`
     : `Please explain in scholarly detail the historical evidence, Sangam literature references, and unique global significance of the Tamil language pillar: "${item.titleEn}" (${item.titleTa}).`;
 
-  const inputEl = document.getElementById('ai-chat-input');
-  if (inputEl) {
-    inputEl.value = prompt;
-    sendAIMessage();
-  }
+  askAIPrompt(prompt);
 }
 
 // Close Modal on Escape Key
@@ -672,7 +682,7 @@ function renderLiteratureEras() {
   const container = document.getElementById('eras-grid-container');
   if (!container) return;
 
-  container.innerHTML = ERAS_DATA.map(era => `
+  container.innerHTML = LITERATURE_ERAS.map(era => `
     <div class="vintage-card flex flex-col lg:flex-row gap-6 items-center">
       <div class="flex-1">
         <span class="era-badge mb-3">${era.badge}</span>
@@ -797,15 +807,27 @@ function initAIAssistant() {
     appendUserMessage(query);
     inputEl.value = '';
 
+    showAITypingIndicator();
+
     setTimeout(() => {
+      removeAITypingIndicator();
       processAIResponse(query);
-    }, 600);
+    }, 500);
   };
 
-  if (sendBtn) sendBtn.addEventListener('click', handleSend);
-  inputEl.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') handleSend();
-  });
+  if (sendBtn) {
+    sendBtn.onclick = (e) => {
+      e.preventDefault();
+      handleSend();
+    };
+  }
+
+  inputEl.onkeydown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSend();
+    }
+  };
 }
 
 function askAIPrompt(promptText) {
@@ -813,7 +835,10 @@ function askAIPrompt(promptText) {
   const inputEl = document.getElementById('ai-input');
   if (inputEl) {
     inputEl.value = promptText;
-    document.getElementById('ai-send-btn').click();
+    const sendBtn = document.getElementById('ai-send-btn');
+    if (sendBtn) {
+      sendBtn.click();
+    }
   }
 }
 
@@ -828,6 +853,33 @@ function appendUserMessage(text) {
   container.scrollTop = container.scrollHeight;
 }
 
+function showAITypingIndicator() {
+  const container = document.getElementById('ai-messages-list');
+  if (!container || document.getElementById('ai-typing-indicator')) return;
+
+  const typingBubble = document.createElement('div');
+  typingBubble.id = 'ai-typing-indicator';
+  typingBubble.className = 'message-bubble-ai flex items-center gap-3 py-3';
+  typingBubble.innerHTML = `
+    <div class="w-7 h-7 rounded-full bg-[#4A151B] text-[#D4AF37] flex items-center justify-center font-serif text-xs font-bold shrink-0">
+      ✦
+    </div>
+    <div class="flex items-center gap-1.5 text-stone-500 font-serif text-xs italic">
+      <span>Agastya is researching scriptures...</span>
+      <span class="w-1.5 h-1.5 rounded-full bg-amber-700 animate-bounce"></span>
+      <span class="w-1.5 h-1.5 rounded-full bg-amber-700 animate-bounce [animation-delay:0.2s]"></span>
+      <span class="w-1.5 h-1.5 rounded-full bg-amber-700 animate-bounce [animation-delay:0.4s]"></span>
+    </div>
+  `;
+  container.appendChild(typingBubble);
+  container.scrollTop = container.scrollHeight;
+}
+
+function removeAITypingIndicator() {
+  const indicator = document.getElementById('ai-typing-indicator');
+  if (indicator) indicator.remove();
+}
+
 function processAIResponse(query) {
   const container = document.getElementById('ai-messages-list');
   if (!container) return;
@@ -835,26 +887,72 @@ function processAIResponse(query) {
   let knowledge = AI_KNOWLEDGE_BASE.default;
   const lower = query.toLowerCase();
 
-  if (lower.includes('aham') || lower.includes('puram') || lower.includes('அகம்') || lower.includes('புறம்')) {
+  if (lower.includes('keeladi') || lower.includes('கீழடி') || lower.includes('excavation') || lower.includes('vaigai')) {
+    knowledge = AI_KNOWLEDGE_BASE.keeladi;
+  } else if (lower.includes('zha') || lower.includes('ழ') || lower.includes('phonetic') || lower.includes('sound')) {
+    knowledge = AI_KNOWLEDGE_BASE.zha;
+  } else if (lower.includes('tolkappiyam') || lower.includes('தொல்காப்பியம்') || lower.includes('thinai') || lower.includes('திணை')) {
+    knowledge = AI_KNOWLEDGE_BASE.tolkappiyam;
+  } else if (lower.includes('sangam') || lower.includes('சங்கம்') || lower.includes('ettuthogai') || lower.includes('pattupattu')) {
+    knowledge = AI_KNOWLEDGE_BASE.sangam;
+  } else if (lower.includes('chola') || lower.includes('சோழர்') || lower.includes('tanjore') || lower.includes('brihadisvara')) {
+    knowledge = AI_KNOWLEDGE_BASE.chola;
+  } else if (lower.includes('aham') || lower.includes('puram') || lower.includes('அகம்') || lower.includes('புறம்')) {
     knowledge = AI_KNOWLEDGE_BASE.aham;
-  } else if (lower.includes('kural') || lower.includes('thirukkural') || lower.includes('குறள்')) {
+  } else if (lower.includes('kural') || lower.includes('thirukkural') || lower.includes('குறள்') || lower.includes('valluvar')) {
     knowledge = AI_KNOWLEDGE_BASE.thirukkural;
   }
 
   const aiBubble = document.createElement('div');
   aiBubble.className = 'message-bubble-ai flex gap-3';
   aiBubble.innerHTML = `
-    <div class="w-8 h-8 rounded-full bg-amber-800 text-amber-100 flex items-center justify-center font-serif text-sm font-bold shrink-0 shadow-sm">
+    <div class="w-8 h-8 rounded-full bg-[#4A151B] text-[#D4AF37] flex items-center justify-center font-serif text-sm font-bold shrink-0 shadow-sm">
       ✦
     </div>
     <div class="flex-1 font-serif text-sm leading-relaxed text-stone-800">
-      <h4 class="font-bold text-maroon mb-2 text-base">${knowledge.titleEn}</h4>
-      <div class="prose prose-stone text-stone-700 whitespace-pre-line">${currentLang === 'ta' ? knowledge.contentTa : knowledge.contentEn}</div>
+      <h4 class="font-bold text-[#4A151B] mb-2 text-base">${knowledge.titleEn}</h4>
+      <div class="prose prose-stone text-stone-800 whitespace-pre-line">${currentLang === 'ta' ? knowledge.contentTa : knowledge.contentEn}</div>
     </div>
   `;
 
   container.appendChild(aiBubble);
   container.scrollTop = container.scrollHeight;
+}
+
+// Render Chronological Literature Eras Grid
+function renderLiteratureEras() {
+  const container = document.getElementById('eras-grid-container');
+  if (!container || !window.LITERATURE_ERAS) return;
+
+  container.innerHTML = LITERATURE_ERAS.map((era, i) => `
+    <div class="vintage-card p-6 md:p-8">
+      <div class="flex items-center justify-between gap-4 mb-4 flex-wrap">
+        <div class="flex items-center gap-3">
+          <span class="text-3xl">${era.icon}</span>
+          <div>
+            <span class="era-badge">${currentLang === 'ta' ? era.periodTa : era.periodEn}</span>
+            <h4 class="text-2xl font-serif font-bold text-[#4A151B] mt-1">${era.nameTa} — ${era.nameEn}</h4>
+          </div>
+        </div>
+        <span class="text-xs font-sans font-bold text-amber-900 bg-amber-100 border border-amber-300 px-3 py-1 rounded-full">
+          ERA 0${i + 1}
+        </span>
+      </div>
+
+      <p class="text-stone-700 text-sm md:text-base font-serif leading-relaxed mb-4">
+        ${currentLang === 'ta' ? era.descTa : era.descEn}
+      </p>
+
+      <div class="space-y-3 pt-3 border-t border-amber-100">
+        <div>
+          <span class="text-[10px] font-sans font-bold uppercase tracking-widest text-stone-400 block mb-1">Key Master Works</span>
+          <div class="flex flex-wrap gap-1.5">
+            ${(currentLang === 'ta' ? era.worksTa : era.worksEn).map(w => `<span class="bg-amber-100 text-amber-900 text-xs px-2.5 py-1 rounded font-serif font-bold border border-amber-300/60">${w}</span>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
 }
 
 // Render 10 Great Poets and 10 Master Literary Books Catalog
@@ -1259,16 +1357,18 @@ function updateUserUI() {
   if (userBtn) {
     if (currentUser) {
       userBtn.innerHTML = `
-        <span class="w-8 h-8 rounded-full bg-amber-800 text-amber-100 flex items-center justify-center font-bold text-xs shadow-sm border border-amber-400">
+        <span class="w-6 h-6 rounded-full bg-amber-800 text-amber-100 flex items-center justify-center font-bold text-xs shadow-sm border border-amber-400">
           ${currentUser.name.charAt(0).toUpperCase()}
         </span>
+        <span class="text-xs font-sans font-semibold text-[#4A151B] hidden sm:inline">${currentUser.name}</span>
       `;
       userBtn.title = `Signed in as ${currentUser.name} (${currentUser.role})`;
     } else {
       userBtn.innerHTML = `
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+        <svg class="w-4 h-4 text-[#4A151B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+        <span class="text-xs font-sans font-bold text-[#4A151B]">Sign In</span>
       `;
-      userBtn.title = "Sign In / Account";
+      userBtn.title = "Sign In / Scholar Account";
     }
   }
 }

@@ -495,6 +495,58 @@ const TAMIL_SPECIALITIES = [
   }
 ];
 
+// Chronological Eras of Tamil Literature
+const LITERATURE_ERAS = [
+  {
+    id: "sangam-era",
+    icon: "📜",
+    nameTa: "சங்க காலம் (Sangam Era)",
+    nameEn: "Sangam Era & Classical Poetics",
+    periodTa: "கி.மு. 500 – கி.பி. 300 (500 BCE – 300 CE)",
+    periodEn: "500 BCE – 300 CE",
+    descTa: "வைகைக் கரைக் கீழடி நாகரிகமும், மதுரைச் சங்கப் பலகையில் புலவர்கள் இயற்றிய எட்டுத்தொகை, பத்துப்பாட்டு மற்றும் தொல்காப்பிய இலக்கண மரபும் மலர்ந்த பொற்காலம்.",
+    descEn: "The classical golden age patronized by Pandyan Kings in Madurai. Produced the earliest anthologies (Ettuthogai), long idylls (Pattupattu), and Tolkappiyam.",
+    worksTa: ["தொல்காப்பியம்", "எட்டுத்தொகை", "பத்துப்பாட்டு", "குறிஞ்சிப்பாட்டு", "புறநானூறு"],
+    worksEn: ["Tolkappiyam", "Ettuthokai", "Pattuppattu", "Kurinjippattu", "Purananuru"]
+  },
+  {
+    id: "post-sangam-era",
+    icon: "⚖️",
+    nameTa: "சங்க மருவிய காலம் (Post-Sangam Ethical Era)",
+    nameEn: "Post-Sangam Ethical & Epic Era",
+    periodTa: "கி.பி. 300 – கி.பி. 600 (300 CE – 600 CE)",
+    periodEn: "300 CE – 600 CE",
+    descTa: "திருவள்ளுவரின் திருக்குறள் மற்றும் பதினெண்கீழ்க்கணக்கு அறநூல்களும், இளங்கோ அடிகளின் சிலப்பதிகாரம், மணிமேகலை போன்ற ஐம்பெருங்காப்பியங்களும் உருவான காலகட்டம்.",
+    descEn: "Era of moral philosophy and grand epics. Produced Thirukkural, Pathinenkeelkanakku ethical treatises, and Silappatikaram.",
+    worksTa: ["திருக்குறள்", "சிலப்பதிகாரம்", "மணிமேகலை", "பதினெண்கீழ்க்கணக்கு"],
+    worksEn: ["Thirukkural", "Silappathikaram", "Manimekalai", "Pathinenkeelkanakku"]
+  },
+  {
+    id: "bhakti-chola-era",
+    icon: "👑",
+    nameTa: "பக்தி காலம் & சோழர் காலம் (Bhakti & Imperial Chola Era)",
+    nameEn: "Bhakti Movement & Imperial Chola Era",
+    periodTa: "கி.பி. 600 – கி.பி. 1300 (600 CE – 1300 CE)",
+    periodEn: "600 CE – 1300 CE",
+    descTa: "சைவ நாயன்மார்களின் பன்னிரு திருமுறைகளும், வைணவ ஆழ்வார்களின் 4000 திவ்யப்பிரபந்தமும், கவிச்சக்கரவர்த்தி கம்பரின் கம்பராமாயணமும் பூத்த பக்தி & காப்பிய யுகம்.",
+    descEn: "Spiritual revival and epic grandeur under Chola patronage. Produced Saiva Thirumurai, Alvar Divya Prabandham, and Kambar's Ramayanam.",
+    worksTa: ["தேவாரம் & திருவாசகம்", "4000 திவ்யப்பிரபந்தம்", "கம்பராமாயணம்", "பெரியபுராணம்"],
+    worksEn: ["Thevaram & Thiruvasagam", "4000 Divya Prabandham", "Kamba Ramayanam", "Periya Puranam"]
+  },
+  {
+    id: "modern-era",
+    icon: "🖨️",
+    nameTa: "இக்காலத் தமிழ் & கணித்தமிழ் யுகம் (Modern & Digital Era)",
+    nameEn: "Modern Renaissance, Print & AI Era",
+    periodTa: "கி.பி. 1800 – தற்காலம் (1800 CE – Present)",
+    periodEn: "1800 CE – Present",
+    descTa: "அச்சுப் பொறி வருகை, உ.வே.சா அவர்களின் சுவடி மீட்புப் பணி, மகாகவி பாரதியாரின் புதுக்கவிதை அலை மற்றும் இன்றைய கணித்தமிழ் AI தொழில்நுட்ப யுகம்.",
+    descEn: "Print revolution, manuscript recovery by U.V. Swaminatha Iyer, Mahakavi Bharati's modern poetic movement, and present-day AI computing.",
+    worksTa: ["மகாகவி பாரதியார் கவிதைகள்", "ஆத்திச்சூடி அச்சு பதிப்புகள்", "கணித்தமிழ் ஒருங்குறி (Unicode)", "அகத்தியன் AI"],
+    worksEn: ["Bharatiyar Nationalist Poems", "Tranquebar Editions", "Digital Unicode NLP", "Agastya AI"]
+  }
+];
+
 // Comprehensive Catalog of 10 Great Tamil Poets
 const POETS_CATALOG = [
   {
@@ -868,6 +920,51 @@ It is universally acclaimed for its non-denominational secular character and ete
 2. பொருட்பால் - 70 அதிகாரங்கள்
 3. இன்பத்துப்பால் - 25 அதிகாரங்கள்`
   },
+  keeladi: {
+    titleEn: "Keeladi & Sangam Urban Civilization (கீழடி அகழாய்வு)",
+    contentEn: `Groundbreaking archaeological excavations at Keeladi on the Vaigai river basin carbon-date Tamil urban literacy back to **580 BCE** (6th Century BCE).
+
+Key Historical Revelations:
+- **Widespread Literacy**: Over 1,000+ potsherds inscribed with Tamil-Brahmi (தமிழி) scripts show ordinary potters and citizens were literate.
+- **Urban Infrastructure**: Covered brick drain networks, ring wells, dyeing vats, and glass bead manufacturing.
+- **Secular Culture**: No religious icons excavated, confirming Sangam Tamil society's secular, human-centric focus.
+- **Global Trade**: Roman pottery, agate beads, and Persian glass prove maritime trade ties across the Mediterranean.`,
+    contentTa: `வைகைக் கரைக் கீழடி அகழாய்வு மூலமாகத் தமிழர்களின் நகர நாகரிகம் கி.மு. 580 என அறிவியல் கரிமப் பகுப்பாய்வு மூலம் நிரூபிக்கப்பட்டுள்ளது.`
+  },
+  zha: {
+    titleEn: "Phonetic Melody of 'ழ' (Zha) (ழகரச் சிறப்பு)",
+    contentEn: `The letter 'ழ' (transliterated as 'zh') is a voiced retroflex approximant sound produced exclusively in Tamil by curling the tongue tip back toward the hard palate without touching it.
+
+Phonetic Attributes:
+- Expressed in key heritage terms: *தமிழ்* (Tamizh), *அமிழ்தம்* (Amizhdham), *யாழ்* (Yaazh), *மகிழ்ச்சி* (Magizhchi).
+- Governed by the **மாத்திரை (Maathirai)** metric science in Tolkappiyam defining exact vocal duration for vowels, consonants, and retroflex tones.`,
+    contentTa: `நாக்கின் நுனியை மேல்நோக்கி வளைத்து அண்ணத்தைத் தொடாமல் காற்றுடன் எழுப்பப்படும் 'ழ' கர ஒலி தமிழ் மொழிக்கே உரிய ஒப்பற்ற தனிச் சிறப்பாகும்.`
+  },
+  tolkappiyam: {
+    titleEn: "Tolkappiyam - Ancient Grammar & Thinai Ecology (தொல்காப்பியம்)",
+    contentEn: `Authored by Tolkappiyar, it is the oldest extant Tamil work (c. 5th-3rd century BCE). Divided into 3 chapters:
+
+1. **எழுத்ததிகாரம் (Ezhuthu)**: Phonetics, orthography, sound duration.
+2. **சொல்லதிகாரம் (Sol)**: Etymology, syntax, parts of speech.
+3. **பொருளதிகாரம் (Porul)**: Poetics, Thinai ecology (Kurinji, Mullai, Marutham, Neithal, Palai), and social ethics.`,
+    contentTa: `தொல்காப்பியம் எழுத்ததிகாரம், சொல்லதிகாரம், பொருளதிகாரம் என 3 அதிகாரங்களில் தமிழ் இலக்கணத்தையும் ஐந்திணை வாழ்வியலையும் விளக்குகிறது.`
+  },
+  sangam: {
+    titleEn: "Sangam Era Poetic Tradition (சங்க காலம்)",
+    contentEn: `The Sangam Era (c. 6th century BCE – 300 CE) represents the golden age of classical Tamil poetry patronized by Pandyan Kings in Madurai.
+
+Major Canons:
+- **Ettuthogai (8 Anthologies)**: Natrinai, Kurunthogai, Aingurunooru, Padhitrupathu, Paripaalal, Kalithogai, Akananooru, Purananooru.
+- **Pattupattu (10 Idylls)**: Thirumurugatrupadai, Porunaratrupadai, Perumpanatrupadai, etc.`,
+    contentTa: `சங்க காலத்தில் எட்டுத்தொகை, பத்துப்பாட்டு நூல்கள் மூலம் இயற்கை, காதல், வீரம் மற்றும் அறநெறிகள் பாடப்பட்டன.`
+  },
+  chola: {
+    titleEn: "Imperial Cholas & Heritage Marvels (சோழர் வரலாறு)",
+    contentEn: `The Imperial Cholas (9th – 13th Century CE) built world-renowned architectural wonders:
+- **Thanjavur Brihadisvara Temple** built by Raja Raja Chola I in 1010 CE.
+- **Naval Empire**: Rajendra Chola I expanded maritime dominion across Sri Lanka, Malaysia, Indonesia (Srivijaya), and Thailand.`,
+    contentTa: `இராஜராஜ சோழனின் தஞ்சைப் பெருவுடையார் கோவிலும், இராஜேந்திர சோழனின் கடற்படை வெற்றிகளும் தமிழர்களின் உலகளாவிய சாதனைகளாகும்.`
+  },
   default: {
     titleEn: "Scholarly Insights from Agastya AI",
     contentEn: `Tamil is one of the world's longest-surviving classical languages, with an unbroken literary tradition spanning over 2,500 years.
@@ -875,8 +972,8 @@ It is universally acclaimed for its non-denominational secular character and ete
 Key facets of Tamil heritage:
 - **Tolkappiyam**: Ancient grammar detailing linguistic science and poetic landscape anthropology (Thinai).
 - **Sangam Anthologies**: 8 Anthologies (Ettuthogai) and 10 Idylls (Pattupattu).
-- **Bhakti Hymns**: 12 Thirumurai (Saivism) and 4000 Divya Prabandham (Vaishnava).
-- **Inscriptions**: Over 100,000 stone & copper plate inscriptions across South and Southeast Asia.`,
+- **Keeladi Archaeology**: 580 BCE urban literacy and secular culture.
+- **Inscriptions**: Over 55,000 stone & copper plate inscriptions documented by ASI.`,
     contentTa: `தமிழ் மொழி 2500 ஆண்டுகளுக்கு மேற்பட்ட தொடர்ச்சியான இலக்கியப் பாரம்பரியத்தைக் கொண்ட உலகின் உன்னதமான செம்மொழியாகும்.`
   }
 };
@@ -1087,5 +1184,58 @@ const DICTIONARY_DATA = [
     citations: ["GOML MSS Records", "U.V. Swaminatha Iyer Archives", "Thirumurai"]
   }
 ];
+
+const THIRUKKURAL_CHAPTER_1 = {
+  chapterTitle: "Chapter 1: The Praise of God (கடவுள் வாழ்த்து)",
+  chapterDesc: "The foundational couplets establishing the primacy of the divine, as authored by Thiruvalluvar.",
+  kurals: [
+    {
+      number: 1,
+      tamil: "அகர முதல எழுத்தெல்லாம் ஆதி\nபகவன் முதற்றே உலகு.",
+      transliteration: "Akara mudhala ezhutthellaam aadhi bhagavan mudhattre ulagu.",
+      translationTa: "எழுத்துக்கள் எல்லாம் 'அ' என்னும் எழுத்தை முதலாவதாகக் கொண்டுள்ளன; அதுபோல உலகம் ஆதிபகவானை முதலாகக் கொண்டுள்ளது.",
+      translationEn: "As the letter 'A' is the first of all letters, so is the primordial Divine the origin of the world.",
+      wordBreakdown: [
+        { word: "அகர முதல (Akara mudhala)", meaningTa: "'அ' எழுத்து முதல்", meaningEn: "Beginning with the vowel 'A'" },
+        { word: "எழுத்தெல்லாம் (Ezhutthellaam)", meaningTa: "எழுத்துக்கள் அனைத்தும்", meaningEn: "All letters of alphabet" },
+        { word: "ஆதி பகவன் (Aadhi bhagavan)", meaningTa: "முதற் பொருள் / இறைவன்", meaningEn: "Primordial Lord / Creator" },
+        { word: "முதற்றே உலகு (Mudhattre ulagu)", meaningTa: "உலகிற்கு முதலாக உள்ளது", meaningEn: "Is the origin of universe" }
+      ],
+      literaryBackground: "Thiruvalluvar uses a linguistic metaphor to establish the concept of a primordial creator. Just as 'A' (அ) is the foundational vowel in Tamil phonetics, without which consonants cannot be articulated, the divine principle is posited as the essential substratum of the universe.",
+      sources: "Government Oriental Manuscripts Library (GOML MSS #TN-104); printed edition by U.V. Swaminatha Iyer (1890); commentary by Parimelazhagar."
+    },
+    {
+      number: 2,
+      tamil: "கற்றதனா லாய பயனென்கொல் வாலறிவன்\nநற்றாள் தொழாஅர் எனின்.",
+      transliteration: "Katrathanaal aaya payanenkol vaalarivan natraal thozhaaar enin.",
+      translationTa: "தூய அறிவை உடைய இறைவனின் நல்ல திருவடிகளை தொழாமல் இருப்பாரானால், அவர் கற்ற கல்வியினால் உண்டான பயன் என்ன?",
+      translationEn: "What is the value of all learning, if one bows not in devotion before the feet of the Pure-Minded Divine?",
+      wordBreakdown: [
+        { word: "கற்றதனால் (Katrathanaal)", meaningTa: "கற்ற கல்வியால்", meaningEn: "From all learning acquired" },
+        { word: "ஆய பயனென்கொல் (Aaya payanenkol)", meaningTa: "உண்டான பயன் யாது?", meaningEn: "What benefit is gained?" },
+        { word: "வாலறிவன் (Vaalarivan)", meaningTa: "தூய அறிவுடையவன்", meaningEn: "One with pure immaculate wisdom" },
+        { word: "நற்றாள் தொழாஅர் (Natraal thozhaaar)", meaningTa: "திருவடிகளை வணங்காதவர்", meaningEn: "Those who do not worship" }
+      ],
+      literaryBackground: "Valluvar emphasizes that intellectual knowledge without spiritual humility and moral devotion is incomplete. Pure wisdom requires ethical grounding.",
+      sources: "Comm. Parimelazhagar, Palm Leaf MSS #104."
+    },
+    {
+      number: 3,
+      tamil: "மலர்மிசை ஏகினான் மாணடி சேர்ந்தார்\nநிலமிசை நீடுவாழ் வார்.",
+      transliteration: "Malarmisai aeginaan maanadi serndhaar nilamisai needuvaazh vaar.",
+      translationTa: "அன்பரின் மனமலர் மீது எழுந்தருளிய இறைவனின் பெருமைமிக்க திருவடிகளை அடைந்தவர், நிலவுலகில் புகழோடு நீடூழி வாழ்வார்.",
+      translationEn: "Those who hold fast to the glorious feet of Him who dwells in the lotus-heart of devotees shall live long in honor upon earth.",
+      wordBreakdown: [
+        { word: "மலர்மிசை (Malarmisai)", meaningTa: "மனமலர் மேல்", meaningEn: "Upon the lotus heart" },
+        { word: "ஏகினான் (Aeginaan)", meaningTa: "எழுந்தருளியவன்", meaningEn: "He who resides / pervades" },
+        { word: "மாணடி (Maanadi)", meaningTa: "பெருமைமிக்க அடிகள்", meaningEn: "Glorious feet of grace" },
+        { word: "நீடுவாழ்வார் (Needuvaazhvaar)", meaningTa: "நீடூழி வாழ்வார்", meaningEn: "Shall live long in glory" }
+      ],
+      literaryBackground: "A universal metaphor common to ancient Tamil poetics, associating the divine presence with the blooming lotus of human consciousness.",
+      sources: "Tirukkural Classical Canon."
+    }
+  ]
+};
+
 
 

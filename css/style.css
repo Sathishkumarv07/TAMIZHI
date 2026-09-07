@@ -693,16 +693,20 @@ body {
   font-size: 1.05rem;
 }
 
-/* Agastya AI Layout (Matching Image 4) */
+/* Agastya AI Layout (Matching Image 4 & Vintage Parchment Theme) */
 .ai-chat-box {
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-parchment);
-  border-radius: 12px;
-  box-shadow: var(--shadow-warm);
+  background-image: url('../assets/ai_chat_parchment.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 1.5px solid #D4AF37;
+  border-radius: 16px;
+  box-shadow: 0 12px 36px rgba(74, 21, 27, 0.15), var(--shadow-warm);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   height: 680px;
+  position: relative;
 }
 
 .ai-messages-container {
@@ -712,31 +716,35 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  background: rgba(255, 253, 249, 0.45);
+  backdrop-filter: blur(2px);
 }
 
 .message-bubble-ai {
-  background-color: var(--primary-maroon-light);
-  border: 1px solid rgba(74, 21, 27, 0.12);
-  border-radius: 12px;
+  background-color: rgba(255, 253, 249, 0.92);
+  border: 1px solid rgba(74, 21, 27, 0.2);
+  border-radius: 14px;
   padding: 1.25rem;
   max-width: 85%;
   align-self: flex-start;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
 }
 
 .message-bubble-user {
-  background-color: var(--primary-maroon);
+  background-color: #4A151B;
   color: #FFFFFF;
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 1.25rem;
   max-width: 80%;
   align-self: flex-end;
   font-family: var(--font-body);
+  box-shadow: 0 4px 15px rgba(74, 21, 27, 0.25);
 }
 
 .ai-input-wrapper {
-  background-color: var(--bg-parchment-subtle);
-  border-top: 1px solid var(--border-parchment);
+  background-color: rgba(244, 236, 225, 0.94);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(212, 175, 55, 0.4);
   padding: 1rem 1.5rem;
   display: flex;
   align-items: center;
