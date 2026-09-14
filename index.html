@@ -38,11 +38,13 @@
         </div>
       </a>
 
-      <!-- CENTER: Header Navigation Links (Explore, Literature, Poets, AI Tamil) -->
-      <nav class="hidden md:flex items-center gap-7">
+      <!-- CENTER: Header Navigation Links (Explore, Literature, Poets, Books, Dictionary, AI Tamil) -->
+      <nav class="hidden md:flex items-center gap-6">
         <a href="#" onclick="showView('explore')" data-view-target="explore" class="nav-link active" data-i18n="navExplore">Explore</a>
         <a href="#" onclick="showView('literature')" data-view-target="literature" class="nav-link" data-i18n="navLiterature">Literature</a>
         <a href="#" onclick="showView('poets')" data-view-target="poets" class="nav-link" data-i18n="navPoets">Poets</a>
+        <a href="#" onclick="showView('books')" data-view-target="books" class="nav-link" data-i18n="navBooks">Books</a>
+        <a href="#" onclick="showView('dictionary')" data-view-target="dictionary" class="nav-link" data-i18n="navDictionary">Dictionary</a>
         <a href="#" onclick="showView('ai')" data-view-target="ai" class="nav-link font-semibold text-[#4A151B] flex items-center gap-1.5 cursor-pointer"
           data-i18n="navAITamil">
           <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -714,6 +716,16 @@
               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
         </div>
+
+        <!-- Dictionary Filter Pills & Actions -->
+        <div class="flex flex-wrap items-center justify-center gap-2.5 mt-6">
+          <button onclick="filterDictionaryCategory('all')" class="dict-filter-pill active" data-dict-filter="all">All Words & Slots (20)</button>
+          <button onclick="filterDictionaryCategory('classical')" class="dict-filter-pill" data-dict-filter="classical">Classical Root Words (9)</button>
+          <button onclick="filterDictionaryCategory('slots')" class="dict-filter-pill border border-dashed border-amber-500/80 bg-amber-50 text-amber-900 font-bold" data-dict-filter="slots">✨ Content Slots (11 Awaiting Data)</button>
+          <button onclick="addNewDictSlot()" class="bg-[#4A151B] hover:bg-[#5F1C24] text-[#D4AF37] border border-[#D4AF37]/60 text-xs font-bold py-2 px-4 rounded-full shadow transition-all flex items-center gap-1.5 ml-2">
+            <span>➕</span> Add New Word Slot
+          </button>
+        </div>
       </div>
 
       <div id="dictionary-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -842,24 +854,30 @@
 
           <!-- Category Filter Pills for Books -->
           <div class="flex flex-wrap justify-center gap-2.5 mt-8">
-            <button onclick="filterBooksCategory('all')" class="book-filter-pill active" data-book-filter="all">All Master Works (10)</button>
+            <button onclick="filterBooksCategory('all')" class="book-filter-pill active" data-book-filter="all">All Master Works & Slots (20)</button>
             <button onclick="filterBooksCategory('grammar')" class="book-filter-pill" data-book-filter="grammar">Grammar & Poetics</button>
             <button onclick="filterBooksCategory('sangam')" class="book-filter-pill" data-book-filter="sangam">Sangam Anthologies</button>
             <button onclick="filterBooksCategory('ethics')" class="book-filter-pill" data-book-filter="ethics">Ethical Treatises</button>
             <button onclick="filterBooksCategory('epics')" class="book-filter-pill" data-book-filter="epics">Five Great Epics</button>
             <button onclick="filterBooksCategory('devotional')" class="book-filter-pill" data-book-filter="devotional">Devotional & Medieval</button>
+            <button onclick="filterBooksCategory('slots')" class="book-filter-pill border border-dashed border-amber-500/80 bg-amber-50 text-amber-900 font-bold" data-book-filter="slots">✨ Content Slots (10 Awaiting Data)</button>
           </div>
         </div>
       </div>
 
       <!-- Books Grid Container -->
       <div class="max-w-7xl mx-auto px-4 py-12">
-        <div class="lit-section-header mb-8">
+        <div class="lit-section-header mb-8 flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h3 class="text-2xl font-bold font-serif text-[#4A151B]" id="books-page-heading">The 10 Monumental Master Works of Tamil</h3>
-            <p class="text-sm font-serif text-stone-500 mt-1">Poetic Treatises, Eighteen Lesser Texts, Five Great Epics & Medieval Classics</p>
+            <h3 class="text-2xl font-bold font-serif text-[#4A151B]" id="books-page-heading">Classical Master Works & Content Slots</h3>
+            <p class="text-sm font-serif text-stone-500 mt-1">10 Classical Canons + 10 Pre-Configured Slots Ready for User Book Data</p>
           </div>
-          <span class="text-xs font-sans text-amber-800 bg-amber-100 border border-amber-300 px-3 py-1 rounded-full font-bold uppercase tracking-wider">Classical Canon</span>
+          <div class="flex items-center gap-3">
+            <button onclick="addNewBookSlot()" class="bg-[#4A151B] hover:bg-[#5F1C24] text-[#D4AF37] border border-[#D4AF37]/60 text-xs font-bold py-2 px-4 rounded-lg shadow-md transition-all flex items-center gap-2">
+              <span>➕</span> Add New Book Slot
+            </button>
+            <span class="text-xs font-sans text-amber-800 bg-amber-100 border border-amber-300 px-3 py-1.5 rounded-full font-bold uppercase tracking-wider">Classical & User Archive</span>
+          </div>
         </div>
 
         <div id="books-grid" class="space-y-6">
@@ -1193,7 +1211,130 @@
         <div><a href="#" class="hover:underline" data-i18n="privacy">Privacy</a></div>
       </div>
     </div>
-  </footer>
+  <!-- HERITAGE DATA SLOT EDITOR MODAL (POPULATE BOOK OR DICTIONARY SLOT) -->
+  <div id="slot-editor-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-[#FFFDF9] max-w-2xl w-full rounded-2xl border border-[#D1C2A5] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <!-- Header -->
+      <div class="bg-[#4A151B] text-[#FFFDF9] px-6 py-4 flex items-center justify-between border-b border-[#D4AF37]/50">
+        <div class="flex items-center gap-2.5">
+          <span id="slot-modal-icon" class="text-2xl">✍️</span>
+          <div>
+            <h3 id="slot-modal-title" class="font-serif font-bold text-lg text-[#F5E6C8]">Fill Content Slot Data</h3>
+            <p id="slot-modal-subtitle" class="text-[11px] font-sans text-[#D4AF37]">Enter the data for this slot or copy template to provide in chat</p>
+          </div>
+        </div>
+        <button onclick="closeSlotModal()" class="text-[#D4AF37] hover:text-white text-xl font-bold p-1">✕</button>
+      </div>
+
+      <!-- Body Form -->
+      <div class="p-6 overflow-y-auto space-y-4 font-serif text-sm">
+        <input type="hidden" id="slot-editor-id" value="" />
+        <input type="hidden" id="slot-editor-type" value="book" />
+
+        <!-- Book Slot Fields -->
+        <div id="slot-book-fields" class="space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-sans font-bold text-stone-700 uppercase tracking-wider mb-1">Book Title (Tamil) *</label>
+              <input type="text" id="slot-book-title-ta" placeholder="எ.கா. சீவக சிந்தாமணி" class="w-full bg-[#FAF6F0] border border-[#D1C2A5] focus:border-[#4A151B] rounded-lg px-3 py-2 text-stone-900 outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-sans font-bold text-stone-700 uppercase tracking-wider mb-1">Book Title (English) *</label>
+              <input type="text" id="slot-book-title-en" placeholder="e.g. Sivaka Chintamani" class="w-full bg-[#FAF6F0] border border-[#D1C2A5] focus:border-[#4A151B] rounded-lg px-3 py-2 text-stone-900 outline-none" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-sans font-bold text-stone-700 uppercase tracking-wider mb-1">Author (Tamil & English)</label>
+              <input type="text" id="slot-book-author" placeholder="எ.கா. திருத்தக்கதேவர் (Tirutthakkadevar)" class="w-full bg-[#FAF6F0] border border-[#D1C2A5] focus:border-[#4A151B] rounded-lg px-3 py-2 text-stone-900 outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-sans font-bold text-stone-700 uppercase tracking-wider mb-1">Period / Era</label>
+              <input type="text" id="slot-book-period" placeholder="e.g. 10th Century CE (சோழர் காலம்)" class="w-full bg-[#FAF6F0] border border-[#D1C2A5] focus:border-[#4A151B] rounded-lg px-3 py-2 text-stone-900 outline-none" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-sans font-bold text-stone-700 uppercase tracking-wider mb-1">Category / Genre</label>
+              <input type="text" id="slot-book-category" placeholder="e.g. Five Great Epics / பெருங்காப்பியம்" class="w-full bg-[#FAF6F0] border border-[#D1C2A5] focus:border-[#4A151B] rounded-lg px-3 py-2 text-stone-900 outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-sans font-bold text-stone-700 uppercase tracking-wider mb-1">Subdivisions (Comma separated)</label>
+              <input type="text" id="slot-book-subdivisions" placeholder="e.g. நாமகள் இலம்பகம், கோவிந்தையார் இலம்பகம்" class="w-full bg-[#FAF6F0] border border-[#D1C2A5] focus:border-[#4A151B] rounded-lg px-3 py-2 text-stone-900 outline-none" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-sans font-bold text-stone-700 uppercase tracking-wider mb-1">Tamil Description (சுருக்கம்)</label>
+            <textarea id="slot-book-desc-ta" rows="2" placeholder="நூலின் சுருக்கமான தமிழ் விளக்கம்..." class="w-full bg-[#FAF6F0] border border-[#D1C2A5] focus:border-[#4A151B] rounded-lg p-3 text-stone-900 outline-none"></textarea>
+          </div>
+
+          <div>
+            <label class="block text-xs font-sans font-bold text-stone-700 uppercase tracking-wider mb-1">English Description</label>
+            <textarea id="slot-book-desc-en" rows="2" placeholder="Summary and literary significance in English..." class="w-full bg-[#FAF6F0] border border-[#D1C2A5] focus:border-[#4A151B] rounded-lg p-3 text-stone-900 outline-none"></textarea>
+          </div>
+        </div>
+
+        <!-- Dictionary Slot Fields -->
+        <div id="slot-dict-fields" class="space-y-4 hidden">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-sans font-bold text-stone-700 uppercase tracking-wider mb-1">Tamil Word (சொல்) *</label>
+              <input type="text" id="slot-dict-word" placeholder="எ.கா. யாழ்" class="w-full bg-[#FAF6F0] border border-[#D1C2A5] focus:border-[#4A151B] rounded-lg px-3 py-2 text-stone-900 outline-none text-lg font-bold text-[#4A151B]" />
+            </div>
+            <div>
+              <label class="block text-xs font-sans font-bold text-stone-700 uppercase tracking-wider mb-1">Phonetics IPA</label>
+              <input type="text" id="slot-dict-phonetic" placeholder="/jaːɻ/" class="w-full bg-[#FAF6F0] border border-[#D1C2A5] focus:border-[#4A151B] rounded-lg px-3 py-2 text-stone-900 outline-none font-mono" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-sans font-bold text-stone-700 uppercase tracking-wider mb-1">Root Word (வேர்ச்சொல்)</label>
+              <input type="text" id="slot-dict-root" placeholder="எ.கா. யா (To bind / harp lute)" class="w-full bg-[#FAF6F0] border border-[#D1C2A5] focus:border-[#4A151B] rounded-lg px-3 py-2 text-stone-900 outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-sans font-bold text-stone-700 uppercase tracking-wider mb-1">Category / Domain</label>
+              <input type="text" id="slot-dict-category" placeholder="e.g. Music / இசைக்கருவி" class="w-full bg-[#FAF6F0] border border-[#D1C2A5] focus:border-[#4A151B] rounded-lg px-3 py-2 text-stone-900 outline-none" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-sans font-bold text-stone-700 uppercase tracking-wider mb-1">Tamil Meaning (பொருள்)</label>
+            <textarea id="slot-dict-meaning-ta" rows="2" placeholder="பழந்தமிழரின் தொன்மையான நரம்பு இசைக் கருவி..." class="w-full bg-[#FAF6F0] border border-[#D1C2A5] focus:border-[#4A151B] rounded-lg p-3 text-stone-900 outline-none"></textarea>
+          </div>
+
+          <div>
+            <label class="block text-xs font-sans font-bold text-stone-700 uppercase tracking-wider mb-1">English Meaning & Etymology</label>
+            <textarea id="slot-dict-meaning-en" rows="2" placeholder="Ancient Tamil harp-like stringed instrument mentioned in Sangam poetry..." class="w-full bg-[#FAF6F0] border border-[#D1C2A5] focus:border-[#4A151B] rounded-lg p-3 text-stone-900 outline-none"></textarea>
+          </div>
+
+          <div>
+            <label class="block text-xs font-sans font-bold text-stone-700 uppercase tracking-wider mb-1">Citations (Comma separated)</label>
+            <input type="text" id="slot-dict-citations" placeholder="e.g. Silappatikaram, Porunararrupadai, Kuruntokai" class="w-full bg-[#FAF6F0] border border-[#D1C2A5] focus:border-[#4A151B] rounded-lg px-3 py-2 text-stone-900 outline-none" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Buttons -->
+      <div class="bg-[#F4ECE1] px-6 py-4 border-t border-[#D1C2A5] flex flex-wrap items-center justify-between gap-3">
+        <button onclick="copyCurrentSlotJson()" class="bg-stone-200 hover:bg-stone-300 text-stone-800 text-xs font-sans font-bold py-2 px-3.5 rounded-lg transition-colors flex items-center gap-1.5">
+          📋 Copy JSON for Assistant
+        </button>
+        <div class="flex items-center gap-2">
+          <button onclick="closeSlotModal()" class="bg-transparent hover:bg-stone-200 text-stone-600 text-xs font-sans font-semibold py-2 px-4 rounded-lg transition-colors">
+            Cancel
+          </button>
+          <button onclick="saveSlotModalData()" class="bg-[#4A151B] hover:bg-[#5F1C24] text-[#D4AF37] text-xs font-sans font-bold py-2 px-5 rounded-lg shadow-md transition-all">
+            💾 Apply & View Live
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- FLOATING AGASTYA AI QUICK BUTTON -->
   <button onclick="showView('ai')" title="Open Agastya AI Tamil Scholar"
     class="fixed bottom-6 right-6 z-40 bg-[#4A151B] hover:bg-[#5F1C24] text-[#D4AF37] border-2 border-[#D4AF37] rounded-full px-4 py-3 shadow-2xl hover:scale-105 transition-all flex items-center gap-2.5 font-serif font-bold text-xs cursor-pointer group">

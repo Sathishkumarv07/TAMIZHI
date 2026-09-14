@@ -1,0 +1,150 @@
+[தமிழி
+          Tamil Heritage Hub](http://localhost:8080)
+[Explore](http://localhost:8080#explore)
+[Literature](http://localhost:8080#literature)
+[Poets](http://localhost:8080#poets)
+[AI Tamil](http://localhost:8080#ai)
+[📚
+
+              Books (நூல்கள்)
+              Tolkappiyam, Epics & Classical Treatises](http://localhost:8080)
+[📖
+
+              Dictionary (அகராதி)
+              Ancient Tamil Root Words & Etymology](http://localhost:8080)
+
+# தமிழ் மரபுக் களஞ்சியம்
+
+Explore the language, literature, poets, books, manuscripts and stories that shaped Tamil heritage across millennia.
+
+## Specialities of the Tamil Language (தமிழ் தனிச்சிறப்புகள்)
+
+Discover why Tamil stands unique among the world's ancient classical languages through its phonetic melody, unbroken antiquity, secular ethics, Keeladi civilization, and global inscriptions.
+
+### Ancient Inscriptions
+Explore the epigraphic evidence carved in stone across millennia, revealing the foundational roots and evolving script of the Tamil language in historical contexts.
+
+### Classical Manuscripts
+Delve into the fragile beauty of Olaichuvadi (palm-leaf manuscripts), the traditional medium that preserved profound literary works, medicine, and scientific wisdom.
+
+### Cultural Personification
+Discover the reverence of Tamil Thai, the deified mother figure representing the language itself, symbolizing its eternal grace, classical purity, and enduring spirit.
+
+### Keeladi Urban Civilization
+Excavations along the Vaigai riverbed at Keeladi prove a literate, secular, urban Sangam-era civilization carbon-dated to 600 BCE with advanced architecture and trade.
+
+### Universal Ethics (Thirukkural)
+Thiruvalluvar's 1,330 couplets offer non-sectarian philosophy on virtue, governance, leadership, and love translated into over 40 world languages.
+
+### The Unique Sound 'ழ' (Zha)
+The retroflex approximant 'ழ' is a signature phoneme found exclusively in Tamil, articulated by curling the tongue to give Tamil its melodic sweetness.
+
+### டிஜிட்டல் தமிழ் — Tamil in the AI & Digital Age
+From the standardized Tamil99 keyboard layout to Unicode 1.1 encoding and modern Google/Agastya AI models, Tamil continues to thrive as an official digital language with massive online encyclopedias, NLP tools, and speech recognition engines.
+
+## A Journey Through Time
+
+Explore the rich tapestry of Tamil literature, spanning millennia. From the ancient poetic landscapes of the Sangam era to the vibrant narratives of modern writers, discover the enduring spirit of a classical language.
+
+### 10 Master Literature Works & Epics
+Tolkappiyam, Sangam Anthologies, Ethical Treatises, Epics & Devotional Masterpieces
+
+### Chronological Eras of Tamil Literature
+Sangam Era, Post-Sangam Period, Bhakti Movement & Imperial Chola & Epic Era
+
+## Chapter 1: The Praise of God
+
+The foundational couplets establishing the primacy of the divine, as authored by Thiruvalluvar.
+
+### Structure
+- 
+                 Chapter 1: The Praise of God
+
+- 
+                 Chapter 2: The Excellence of Rain
+
+- 
+                 Chapter 3: Greatness of Ascetics
+
+### LITERARY BACKGROUND
+Thiruvalluvar uses a linguistic metaphor to establish the concept of a primordial creator. Just as 'A' (அ) is the foundational vowel in Tamil phonetics, without which consonants cannot be articulated, the divine principle is posited as the essential substratum of the universe.
+
+### MANUSCRIPT & SOURCES
+Government Oriental Manuscripts Library (GOML MSS #TN-104); printed edition by U.V. Swaminatha Iyer (1890); commentary by Parimelazhagar.
+
+## Classical Tamil Dictionary & Etymology
+Explore ancient Tamil root words, etymological origins, and classical literary occurrences.
+
+## Agastya AI (அகத்தியன் AI)
+Virtual Tamil Scholar Online
+வணக்கம் (Vanakkam). I am a digital scholar specializing in ancient Tamil literature and history. We can explore the Ettuthogai, dive into the architectural marvels of the Cholas, or discuss the nuances of Tolkappiyam. How may I assist your research today?
+
+## Poets & Authors of Tamilakam
+Discover the immortal poets, philosophers, ascetics, and saints who shaped Tamil literary consciousness across two millennia — from Thiruvalluvar and Kapilar to Avvaiyar and Bharati.
+
+### All Great Tamil Poets & Authors
+
+Philosophers, Epistemic Scholars, Court Poets & Devotional Saints
+
+## Classical Treatises & Master Literature
+
+Archival records, descriptions, and subdivisions of Tamil's 10 monumental literary works, epics, and anthologies — from Tolkappiyam to Kamba Ramayanam.
+
+### The 10 Monumental Master Works of Tamil
+
+Poetic Treatises, Eighteen Lesser Texts, Five Great Epics & Medieval Classics
+
+### மீண்டும் வரவேற்கிறோம்
+
+[Forgot Password?](http://localhost:8080)
+[Create an Account](http://localhost:8080)
+
+## TAMIL HERITAGE HUB — LANDING PAGE VIDEO
+
+Duration: 20–25 Seconds • Tone: Heritage, Authentic, Warm, Inspiring • Click any scene to play
+
+### சிலப்பதிகாரம் — Silappatikāram Master Study
+Special Analysis of Tamil Epic Story, Characters, Cities, Music & Justice
+
+#### 📖 1. Epic Storyline (கதை)
+The tragic saga of Kovalan, who leaves his faithful wife Kannagi for the dancer Madhavi in Poompuhar. After losing his wealth, Kovalan arrives in Madurai to sell Kannagi's ruby-filled anklet (Silambu), where he is falsely accused by the royal goldsmith and executed by King Nedunjeliyan. Kannagi proves his innocence in court and burns Madurai in moral wrath.
+
+#### 👑 2. Major Characters (மாந்தர்கள்)
+- • Kannagi: Heroine of unwavering chastity, moral courage & divine justice.
+- • Kovalan: Wealthy merchant prince of Poompuhar.
+- • Madhavi: Master accomplished courtesan dancer of the Chola court.
+- • Nedunjeliyan: Pandyan King who died on his throne upon discovering his judicial error.
+
+#### ⚖️ 3. Literary Themes (இலக்கியக் கோட்பாடுகள்)
+- • அரசியல் பிழைத்தோர்க்கு அறம்கூற்றாவது: Justice strikes down unrighteous rulers.
+- • உரைசால் பத்தினியை உயர்ந்தோர் ஏத்துவர்: Virtuous women are revered by the wise.
+- • ஊழ்வினை உருத்துவந்து ஊட்டும்: Inescapable power of karmic destiny.
+
+#### 🌾 4. Ancient Tamil Culture (தமிழர் பண்பாடு)
+Preserves 2,000-year-old Tamil social life, trade guilds, festival traditions (Indra Vizha), coastal pearl fisheries, urban architecture, maritime voyages, and religious rituals across Chola, Pandya, and Chera kingdoms.
+
+#### 🏛️ 5. Three Great Cities (மூவேந்தர் நகரங்கள்)
+- • Poompuhar (Kaveripoompattinam): Chola international port capital.
+- • Madurai: Pandyan inland capital of the Sangam Tamil academy.
+- • Vanchi (Karur/Kavai): Chera mountain capital where Kannagi was deified.
+
+#### 🎵 6. Music & Dance (இசையும் கூத்தும்)
+Detailed record of classical Tamil musicology: the 7 scale notes (Kural, Thuttham, Kaikillai, Uzhai, Ili, Vilari, Tharam), Yazh harp tuning, and Arangetram Natya dance rules written by Ilango Adigal.
+
+#### 📜 7. Historical Context (வரலாற்றுச் பின்னணி)
+Composed by Cheran Senguttuvan's brother, Prince Ilango Adigal (c. 2nd-5th Century CE). Serves as a vital historical bridge connecting Sangam age aesthetics with epic narrative literature.
+
+#### 📚 8. Critical Sources (சுவடி ஆதாரங்கள்)
+Palm-leaf manuscripts preserved by U. V. Swaminatha Iyer; classical commentary by Adiyarkkunallar (12th Century CE); Government Oriental Manuscripts Library collection.
+
+### Archival Palm-Leaf Manuscript (ஓலைச்சுவடி)
+Government Oriental Manuscripts Library (GOML MSS #TN-104)
+© Tamil Heritage Hub. One Language. A Thousand Stories.
+[Archive
+            Sources](http://localhost:8080)
+[Methodology](http://localhost:8080)
+[Literature
+            Map](http://localhost:8080)
+[Era
+            Discovery](http://localhost:8080)
+[Privacy](http://localhost:8080)

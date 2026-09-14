@@ -613,30 +613,85 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+// Render a single Dictionary item (supports classical entries and slots)
+function renderDictionaryItem(item) {
+  if (item.isSlot) {
+    return `
+      <div class="vintage-card border-2 border-dashed border-amber-300/90 bg-[#FFFDF9] hover:border-amber-500 transition-all shadow-sm flex flex-col justify-between" id="${item.id}">
+        <div>
+          <div class="flex justify-between items-start mb-2">
+            <span class="bg-amber-100 text-amber-950 text-xs px-2.5 py-0.5 rounded font-bold font-sans flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+              ${item.category}
+            </span>
+            <span class="text-xs font-mono text-stone-400 bg-stone-100 px-2 py-0.5 rounded">${item.phonetic}</span>
+          </div>
+          <div class="flex items-center justify-between mb-1">
+            <h3 class="text-2xl font-serif font-bold text-[#4A151B]">${item.wordTa}</h3>
+            <span class="text-[10px] font-sans font-bold bg-amber-600 text-white px-2 py-0.5 rounded uppercase tracking-wider">Awaiting Data</span>
+          </div>
+          <div class="text-xs font-semibold text-stone-600 mb-3">Root: <span class="text-amber-800 italic">${item.rootTa}</span></div>
+          <div class="p-2.5 bg-amber-50/70 border border-amber-200/60 rounded mb-3">
+            <span class="text-[9px] font-sans font-bold uppercase tracking-widest text-amber-900 block mb-1">Meaning & Definition Slot</span>
+            <p class="text-stone-700 text-sm font-serif leading-relaxed italic">
+              ${currentLang === 'ta' ? item.meaningTa : item.meaningEn}
+            </p>
+          </div>
+          <div class="border-t border-amber-100 pt-2 mb-3">
+            <span class="text-[10px] font-sans font-bold text-stone-400 uppercase tracking-widest block mb-1">Citations & Literary Reference</span>
+            <div class="flex flex-wrap gap-1">
+              ${item.citations.map(c => `<span class="bg-stone-100 text-stone-600 text-[11px] px-2 py-0.5 rounded font-serif border border-dashed border-stone-300">${c}</span>`).join('')}
+            </div>
+          </div>
+        </div>
+        <div class="pt-2.5 border-t border-stone-200 flex items-center justify-between mt-auto">
+          <button onclick="openDictSlotModal('${item.id}')" class="bg-[#4A151B] hover:bg-[#5F1C24] text-[#D4AF37] text-xs font-bold py-1.5 px-3 rounded shadow transition-colors flex items-center gap-1">
+            ✍️ Fill Word Data
+          </button>
+          <button onclick="copyDictSlotTemplate('${item.id}')" class="text-xs font-semibold text-stone-600 hover:text-stone-900 flex items-center gap-1">
+            📋 Copy Format
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="vintage-card flex flex-col justify-between" id="${item.id}">
+      <div>
+        <div class="flex justify-between items-start mb-2">
+          <span class="bg-amber-100 text-amber-900 text-xs px-2.5 py-1 rounded font-bold font-sans">${item.category}</span>
+          <span class="text-xs font-mono text-stone-500">${item.phonetic}</span>
+        </div>
+        <h3 class="text-2xl font-serif font-bold text-maroon mb-1">${item.wordTa}</h3>
+        <div class="text-xs font-semibold text-stone-600 mb-3">Root: <span class="text-amber-800">${item.rootTa}</span></div>
+        <p class="text-stone-700 text-sm font-serif mb-4 leading-relaxed">
+          ${currentLang === 'ta' ? item.meaningTa : item.meaningEn}
+        </p>
+        <div class="border-t border-amber-100 pt-3">
+          <span class="text-[10px] font-sans font-bold text-stone-400 uppercase tracking-widest block mb-1">Sangam Citations</span>
+          <div class="flex flex-wrap gap-1">
+            ${item.citations.map(c => `<span class="bg-stone-100 text-stone-700 text-[11px] px-2 py-0.5 rounded font-serif">${c}</span>`).join('')}
+          </div>
+        </div>
+      </div>
+      <div class="pt-3 mt-3 border-t border-stone-100 flex items-center justify-between">
+        <button onclick="playTamilAudioWord('${item.wordTa}')" class="text-xs font-bold text-[#4A151B] hover:underline flex items-center gap-1">
+          🔊 Pronounce
+        </button>
+        <button onclick="askAIPrompt('Provide detailed etymological root analysis for the Tamil classical word: ${item.wordTa}')" class="text-xs font-serif text-[#C8963E] hover:underline">
+          ✦ Ask Agastya AI
+        </button>
+      </div>
+    </div>
+  `;
+}
+
 // Render Classical Tamil Dictionary View
 function renderDictionary() {
   const container = document.getElementById('dictionary-grid');
   if (!container) return;
-
-  container.innerHTML = DICTIONARY_DATA.map(item => `
-    <div class="vintage-card">
-      <div class="flex justify-between items-start mb-2">
-        <span class="bg-amber-100 text-amber-900 text-xs px-2.5 py-1 rounded font-bold font-sans">${item.category}</span>
-        <span class="text-xs font-mono text-stone-500">${item.phonetic}</span>
-      </div>
-      <h3 class="text-2xl font-serif font-bold text-maroon mb-1">${item.wordTa}</h3>
-      <div class="text-xs font-semibold text-stone-600 mb-3">Root: <span class="text-amber-800">${item.rootTa}</span></div>
-      <p class="text-stone-700 text-sm font-serif mb-4 leading-relaxed">
-        ${currentLang === 'ta' ? item.meaningTa : item.meaningEn}
-      </p>
-      <div class="border-t border-amber-100 pt-3">
-        <span class="text-[10px] font-sans font-bold text-stone-400 uppercase tracking-widest block mb-1">Sangam Citations</span>
-        <div class="flex flex-wrap gap-1">
-          ${item.citations.map(c => `<span class="bg-stone-100 text-stone-700 text-[11px] px-2 py-0.5 rounded font-serif">${c}</span>`).join('')}
-        </div>
-      </div>
-    </div>
-  `).join('');
+  container.innerHTML = DICTIONARY_DATA.map(item => renderDictionaryItem(item)).join('');
 }
 
 function filterDictionary(query) {
@@ -645,36 +700,50 @@ function filterDictionary(query) {
     d.wordTa.toLowerCase().includes(q) ||
     d.phonetic.toLowerCase().includes(q) ||
     d.meaningEn.toLowerCase().includes(q) ||
-    d.meaningTa.toLowerCase().includes(q)
+    d.meaningTa.toLowerCase().includes(q) ||
+    (d.rootTa && d.rootTa.toLowerCase().includes(q))
   );
 
   const container = document.getElementById('dictionary-grid');
   if (!container) return;
 
   if (filtered.length === 0) {
-    container.innerHTML = `<div class="col-span-full text-center py-12 text-stone-500 font-serif">No dictionary matches found for "${query}". Try searching "Aram", "Sangam", or "Aham".</div>`;
+    container.innerHTML = `<div class="col-span-full text-center py-12 text-stone-500 font-serif">No dictionary matches found for "${query}". Try searching "Aram", "Sangam", or "Slot".</div>`;
     return;
   }
 
-  container.innerHTML = filtered.map(item => `
-    <div class="vintage-card">
-      <div class="flex justify-between items-start mb-2">
-        <span class="bg-amber-100 text-amber-900 text-xs px-2.5 py-1 rounded font-bold font-sans">${item.category}</span>
-        <span class="text-xs font-mono text-stone-500">${item.phonetic}</span>
-      </div>
-      <h3 class="text-2xl font-serif font-bold text-maroon mb-1">${item.wordTa}</h3>
-      <div class="text-xs font-semibold text-stone-600 mb-3">Root: <span class="text-amber-800">${item.rootTa}</span></div>
-      <p class="text-stone-700 text-sm font-serif mb-4 leading-relaxed">
-        ${currentLang === 'ta' ? item.meaningTa : item.meaningEn}
-      </p>
-      <div class="border-t border-amber-100 pt-3">
-        <span class="text-[10px] font-sans font-bold text-stone-400 uppercase tracking-widest block mb-1">Sangam Citations</span>
-        <div class="flex flex-wrap gap-1">
-          ${item.citations.map(c => `<span class="bg-stone-100 text-stone-700 text-[11px] px-2 py-0.5 rounded font-serif">${c}</span>`).join('')}
-        </div>
-      </div>
-    </div>
-  `).join('');
+  container.innerHTML = filtered.map(item => renderDictionaryItem(item)).join('');
+}
+
+function filterDictionaryCategory(category) {
+  document.querySelectorAll('.dict-filter-pill').forEach(pill => {
+    if (pill.getAttribute('data-dict-filter') === category) {
+      pill.classList.add('active');
+    } else {
+      pill.classList.remove('active');
+    }
+  });
+
+  const container = document.getElementById('dictionary-grid');
+  if (!container) return;
+
+  if (category === 'all') {
+    renderDictionary();
+    return;
+  }
+
+  let filtered = [];
+  if (category === 'slots') {
+    filtered = DICTIONARY_DATA.filter(d => d.isSlot === true);
+  } else if (category === 'classical') {
+    filtered = DICTIONARY_DATA.filter(d => !d.isSlot);
+  }
+
+  if (filtered.length === 0) {
+    container.innerHTML = `<div class="col-span-full text-center py-12 text-stone-500 font-serif">No words found in this category.</div>`;
+  } else {
+    container.innerHTML = filtered.map(item => renderDictionaryItem(item)).join('');
+  }
 }
 
 // Render Literature Eras
@@ -1047,74 +1116,140 @@ function filterLiteratureView(query) {
 
 // Helper: Render books array into a given container
 function renderBooksToContainer(container, books) {
-  container.innerHTML = books.map((b, idx) => `
-    <div class="lit-work-card">
-      <div class="lit-work-card-seal">
-        <span class="text-3xl">${b.emblem || '📜'}</span>
-        <span class="lit-work-num-tag">WORK #${idx + 1 < 10 ? '0' + (idx + 1) : (idx + 1)}</span>
-      </div>
-      <div class="flex-1 min-w-0">
-        <div class="flex items-center justify-between gap-2 mb-2 flex-wrap">
-          <span class="era-badge">${currentLang === 'ta' ? b.categoryTa : b.categoryEn}</span>
-          <span class="text-xs font-sans font-bold text-amber-900 bg-amber-100/80 border border-amber-300/60 px-2.5 py-0.5 rounded-full">
-            ${b.meaningEn ? `${currentLang === 'ta' ? b.meaningTa : 'Meaning: ' + b.meaningEn}` : (b.collectionEn ? `${currentLang === 'ta' ? b.collectionTa : 'Collection: ' + b.collectionEn}` : (currentLang === 'ta' ? b.periodTa : b.periodEn))}
-          </span>
-        </div>
-
-        <h3 class="text-xl md:text-2xl font-serif font-bold text-[#4A151B] mb-1 leading-tight">
-          ${b.titleTa} — ${b.titleEn}
-        </h3>
-
-        ${b.authorTa ? `
-          <div class="text-xs font-serif font-bold text-amber-800 mb-2.5">
-            ✍️ Attributed Author: <strong class="text-[#4A151B]">${currentLang === 'ta' ? b.authorTa : b.authorEn}</strong>
+  container.innerHTML = books.map((b, idx) => {
+    if (b.isSlot) {
+      return `
+        <div class="lit-work-card border-2 border-dashed border-amber-300 bg-[#FFFDF9]/95 hover:border-amber-500 transition-all shadow-sm" id="${b.id}">
+          <div class="lit-work-card-seal bg-amber-50 border border-dashed border-amber-300">
+            <span class="text-3xl">${b.emblem || '📖'}</span>
+            <span class="lit-work-num-tag bg-amber-600 text-white">SLOT #${b.num || (idx + 1)}</span>
           </div>
-        ` : ''}
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between gap-2 mb-2 flex-wrap">
+              <span class="bg-amber-100 text-amber-950 border border-amber-300 font-sans text-xs px-2.5 py-0.5 rounded-full font-bold flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                ${currentLang === 'ta' ? 'உள்ளடக்க இடம் (Slot Available)' : 'Content Slot Available (Awaiting Data)'}
+              </span>
+              <span class="text-xs font-sans font-bold text-stone-500 bg-stone-100 px-2.5 py-0.5 rounded-full border border-stone-200">
+                ${currentLang === 'ta' ? b.categoryTa : b.categoryEn}
+              </span>
+            </div>
 
-        <div class="bg-[#F4ECE1] border-l-4 border-[#4A151B] p-3 rounded-r-lg mb-3">
-          <span class="text-[10px] font-sans font-bold uppercase tracking-widest text-stone-500 block mb-1">
-            ${currentLang === 'ta' ? 'விளக்கம் (Website Short Description)' : 'Website Short Description'}
-          </span>
-          <p class="text-stone-800 text-sm font-serif leading-relaxed italic font-medium">
-            "${currentLang === 'ta' ? b.shortDescTa : b.shortDescTa}"
-          </p>
-        </div>
+            <h3 class="text-xl md:text-2xl font-serif font-bold text-[#4A151B] mb-1 leading-tight">
+              ${b.titleTa} — ${b.titleEn}
+            </h3>
 
-        ${b.shortDescEn ? `
-          <p class="text-stone-700 text-xs font-serif leading-relaxed mb-3">
-            ${b.shortDescEn}
-          </p>
-        ` : ''}
+            <div class="text-xs font-serif font-semibold text-stone-600 mb-2.5 flex items-center gap-1 flex-wrap">
+              <span>✍️ Attributed Author:</span> <strong class="text-[#4A151B]">${currentLang === 'ta' ? b.authorTa : b.authorEn}</strong>
+              <span class="mx-2 text-stone-300 hidden sm:inline">|</span>
+              <span>📅 Period:</span> <span class="text-stone-700 font-sans font-medium">${currentLang === 'ta' ? b.periodTa : b.periodEn}</span>
+            </div>
 
-        <div class="space-y-2 border-t border-amber-100 pt-3 mb-3">
-          <span class="text-[10px] font-sans font-bold uppercase tracking-widest text-stone-400 block mb-1">
-            ${b.id === 'tolkappiyam' || b.id === 'thirukkural' ? 'Major Sections & Divisions (பிரிவுகள்)' : (b.id === 'ettuthokai' || b.id === 'pattuppattu' ? 'Anthologies / Master Poems (பாடல்கள்)' : 'Core Themes & Literary Focus (கோட்பாடுகள்)')}
-          </span>
-          <div class="flex flex-wrap gap-1.5">
-            ${(currentLang === 'ta' ? b.subdivisionsTa : b.subdivisionsEn).map(s => `<span class="bg-amber-100 text-amber-900 text-[11px] px-2.5 py-1 rounded font-serif font-bold border border-amber-300/60">${s}</span>`).join('')}
-          </div>
-        </div>
+            <div class="bg-amber-50/70 border-l-4 border-amber-600 p-3 rounded-r-lg mb-3 border border-amber-200/50">
+              <span class="text-[10px] font-sans font-bold uppercase tracking-widest text-amber-900 block mb-1">
+                ${currentLang === 'ta' ? 'நூல் சுருக்க இடம் (Slot Overview)' : 'Book Overview & Summary (Slot Ready)'}
+              </span>
+              <p class="text-stone-700 text-sm font-serif leading-relaxed italic">
+                "${currentLang === 'ta' ? b.shortDescTa : b.shortDescEn}"
+              </p>
+            </div>
 
-        <div class="pt-3 border-t border-stone-200 flex flex-wrap items-center justify-between gap-3">
-          <div class="flex flex-wrap gap-2">
-            ${b.hasKuralExplorer ? `
-              <button onclick="showView('reader')" class="bg-[#4A151B] hover:bg-[#5F1C24] text-[#D4AF37] text-xs font-bold py-1.5 px-4 rounded shadow transition-colors flex items-center gap-1.5">
-                📖 Open Kural Explorer →
+            <div class="space-y-2 border-t border-amber-100/80 pt-3 mb-3">
+              <span class="text-[10px] font-sans font-bold uppercase tracking-widest text-stone-400 block mb-1">
+                Subdivisions & Chapters / பிரிவுகள்
+              </span>
+              <div class="flex flex-wrap gap-1.5">
+                ${(currentLang === 'ta' ? b.subdivisionsTa : b.subdivisionsEn).map(s => `<span class="bg-amber-50 text-amber-900 text-[11px] px-2.5 py-1 rounded font-serif border border-dashed border-amber-300">${s}</span>`).join('')}
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-stone-200 flex flex-wrap items-center justify-between gap-3">
+              <div class="flex flex-wrap gap-2">
+                <button onclick="openBookSlotModal('${b.id}')" class="bg-[#4A151B] hover:bg-[#5F1C24] text-[#D4AF37] text-xs font-bold py-1.5 px-3.5 rounded shadow transition-colors flex items-center gap-1.5">
+                  ✍️ Fill Data in this Slot
+                </button>
+                <button onclick="copyBookSlotTemplate('${b.id}')" class="bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold py-1.5 px-3 rounded border border-stone-300 transition-colors flex items-center gap-1.5">
+                  📋 Copy Format
+                </button>
+              </div>
+              <button onclick="askAIPrompt('Suggest content and background for ${b.titleEn}')" class="text-xs font-bold text-[#4A151B] hover:underline flex items-center gap-1 ml-auto">
+                ✦ Ask Agastya AI →
               </button>
-            ` : ''}
-            ${b.hasSpecialSection ? `
-              <button onclick="openSilappatikaramModal()" class="btn-gold-solid text-xs py-1.5 px-4 shadow flex items-center gap-1.5">
-                🏛️ Epic Explorer (8 Special Sections) →
-              </button>
-            ` : ''}
+            </div>
           </div>
-          <button onclick="askAIPrompt('Provide a deep literary background on ${b.titleEn} (${b.titleTa})')" class="text-xs font-bold text-[#4A151B] hover:underline flex items-center gap-1 ml-auto">
-            ✦ Ask Agastya AI about ${b.titleEn} →
-          </button>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="lit-work-card" id="${b.id}">
+        <div class="lit-work-card-seal">
+          <span class="text-3xl">${b.emblem || '📜'}</span>
+          <span class="lit-work-num-tag">WORK #${idx + 1 < 10 ? '0' + (idx + 1) : (idx + 1)}</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center justify-between gap-2 mb-2 flex-wrap">
+            <span class="era-badge">${currentLang === 'ta' ? b.categoryTa : b.categoryEn}</span>
+            <span class="text-xs font-sans font-bold text-amber-900 bg-amber-100/80 border border-amber-300/60 px-2.5 py-0.5 rounded-full">
+              ${b.meaningEn ? `${currentLang === 'ta' ? b.meaningTa : 'Meaning: ' + b.meaningEn}` : (b.collectionEn ? `${currentLang === 'ta' ? b.collectionTa : 'Collection: ' + b.collectionEn}` : (currentLang === 'ta' ? b.periodTa : b.periodEn))}
+            </span>
+          </div>
+
+          <h3 class="text-xl md:text-2xl font-serif font-bold text-[#4A151B] mb-1 leading-tight">
+            ${b.titleTa} — ${b.titleEn}
+          </h3>
+
+          ${b.authorTa ? `
+            <div class="text-xs font-serif font-bold text-amber-800 mb-2.5">
+              ✍️ Attributed Author: <strong class="text-[#4A151B]">${currentLang === 'ta' ? b.authorTa : b.authorEn}</strong>
+            </div>
+          ` : ''}
+
+          <div class="bg-[#F4ECE1] border-l-4 border-[#4A151B] p-3 rounded-r-lg mb-3">
+            <span class="text-[10px] font-sans font-bold uppercase tracking-widest text-stone-500 block mb-1">
+              ${currentLang === 'ta' ? 'விளக்கம் (Website Short Description)' : 'Website Short Description'}
+            </span>
+            <p class="text-stone-800 text-sm font-serif leading-relaxed italic font-medium">
+              "${currentLang === 'ta' ? b.shortDescTa : b.shortDescTa}"
+            </p>
+          </div>
+
+          ${b.shortDescEn ? `
+            <p class="text-stone-700 text-xs font-serif leading-relaxed mb-3">
+              ${b.shortDescEn}
+            </p>
+          ` : ''}
+
+          <div class="space-y-2 border-t border-amber-100 pt-3 mb-3">
+            <span class="text-[10px] font-sans font-bold uppercase tracking-widest text-stone-400 block mb-1">
+              ${b.id === 'tolkappiyam' || b.id === 'thirukkural' ? 'Major Sections & Divisions (பிரிவுகள்)' : (b.id === 'ettuthokai' || b.id === 'pattuppattu' ? 'Anthologies / Master Poems (பாடல்கள்)' : 'Core Themes & Literary Focus (கோட்பாடுகள்)')}
+            </span>
+            <div class="flex flex-wrap gap-1.5">
+              ${(currentLang === 'ta' ? b.subdivisionsTa : b.subdivisionsEn).map(s => `<span class="bg-amber-100 text-amber-900 text-[11px] px-2.5 py-1 rounded font-serif font-bold border border-amber-300/60">${s}</span>`).join('')}
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-stone-200 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex flex-wrap gap-2">
+              ${b.hasKuralExplorer ? `
+                <button onclick="showView('reader')" class="bg-[#4A151B] hover:bg-[#5F1C24] text-[#D4AF37] text-xs font-bold py-1.5 px-4 rounded shadow transition-colors flex items-center gap-1.5">
+                  📖 Open Kural Explorer →
+                </button>
+              ` : ''}
+              ${b.hasSpecialSection ? `
+                <button onclick="openSilappatikaramModal()" class="btn-gold-solid text-xs py-1.5 px-4 shadow flex items-center gap-1.5">
+                  🏛️ Epic Explorer (8 Special Sections) →
+                </button>
+              ` : ''}
+            </div>
+            <button onclick="askAIPrompt('Provide a deep literary background on ${b.titleEn} (${b.titleTa})')" class="text-xs font-bold text-[#4A151B] hover:underline flex items-center gap-1 ml-auto">
+              ✦ Ask Agastya AI about ${b.titleEn} →
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
 // Helper: Render poets array into a given container
@@ -1240,6 +1375,8 @@ function filterBooksCategory(category) {
   }
 
   const filtered = BOOKS_CATALOG.filter(b => {
+    if (category === 'slots') return b.isSlot === true;
+    if (b.isSlot) return false;
     const cat = (b.categoryEn || '').toLowerCase();
     if (category === 'grammar') return cat.includes('grammar') || cat.includes('poetics');
     if (category === 'sangam') return cat.includes('sangam');
@@ -1280,6 +1417,281 @@ function filterBooksPage(query) {
   } else {
     renderBooksToContainer(booksGrid, filtered);
   }
+}
+
+// =========================================================================
+// TAMIZHI CONTENT SLOTS & DATA MANAGEMENT SYSTEM
+// =========================================================================
+
+// Notification Toast
+function showTamizhiToast(msg) {
+  let toast = document.getElementById('tamizhi-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'tamizhi-toast';
+    toast.className = 'fixed bottom-6 left-6 z-50 bg-[#4A151B] text-[#D4AF37] border border-[#D4AF37]/60 shadow-2xl px-5 py-3 rounded-xl font-serif text-sm flex items-center gap-2 transition-all duration-300 opacity-0 translate-y-4';
+    document.body.appendChild(toast);
+  }
+  toast.innerHTML = `<span class="text-lg">✨</span> <span>${msg}</span>`;
+  toast.classList.remove('opacity-0', 'translate-y-4');
+  toast.classList.add('opacity-100', 'translate-y-0');
+  setTimeout(() => {
+    toast.classList.remove('opacity-100', 'translate-y-0');
+    toast.classList.add('opacity-0', 'translate-y-4');
+  }, 3500);
+}
+
+// Open Book Slot in Modal
+function openBookSlotModal(slotId) {
+  const item = BOOKS_CATALOG.find(b => b.id === slotId);
+  if (!item) return;
+
+  document.getElementById('slot-editor-id').value = slotId;
+  document.getElementById('slot-editor-type').value = 'book';
+  document.getElementById('slot-modal-icon').textContent = '📖';
+  document.getElementById('slot-modal-title').textContent = `Edit Book Slot: ${item.titleTa}`;
+  document.getElementById('slot-modal-subtitle').textContent = `Slot ID: ${slotId} (Number #${item.num || ''})`;
+
+  document.getElementById('slot-book-fields').classList.remove('hidden');
+  document.getElementById('slot-dict-fields').classList.add('hidden');
+
+  document.getElementById('slot-book-title-ta').value = item.titleTa.startsWith('[') ? '' : item.titleTa;
+  document.getElementById('slot-book-title-en').value = item.titleEn.startsWith('[') ? '' : item.titleEn;
+  document.getElementById('slot-book-author').value = item.authorTa.startsWith('[') ? '' : (item.authorTa + (item.authorEn ? ' (' + item.authorEn + ')' : ''));
+  document.getElementById('slot-book-period').value = item.periodTa.startsWith('[') ? '' : (item.periodEn || item.periodTa);
+  document.getElementById('slot-book-category').value = item.categoryTa.includes('[') ? '' : item.categoryTa;
+  document.getElementById('slot-book-subdivisions').value = item.subdivisionsTa ? item.subdivisionsTa.filter(s => !s.startsWith('[')).join(', ') : '';
+  document.getElementById('slot-book-desc-ta').value = item.shortDescTa.startsWith('[') ? '' : item.shortDescTa;
+  document.getElementById('slot-book-desc-en').value = item.shortDescEn.startsWith('[') ? '' : item.shortDescEn;
+
+  const modal = document.getElementById('slot-editor-modal');
+  if (modal) modal.classList.remove('hidden');
+}
+
+// Open Dictionary Slot in Modal
+function openDictSlotModal(slotId) {
+  const item = DICTIONARY_DATA.find(d => d.id === slotId);
+  if (!item) return;
+
+  document.getElementById('slot-editor-id').value = slotId;
+  document.getElementById('slot-editor-type').value = 'dict';
+  document.getElementById('slot-modal-icon').textContent = '📖';
+  document.getElementById('slot-modal-title').textContent = `Edit Dictionary Slot: ${item.wordTa}`;
+  document.getElementById('slot-modal-subtitle').textContent = `Slot ID: ${slotId}`;
+
+  document.getElementById('slot-book-fields').classList.add('hidden');
+  document.getElementById('slot-dict-fields').classList.remove('hidden');
+
+  document.getElementById('slot-dict-word').value = item.wordTa.startsWith('[') ? '' : item.wordTa;
+  document.getElementById('slot-dict-phonetic').value = item.phonetic.includes('slot') ? '' : item.phonetic;
+  document.getElementById('slot-dict-root').value = item.rootTa.startsWith('[') ? '' : item.rootTa;
+  document.getElementById('slot-dict-category').value = item.category.includes('[') ? '' : item.category;
+  document.getElementById('slot-dict-meaning-ta').value = item.meaningTa.startsWith('[') ? '' : item.meaningTa;
+  document.getElementById('slot-dict-meaning-en').value = item.meaningEn.startsWith('[') ? '' : item.meaningEn;
+  document.getElementById('slot-dict-citations').value = item.citations ? item.citations.filter(c => !c.startsWith('[')).join(', ') : '';
+
+  const modal = document.getElementById('slot-editor-modal');
+  if (modal) modal.classList.remove('hidden');
+}
+
+function closeSlotModal() {
+  const modal = document.getElementById('slot-editor-modal');
+  if (modal) modal.classList.add('hidden');
+}
+
+// Save in-memory changes from modal
+function saveSlotModalData() {
+  const slotId = document.getElementById('slot-editor-id').value;
+  const slotType = document.getElementById('slot-editor-type').value;
+
+  if (slotType === 'book') {
+    const item = BOOKS_CATALOG.find(b => b.id === slotId);
+    if (!item) return;
+
+    const titleTa = document.getElementById('slot-book-title-ta').value.trim();
+    const titleEn = document.getElementById('slot-book-title-en').value.trim();
+    if (!titleTa && !titleEn) {
+      alert("Please enter at least a title for the book.");
+      return;
+    }
+
+    item.titleTa = titleTa || item.titleTa;
+    item.titleEn = titleEn || item.titleEn;
+    const author = document.getElementById('slot-book-author').value.trim();
+    if (author) { item.authorTa = author; item.authorEn = author; }
+    const period = document.getElementById('slot-book-period').value.trim();
+    if (period) { item.periodTa = period; item.periodEn = period; }
+    const category = document.getElementById('slot-book-category').value.trim();
+    if (category) { item.categoryTa = category; item.categoryEn = category; }
+    const subs = document.getElementById('slot-book-subdivisions').value.trim();
+    if (subs) {
+      const parts = subs.split(',').map(s => s.trim()).filter(Boolean);
+      item.subdivisionsTa = parts;
+      item.subdivisionsEn = parts;
+    }
+    const descTa = document.getElementById('slot-book-desc-ta').value.trim();
+    if (descTa) item.shortDescTa = descTa;
+    const descEn = document.getElementById('slot-book-desc-en').value.trim();
+    if (descEn) item.shortDescEn = descEn;
+
+    item.isSlot = false; // Now populated with user data!
+
+    const booksGrid = document.getElementById('books-grid');
+    if (booksGrid) renderBooksToContainer(booksGrid, BOOKS_CATALOG);
+    const litWorksGrid = document.getElementById('literature-works-grid');
+    if (litWorksGrid) renderBooksToContainer(litWorksGrid, BOOKS_CATALOG);
+
+    closeSlotModal();
+    showTamizhiToast(`Book "${item.titleTa}" saved and live!`);
+
+    const cardEl = document.getElementById(slotId);
+    if (cardEl) cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } else {
+    const item = DICTIONARY_DATA.find(d => d.id === slotId);
+    if (!item) return;
+
+    const wordTa = document.getElementById('slot-dict-word').value.trim();
+    if (!wordTa) {
+      alert("Please enter a Tamil word.");
+      return;
+    }
+
+    item.wordTa = wordTa;
+    const phonetic = document.getElementById('slot-dict-phonetic').value.trim();
+    if (phonetic) item.phonetic = phonetic;
+    const root = document.getElementById('slot-dict-root').value.trim();
+    if (root) item.rootTa = root;
+    const category = document.getElementById('slot-dict-category').value.trim();
+    if (category) item.category = category;
+    const meaningTa = document.getElementById('slot-dict-meaning-ta').value.trim();
+    if (meaningTa) item.meaningTa = meaningTa;
+    const meaningEn = document.getElementById('slot-dict-meaning-en').value.trim();
+    if (meaningEn) item.meaningEn = meaningEn;
+    const citations = document.getElementById('slot-dict-citations').value.trim();
+    if (citations) {
+      item.citations = citations.split(',').map(c => c.trim()).filter(Boolean);
+    }
+
+    item.isSlot = false; // Now populated with user data!
+
+    renderDictionary();
+    closeSlotModal();
+    showTamizhiToast(`Word "${item.wordTa}" saved and live!`);
+
+    const cardEl = document.getElementById(slotId);
+    if (cardEl) cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+// Copy JSON template for a book slot
+function copyBookSlotTemplate(slotId) {
+  const item = BOOKS_CATALOG.find(b => b.id === slotId) || {
+    id: slotId,
+    num: BOOKS_CATALOG.length + 1,
+    titleTa: "புதிய நூல்",
+    titleEn: "New Book",
+    authorTa: "ஆசிரியர்",
+    authorEn: "Author",
+    periodEn: "Period / Era",
+    categoryEn: "Literature",
+    shortDescTa: "தமிழ் விளக்கம்",
+    shortDescEn: "English summary",
+    subdivisionsTa: ["பிரிவு 1", "பிரிவு 2"]
+  };
+
+  const jsonStr = JSON.stringify(item, null, 2);
+  navigator.clipboard.writeText(jsonStr).then(() => {
+    showTamizhiToast(`Template for ${slotId} copied! Paste it in chat.`);
+  }).catch(() => {
+    prompt("Copy this Book Slot JSON format to send in chat:", jsonStr);
+  });
+}
+
+// Copy JSON template for a dictionary slot
+function copyDictSlotTemplate(slotId) {
+  const item = DICTIONARY_DATA.find(d => d.id === slotId) || {
+    id: slotId,
+    wordTa: "சொல்",
+    phonetic: "/phonetic/",
+    rootTa: "வேர்ச்சொல்",
+    category: "General",
+    meaningTa: "பொருள் விளக்கம்",
+    meaningEn: "English definition",
+    citations: ["Citation 1", "Citation 2"]
+  };
+
+  const jsonStr = JSON.stringify(item, null, 2);
+  navigator.clipboard.writeText(jsonStr).then(() => {
+    showTamizhiToast(`Template for ${slotId} copied! Paste it in chat.`);
+  }).catch(() => {
+    prompt("Copy this Dictionary Slot JSON format to send in chat:", jsonStr);
+  });
+}
+
+// Copy JSON currently in the modal
+function copyCurrentSlotJson() {
+  const slotId = document.getElementById('slot-editor-id').value;
+  const slotType = document.getElementById('slot-editor-type').value;
+  if (slotType === 'book') {
+    copyBookSlotTemplate(slotId);
+  } else {
+    copyDictSlotTemplate(slotId);
+  }
+}
+
+// Dynamically add a new book slot
+function addNewBookSlot() {
+  const nextNum = BOOKS_CATALOG.length + 1;
+  const newSlot = {
+    id: `book-slot-${nextNum}`,
+    num: nextNum,
+    emblem: "📖",
+    titleTa: `[புதிய நூல் இடம் #${nextNum} — தலைப்பு]`,
+    titleEn: `[Book Slot #${nextNum} — Ready for Title]`,
+    authorTa: "[நூலாசிரியர் பெயர்]",
+    authorEn: "[Author / Compiler]",
+    periodTa: "[காலம் / நூற்றாண்டு]",
+    periodEn: "[Era / Century]",
+    categoryTa: "இலக்கியப் பிரிவு [Slot]",
+    categoryEn: "Literature / Epic / Custom",
+    shortDescTa: "[நூலின் சுருக்கமான தமிழ் விளக்கம் — நீங்கள் தரும் தரவுகளுக்காக காத்திருக்கிறது.]",
+    shortDescEn: "[English summary and significance — slot ready for your data.]",
+    subdivisionsTa: ["[பிரிவு 1]", "[பிரிவு 2]", "[பிரிவு 3]"],
+    subdivisionsEn: ["[Section 1]", "[Section 2]", "[Section 3]"],
+    isSlot: true
+  };
+
+  BOOKS_CATALOG.push(newSlot);
+  const booksGrid = document.getElementById('books-grid');
+  if (booksGrid) renderBooksToContainer(booksGrid, BOOKS_CATALOG);
+  const litWorksGrid = document.getElementById('literature-works-grid');
+  if (litWorksGrid) renderBooksToContainer(litWorksGrid, BOOKS_CATALOG);
+
+  showTamizhiToast(`New Book Slot #${nextNum} created!`);
+  const cardEl = document.getElementById(newSlot.id);
+  if (cardEl) cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// Dynamically add a new dictionary slot
+function addNewDictSlot() {
+  const nextNum = DICTIONARY_DATA.length + 1;
+  const newSlot = {
+    id: `dict-slot-${nextNum}`,
+    wordTa: `[சொல் இடம் #${nextNum}]`,
+    phonetic: `/phonetic-slot-${nextNum}/`,
+    rootTa: "[வேர்ச்சொல் / Root Word Slot]",
+    category: "General / பொது [Slot]",
+    meaningTa: "[தமிழில் சொல் விளக்கம் / பொருள் — நீங்கள் தரும் தரவுகளுக்காக காத்திருக்கிறது.]",
+    meaningEn: "[English definition, etymology & semantic roots — ready for your data.]",
+    citations: ["[இலக்கிய மேற்கோள் 1]", "[இலக்கிய மேற்கோள் 2]"],
+    isSlot: true
+  };
+
+  DICTIONARY_DATA.push(newSlot);
+  renderDictionary();
+  showTamizhiToast(`New Dictionary Slot #${nextNum} created!`);
+  const cardEl = document.getElementById(newSlot.id);
+  if (cardEl) cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 

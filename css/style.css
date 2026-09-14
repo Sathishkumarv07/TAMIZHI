@@ -1957,3 +1957,48 @@ body {
   padding: 0.2rem 0.6rem;
   border-radius: 100px;
 }
+
+/* =========================================================================
+   FILTER PILLS & CONTENT SLOTS STYLES
+   ========================================================================= */
+
+.book-filter-pill,
+.poet-filter-pill,
+.dict-filter-pill {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.45rem 1rem;
+  border-radius: 9999px;
+  background: var(--bg-card);
+  color: var(--text-medium);
+  border: 1px solid var(--border-gold);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.book-filter-pill:hover,
+.poet-filter-pill:hover,
+.dict-filter-pill:hover {
+  background: var(--bg-parchment-subtle);
+  color: var(--primary-maroon);
+  border-color: var(--primary-maroon);
+}
+
+.book-filter-pill.active,
+.poet-filter-pill.active,
+.dict-filter-pill.active {
+  background: var(--primary-maroon);
+  color: #F5E6C8;
+  border-color: var(--primary-maroon);
+  box-shadow: 0 4px 12px rgba(74, 21, 27, 0.25);
+}
+
+.slot-pulse-ring {
+  animation: slotPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes slotPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.08); }
+}
